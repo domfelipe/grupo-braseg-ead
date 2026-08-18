@@ -3,115 +3,184 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grupo BRASEG • Plataforma Corporativa de Treinamentos Regulamentares (NRs)</title>
-  <meta name="description" content="Plataforma oficial de capacitação técnica e conformidade em Segurança e Medicina do Trabalho do Grupo BRASEG. Treinamentos em conformidade com a NR-01 e Portaria MTP nº 6.730/2020.">
+  <title>Grupo BRASEG • Capacitação em Segurança do Trabalho & NRs</title>
+  <meta name="description" content="Plataforma oficial de treinamentos regulamentares (NRs) do Grupo BRASEG. Cursos 100% online com certificação homologada pela Portaria MTP nº 6.730/2020 e assinaturas de Médico do Trabalho (CRM) e Engenheiro de Segurança (CREA).">
   
-  <!-- Tipografia Corporativa Suíça: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <!-- Tipografia Corporativa: Plus Jakarta Sans, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Estilos CSS Principais -->
+  <!-- Estilos CSS Liquid Glass & Motion Standard -->
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Barra Institucional Superior (Top Bar de Fora a Fora) -->
+  <!-- Ambient Glow Background Canvas -->
+  <div class="ambient-glow-wrapper no-print" aria-hidden="true">
+    <div class="glow-orb orb-primary"></div>
+    <div class="glow-orb orb-secondary"></div>
+    <div class="glow-orb orb-accent"></div>
+  </div>
+
+  <!-- Barra Institucional Superior (Top Bar) -->
   <div class="top-brand-bar no-print">
     <div class="top-bar-inner">
       <div class="top-bar-left">
         <span class="location-item">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Sede Operacional: Lençóis Paulista - SP
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Sede: Lençóis Paulista - SP
         </span>
-        <span class="divider">/</span>
+        <span class="divider-slash">/</span>
         <span class="contact-item">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           Central: (14) 3283-2060
         </span>
-        <span class="divider">/</span>
+        <span class="divider-slash">/</span>
         <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="whatsapp-top-link">
+          <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
           WhatsApp SESMT: (14) 99760-9595
         </a>
       </div>
       <div class="top-bar-right">
         <span class="compliance-tag">
           <span class="status-live-dot"></span>
-          Ambiente Homologado MTE • Anexo II da NR-01
+          Homologado Portaria MTP nº 6.730/2020 • eSocial S-2220 / S-2240
         </span>
-        <span class="divider">/</span>
+        <span class="divider-slash">/</span>
         <a href="https://www.brasegconsultoria.com.br/" target="_blank" class="site-link">brasegconsultoria.com.br ↗</a>
       </div>
     </div>
   </div>
 
-  <!-- Header Executivo Full-Width (De Fora a Fora, Equilibrado) -->
-  <header class="app-header no-print">
+  <!-- Header Liquid Glass Sticky -->
+  <header class="app-header no-print" id="mainAppHeader">
     <div class="header-container-fluid">
       
       <!-- Marca / Logotipo Oficial Grupo BRASEG -->
-      <div class="brand-wrapper" id="brandLogo" role="button" title="Página Inicial">
+      <div class="brand-wrapper" id="brandLogo" role="button" title="Ir para o Início">
         <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="braseg-logo">
         <div class="brand-divider"></div>
         <div class="brand-tagline">
           <span class="tag-main">SST & EAD</span>
-          <span class="tag-sub">Portal Corporativo</span>
+          <span class="tag-sub">Portal Oficial</span>
         </div>
       </div>
 
-      <!-- Navegação Principal -->
-      <nav class="main-navigation">
-        <button class="nav-item active" data-view="catalog" id="navCatalog">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-          <span>Catálogo de NRs</span>
+      <!-- Navegação Contextual: Landing Page Links (Quando na Landing) -->
+      <nav class="main-navigation" id="navLandingMenu">
+        <button class="nav-item active" data-scroll="hero">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <span>Início</span>
         </button>
-        <button class="nav-item" data-view="player" id="navPlayer">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-          <span>Sala de Capacitação</span>
+        <button class="nav-item" data-scroll="secNrs">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Normas (NRs)</span>
         </button>
-        <button class="nav-item" data-view="membership" id="navMembership">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          <span>Planos Corporativos</span>
+        <button class="nav-item" data-scroll="secDiferenciais">
+          <svg class="icon-nav" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          <span>Diferenciais</span>
         </button>
-        <button class="nav-item" data-view="dashboard" id="navDashboard">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-          <span>Painel SESMT & Faturamento</span>
+        <button class="nav-item" data-scroll="secPlanos">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Planos Individuais</span>
         </button>
-        <button class="nav-item" data-view="docs" id="navDocs">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-          <span>Sobre a BRASEG</span>
+        <button class="nav-item" data-scroll="secSimulador">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          <span>Simulador Certificado</span>
+        </button>
+        <button class="nav-item" data-scroll="secFaq">
+          <svg class="icon-nav" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span>FAQ</span>
         </button>
       </nav>
 
-      <!-- Ações do Cabeçalho: Equilíbrio Lateral Completo -->
+      <!-- Navegação Contextual: Plataforma EAD Links (Quando dentro da Plataforma) -->
+      <nav class="main-navigation" id="navPlatformMenu" style="display: none;">
+        <button class="nav-item" data-view="catalog" id="navCatalog">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Catálogo NRs</span>
+        </button>
+        <button class="nav-item" data-view="player" id="navPlayer">
+          <svg class="icon-nav" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Sala de Aula EAD</span>
+        </button>
+        <button class="nav-item" data-view="membership" id="navMembership">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Planos Individuais</span>
+        </button>
+        <button class="nav-item" data-view="dashboard" id="navDashboard">
+          <svg class="icon-nav" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <span>Meu Painel & ASOs</span>
+        </button>
+        <button class="nav-item" data-view="landing" id="navBackLanding">
+          <svg class="icon-nav" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          <span>Página Inicial</span>
+        </button>
+      </nav>
+
+      <!-- Ações do Header (Auth, Tema e CTAs) -->
       <div class="header-actions">
         
-        <!-- Status de Conexão SESMT -->
-        <div class="header-status-chip">
-          <span class="pulse-indicator"></span>
-          <span class="chip-label">eSocial S-2220 / 2240 Ativo</span>
-        </div>
-
-        <!-- Botão Suporte Rápido -->
-        <a href="https://api.whatsapp.com/send?phone=5514997609595" target="_blank" class="btn-header-support" title="Falar com Suporte Técnico BRASEG">
-          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-          <span>Suporte SESMT</span>
-        </a>
-
         <!-- Alternar Tema -->
-        <button class="btn-icon-theme" id="btnThemeToggle" title="Alternar Modo Escuro / Claro">
+        <button class="btn-icon-glass" id="btnThemeToggle" title="Alternar Modo Escuro / Claro">
           <span id="themeIcon">☀️</span>
         </button>
 
-        <!-- Perfil do Usuário / Colaborador Ativo -->
-        <div class="user-account-card" id="headerProfileCard" title="Acessar Gestão de Colaboradores">
-          <div class="user-avatar-wrap">
-            <img src="assets/images/doctor.jpg" alt="Colaborador" class="user-avatar">
-            <span class="user-status-dot"></span>
-          </div>
-          <div class="user-text-info">
-            <span class="user-display-name" id="headerUserName">Carlos Alberto Mendonça</span>
-            <span class="user-display-role" id="headerUserRole">Técnico de Manutenção</span>
+        <!-- Se Deslogado: Botão Login via Clerk + CTA Começar -->
+        <div class="auth-unlogged-group" id="headerUnloggedActions">
+          <button type="button" class="btn btn-sm btn-glass" id="btnHeaderLogin">
+            <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+            <span>Entrar</span>
+          </button>
+          <button type="button" class="btn btn-sm btn-primary" id="btnHeaderCta">
+            <span>Acessar Plataforma</span>
+            <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+
+        <!-- Se Logado: Clerk User Button com Menu Dropdown -->
+        <div class="auth-logged-group" id="headerLoggedActions" style="display: none;">
+          <div class="clerk-user-button-wrap" id="clerkUserButton">
+            <div class="clerk-avatar-ring">
+              <img src="assets/images/doctor.jpg" alt="Usuário" class="clerk-avatar-img" id="clerkUserAvatar">
+              <span class="clerk-online-indicator"></span>
+            </div>
+            <div class="clerk-user-meta">
+              <span class="clerk-user-name" id="clerkUserName">Carlos Alberto</span>
+              <span class="clerk-user-role" id="clerkUserRole">Técnico em SST</span>
+            </div>
+            <svg class="clerk-chevron-icon" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+
+            <!-- Dropdown Menu do Clerk -->
+            <div class="clerk-user-dropdown" id="clerkUserDropdown">
+              <div class="dropdown-header">
+                <strong id="dropdownUserFullName">Carlos Alberto Mendonça</strong>
+                <small id="dropdownUserEmail">carlos.mendonca@email.com</small>
+              </div>
+              <div class="dropdown-divider"></div>
+              <a href="#" class="dropdown-item" id="dropItemPlatform">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Sala de Capacitação</span>
+              </a>
+              <a href="#" class="dropdown-item" id="dropItemCatalog">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                <span>Catálogo de NRs</span>
+              </a>
+              <a href="#" class="dropdown-item" id="dropItemDashboard">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                <span>Painel do Aluno & ASOs</span>
+              </a>
+              <a href="#" class="dropdown-item" id="dropItemCertificates">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M12 15l-2 5 4-2 4 2-2-5"/><path d="M12 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+                <span>Meus Certificados</span>
+              </a>
+              <div class="dropdown-divider"></div>
+              <button type="button" class="dropdown-item item-danger" id="dropItemLogout">
+                <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>Sair da Conta (Sign Out)</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -119,424 +188,934 @@
     </div>
   </header>
 
-  <!-- Conteúdo SPA Principal -->
-  <main class="app-viewport">
+  <!-- ========================================== -->
+  <!-- VIEW 1: LANDING PAGE OFICIAL (INDEX)       -->
+  <!-- ========================================== -->
+  <main class="view-panel active-view" id="viewLanding">
     
-    <!-- ========================================== -->
-    <!-- VIEW 1: CATÁLOGO EXECUTIVO DE TREINAMENTOS -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewCatalog">
-      
-      <!-- Hero Executivo Limpo e de Alto Impacto (Clean Split Layout) -->
-      <div class="executive-hero-section">
-        <div class="hero-split-container">
+    <!-- Hero Section Liquid Glass -->
+    <section class="landing-hero-section" id="hero">
+      <div class="landing-container">
+        
+        <!-- Hero Split Grid -->
+        <div class="hero-split-grid">
           
-          <!-- Coluna Esquerda: Conteúdo Editorial e Ações -->
-          <div class="hero-left-content">
-            <div class="hero-badge-tag">
-              <span class="badge-dot-gold"></span>
-              PORTARIA MTP Nº 6.730/2020 • CERTIFICAÇÃO DIGITAL COM QR CODE
+          <!-- Lado Esquerdo: Mensagem de Alto Impacto -->
+          <div class="hero-content-col">
+            
+            <div class="hero-compliance-pill">
+              <span class="pill-pulse-dot"></span>
+              <span class="pill-text">Portaria MTP nº 6.730/2020 • eSocial S-2220 / S-2240</span>
             </div>
 
-            <h1 class="hero-title-main">
-              SALA DE CAPACITAÇÃO EAD
+            <h1 class="hero-main-title">
+              Capacitação em <span class="gradient-text">Segurança do Trabalho</span> com Certificação Válida em Todo o Brasil.
             </h1>
-            
-            <p class="hero-subtitle-lead">
-              Treinamentos regulamentares em Segurança e Medicina do Trabalho com validação técnica de Médicos (CRM) e Engenheiros (CREA). Estrutura homologada para atendimento ao eSocial e gestão contínua de conformidade.
+
+            <p class="hero-description">
+              Treinamentos 100% online em conformidade com as Normas Regulamentadoras (NRs). Emissão instantânea com assinatura digital de Médico do Trabalho (CRM) e Engenheiro de Segurança (CREA).
             </p>
 
-            <!-- Grid de Metadados / Especificações Técnicas -->
-            <div class="hero-metrics-strip">
-              <div class="metric-block">
-                <span class="metric-num">10 NRs</span>
-                <span class="metric-text">Catálogo Completo</span>
+            <!-- Ações Principais -->
+            <div class="hero-cta-group">
+              <button type="button" class="btn btn-lg btn-primary btn-glow" id="btnHeroExplorePlans">
+                <span>Ver Planos Individuais</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+              
+              <button type="button" class="btn btn-lg btn-glass" id="btnHeroOpenPlatform">
+                <svg class="icon-svg" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>Acessar Sala de Treinamento</span>
+              </button>
+            </div>
+
+            <!-- Faixa de Métricas Rápidas -->
+            <div class="hero-metric-strip">
+              <div class="metric-item">
+                <span class="metric-val">10 NRs</span>
+                <span class="metric-lbl">Homologadas</span>
               </div>
-              <div class="metric-divider"></div>
-              <div class="metric-block">
-                <span class="metric-num">CRM / CREA</span>
-                <span class="metric-text">Corpo Docente Titulado</span>
+              <div class="metric-sep"></div>
+              <div class="metric-item">
+                <span class="metric-val">CRM / CREA</span>
+                <span class="metric-lbl">Assinatura Dupla</span>
               </div>
-              <div class="metric-divider"></div>
-              <div class="metric-block">
-                <span class="metric-num">S-2220 / 2240</span>
-                <span class="metric-text">Integração eSocial</span>
+              <div class="metric-sep"></div>
+              <div class="metric-item">
+                <span class="metric-val">QR Code</span>
+                <span class="metric-lbl">Verificação Pública</span>
               </div>
-              <div class="metric-divider"></div>
-              <div class="metric-block">
-                <span class="metric-num">Asaas D+0</span>
-                <span class="metric-text">Faturamento & NFS-e</span>
+              <div class="metric-sep"></div>
+              <div class="metric-item">
+                <span class="metric-val">Asaas D+0</span>
+                <span class="metric-lbl">Liberação Imediata</span>
               </div>
             </div>
 
-            <!-- Ações Principais do Hero -->
-            <div class="hero-actions-group">
-              <button class="btn btn-hero-primary" id="btnHeroStartCourse">
-                <svg class="icon-btn" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                Acessar Sala de Treinamento
-              </button>
-              <button class="btn btn-hero-outline" id="btnHeroPass">
-                <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                Planos Corporativos
-              </button>
-            </div>
           </div>
 
-          <!-- Coluna Direita: Card em Destaque (Preview do Treinamento Ativo) -->
-          <div class="hero-right-preview">
-            <div class="featured-training-card">
-              <div class="featured-image-wrapper">
-                <img src="assets/images/nr35.jpg" alt="NR-35 Trabalho em Altura" class="featured-img">
-                <div class="featured-overlay"></div>
-                <span class="featured-chip-tag">TREINAMENTO EM DESTAQUE</span>
-                <div class="featured-play-btn" id="btnPlayFeaturedHero">
-                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+          <!-- Lado Direito: Live Liquid Glass Interactive App Mockup -->
+          <div class="hero-preview-col">
+            <div class="liquid-mockup-frame">
+              
+              <!-- Window Header -->
+              <div class="mockup-window-bar">
+                <div class="window-dots">
+                  <span class="dot dot-red"></span>
+                  <span class="dot dot-yellow"></span>
+                  <span class="dot dot-green"></span>
                 </div>
+                <div class="window-title-pill">
+                  <svg class="icon-svg-xs" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                  <span>BRASEG EAD • NR-35: Trabalho em Altura</span>
+                </div>
+                <div class="window-live-badge">AO VIVO</div>
               </div>
 
-              <div class="featured-card-body">
-                <div class="featured-card-meta">
-                  <span class="meta-code">NR-35</span>
-                  <span class="meta-duration">⏱️ Carga: 8 horas</span>
-                  <span class="meta-validity">Validade: 2 anos</span>
+              <!-- Interactive Media Player Container -->
+              <div class="mockup-player-screen">
+                <img src="assets/images/nr35.jpg" alt="NR-35 Simulação" class="mockup-video-bg">
+                <div class="mockup-overlay-scrim"></div>
+
+                <!-- Simulation Graphic HUD -->
+                <div class="mockup-hud">
+                  <div class="hud-tag">Simulação Industrial: Fator de Queda (FQ)</div>
+                  <div class="hud-telemetry">
+                    <span>Ângulo: 15°</span>
+                    <span>Ancoragem: Conforme NR-35</span>
+                    <span>Status: Apto</span>
+                  </div>
                 </div>
-                <h3 class="featured-card-title">NR-35: Trabalho em Altura e Análise de Risco</h3>
-                <p class="featured-card-desc">Planejamento operacional, cálculo de ZLQ, inspeção de EPIs e procedimentos de resgate conforme Portaria MTP 4.218.</p>
-                
-                <div class="featured-instructor-row">
-                  <div class="instructor-info-chip">
-                    <span class="inst-label">Responsável Técnico:</span>
-                    <strong>Eng. Ricardo S. Albuquerque (CREA-SP 506.128)</strong>
+
+                <!-- Play Central Trigger -->
+                <button type="button" class="mockup-play-circle" id="btnHeroPlayMockup" title="Assistir Demonstração">
+                  <svg class="icon-play-mockup" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                </button>
+
+                <!-- Player Progress Bar -->
+                <div class="mockup-timeline">
+                  <div class="timeline-bar">
+                    <div class="timeline-progress" style="width: 42%;"></div>
+                  </div>
+                  <div class="timeline-meta">
+                    <span>03:45 / 08:00</span>
+                    <span>Módulo 1: Requisitos Legais & APR</span>
                   </div>
                 </div>
               </div>
+
+              <!-- Floating Micro-Badges Liquid Glass -->
+              <div class="floating-glass-pill pill-top-left">
+                <svg class="icon-pill" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                <div>
+                  <strong>Conformidade eSocial</strong>
+                  <span>Eventos S-2220 e S-2240</span>
+                </div>
+              </div>
+
+              <div class="floating-glass-pill pill-bottom-right">
+                <svg class="icon-pill text-gold" viewBox="0 0 24 24"><path d="M12 15l-2 5 4-2 4 2-2-5"/><path d="M12 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+                <div>
+                  <strong>Certificado Homologado</strong>
+                  <span>CRM-SP 148.920 • CREA-SP</span>
+                </div>
+              </div>
+
             </div>
           </div>
 
         </div>
-      </div>
 
-      <!-- Barra de Filtros e Busca de NRs -->
-      <div class="filter-toolbar">
-        <div class="toolbar-container">
-          <div class="category-filter-group">
-            <button class="filter-tab active" data-cat="all">Todas as Normas (10)</button>
-            <button class="filter-tab" data-cat="industrial">Industrial & Elétrica</button>
-            <button class="filter-tab" data-cat="agro">Agroflorestal & Canavieiro</button>
-            <button class="filter-tab" data-cat="geral">Segurança Geral & CIPA</button>
-            <button class="filter-tab" data-cat="saude">Saúde & Emergência</button>
+      </div>
+    </section>
+
+    <!-- Social Proof & Trust Strip -->
+    <section class="trust-stats-section">
+      <div class="landing-container">
+        <div class="stats-glass-grid">
+          
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg class="icon-stat" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <div class="stat-info">
+              <strong class="stat-number">+25.000</strong>
+              <span class="stat-label">Profissionais Capacitados</span>
+            </div>
           </div>
 
-          <div class="search-input-box">
-            <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="catalogSearchInput" placeholder="Buscar por código (ex: NR-35), título ou termo técnico...">
-          </div>
-        </div>
-      </div>
-
-      <!-- Grid de Cursos Executivos -->
-      <div class="catalog-grid-wrapper">
-        <div class="courses-executive-grid" id="coursesGrid">
-          <!-- Injetado dinamicamente via js/app.js -->
-        </div>
-      </div>
-
-      <!-- Clientes Corporativos Atendidos -->
-      <div class="client-partners-section">
-        <div class="partners-container">
-          <span class="partners-section-title">Grandes Organizações Atendidas pelo Grupo BRASEG:</span>
-          <div class="partners-row">
-            <div class="partner-card-clean">
-              <strong>LDC.</strong>
-              <span>Louis Dreyfus Company</span>
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg class="icon-stat" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
             </div>
-            <div class="partner-card-clean">
-              <strong>FRIGOL</strong>
-              <span>Frigol Alimentos</span>
-            </div>
-            <div class="partner-card-clean">
-              <strong>dexco</strong>
-              <span>Deca • Portinari • Durafloor</span>
-            </div>
-            <div class="partner-card-clean">
-              <strong>LWART</strong>
-              <span>Soluções Ambientais</span>
+            <div class="stat-info">
+              <strong class="stat-number">10 NRs</strong>
+              <span class="stat-label">Treinamentos Homologados</span>
             </div>
           </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg class="icon-stat" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <div class="stat-info">
+              <strong class="stat-number">100%</strong>
+              <span class="stat-label">Validade Jurídica Nacional</span>
+            </div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap">
+              <svg class="icon-stat" viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            </div>
+            <div class="stat-info">
+              <strong class="stat-number">D+0</strong>
+              <span class="stat-label">Liberação Imediata no PIX</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 2: PLANOS CORPORATIVOS & ASSINATURAS  -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewMembership" style="display: none;">
-      <div class="membership-container">
-        <div class="section-title-header">
-          <span class="section-subtitle">MODELOS DE CONTRATAÇÃO & LICENCIAMENTO</span>
-          <h2>Planos Corporativos de Capacitação em SST</h2>
-          <p>
-            Estrutura flexível para empresas de todos os portes atenderem às exigências legais da NR-01 com previsibilidade orçamentária e emissão contínua de certificados homologados.
+    <!-- Vitrine Interativa de Normas Regulamentadoras (NRs) -->
+    <section class="landing-nrs-section" id="secNrs">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">CATÁLOGO REGULAMENTAR OFICIAL</div>
+          <h2 class="section-title">Treinamentos em Normas Regulamentadoras</h2>
+          <p class="section-subtitle">
+            Cursos estruturados conforme a NR-01 (Disposições Gerais e PGR) com emissão imediata de certificado com QR Code.
           </p>
         </div>
 
-        <div class="pricing-cards-wrapper">
-          <!-- Plano Anual -->
-          <div class="corporate-pricing-card featured">
-            <div class="card-highlight-badge">RECOMENDADO PARA PROFISSIONAIS E TÉCNICOS</div>
-            <div class="pricing-card-header">
-              <h3 class="plan-title">BRASEG Pass Anual</h3>
-              <p class="plan-description">Acesso irrestrito a todas as 10 Normas Regulamentadoras com reciclagens periódicas e certificados inclusos.</p>
-            </div>
-
-            <div class="pricing-value-box">
-              <span class="currency">R$</span>
-              <span class="integer-part">24</span>
-              <span class="decimal-part">,90</span>
-              <span class="frequency">/mês</span>
-            </div>
-            <span class="billing-info">Faturamento anual de R$ 299,00 em até 12x no cartão ou à vista via PIX</span>
-
-            <div class="plan-divider"></div>
-
-            <ul class="features-checklist">
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Acesso integral a todas as 10 NRs (Industrial, Agro, Elétrica e Saúde);</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Certificados homologados com assinatura de Médicos (CRM) e Engenheiros (CREA);</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Simulações técnicas e telemetria industrial em tempo real;</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Suporte técnico-normativo com especialistas do Grupo BRASEG;</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Emissão automática de Nota Fiscal Eletrônica de Serviços (NFS-e Asaas).</span>
-              </li>
-            </ul>
-
-            <button class="btn btn-primary btn-block btn-select-plan" data-plan="pass_annual">
-              Contratar Licença Anual (Asaas Gateway)
-            </button>
-          </div>
-
-          <!-- Plano Mensal -->
-          <div class="corporate-pricing-card">
-            <div class="pricing-card-header">
-              <h3 class="plan-title">BRASEG Pass Mensal</h3>
-              <p class="plan-description">Flexibilidade para formação pontual sem compromisso de longo prazo.</p>
-            </div>
-
-            <div class="pricing-value-box">
-              <span class="currency">R$</span>
-              <span class="integer-part">39</span>
-              <span class="decimal-part">,90</span>
-              <span class="frequency">/mês</span>
-            </div>
-            <span class="billing-info">Cobrança recorrente mensal no Cartão de Crédito ou PIX</span>
-
-            <div class="plan-divider"></div>
-
-            <ul class="features-checklist">
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Acesso a todos os treinamentos enquanto a assinatura estiver ativa;</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Certificados emitidos após aprovação com nota mínima de 70%;</span>
-              </li>
-              <li>
-                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-                <span>Cancelamento simplificado a qualquer momento no painel.</span>
-              </li>
-            </ul>
-
-            <button class="btn btn-outline btn-block btn-select-plan" data-plan="pass_monthly">
-              Contratar Licença Mensal
-            </button>
-          </div>
+        <!-- Filtros Rápidos de Categorias -->
+        <div class="nrs-filter-bar">
+          <button type="button" class="filter-tab-glass active" data-cat="all">Todas as Normas</button>
+          <button type="button" class="filter-tab-glass" data-cat="industrial">Trabalho em Altura & Eletricidade</button>
+          <button type="button" class="filter-tab-glass" data-cat="management">CIPA & Primeiros Socorros</button>
+          <button type="button" class="filter-tab-glass" data-cat="special">Máquinas, Inflamáveis & Espaço Confinado</button>
+          <button type="button" class="filter-tab-glass" data-cat="rural">Agrícola & Florestal</button>
         </div>
+
+        <!-- Grid de Cards Liquid Glass das NRs -->
+        <div class="nrs-cards-grid" id="landingCoursesGrid">
+          <!-- Injetado dinamicamente via JS com design liquid glass -->
+        </div>
+
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 3: SALA DE CAPACITAÇÃO TÉCNICA EAD    -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewPlayer" style="display: none;">
-      <div class="player-container">
-        <!-- Coluna Principal: Player e Conteúdo -->
-        <div class="player-content-column">
-          <div class="player-navigation-header">
-            <button class="btn-return-catalog" id="btnBackToCatalog">
-              <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
-              Retornar ao Catálogo
-            </button>
-            <div class="player-header-titles">
-              <h2 id="playerCourseTitle">NR-35: Trabalho em Altura</h2>
-              <span class="norm-reference-badge" id="playerCourseNorma">Portaria MTP 4.218 • Carga Horária: 8h</span>
-            </div>
-          </div>
-
-          <!-- Player de Vídeo e Simulação Canvas -->
-          <div class="video-mount-wrapper" id="videoPlayerMount"></div>
-
-          <!-- Abas de Conteúdo Pedagógico -->
-          <div class="pedagogical-tabs-container" id="playerTabsContainer">
-            <div class="tabs-header-nav">
-              <button class="pedagogical-tab-btn active" data-tab="tabSummary">Resumo Normativo & Transcrição</button>
-              <button class="pedagogical-tab-btn" data-tab="tabNotes">Anotações Técnicas do Aluno</button>
-              <button class="pedagogical-tab-btn" data-tab="tabMaterials">Documentos & Modelos de APR</button>
-              <button class="pedagogical-tab-btn" data-tab="tabForum">Fórum Técnico com Especialistas</button>
-            </div>
-
-            <!-- Tab 1: Resumo -->
-            <div class="pedagogical-tab-panel active" id="tabSummary">
-              <div id="tabSummaryContent"></div>
-            </div>
-
-            <!-- Tab 2: Anotações -->
-            <div class="pedagogical-tab-panel" id="tabNotes">
-              <form id="addNoteForm" class="add-note-form">
-                <input type="text" id="newNoteInput" placeholder="Registrar anotação técnica no minuto atual..." required>
-                <button type="submit" class="btn btn-primary btn-sm">Salvar Anotação</button>
-              </form>
-              <div class="notes-list" id="notesList"></div>
-            </div>
-
-            <!-- Tab 3: Materiais -->
-            <div class="pedagogical-tab-panel" id="tabMaterials">
-              <div class="attachments-list" id="attachmentsList"></div>
-            </div>
-
-            <!-- Tab 4: Fórum -->
-            <div class="pedagogical-tab-panel" id="tabForum">
-              <form id="askForumForm" class="forum-ask-form">
-                <input type="text" id="forumQuestionInput" placeholder="Encaminhar dúvida para o Médico Coordenador ou Engenheiro de Segurança..." required>
-                <button type="submit" class="btn btn-primary btn-sm">Enviar Dúvida</button>
-              </form>
-              <div class="forum-questions-list" id="forumQuestionsList"></div>
-            </div>
-          </div>
+    <!-- Diferenciais & Tecnologia Bento Grid -->
+    <section class="landing-features-section" id="secDiferenciais">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">PADRÃO GRUPO BRASEG</div>
+          <h2 class="section-title">Por Que Escolher a Plataforma BRASEG?</h2>
+          <p class="section-subtitle">
+            Unimos rigor técnico-médico, engenharia de segurança de alto nível e tecnologia para transformar sua capacitação.
+          </p>
         </div>
 
-        <!-- Coluna Lateral: Grade Curricular -->
-        <aside class="player-sidebar-column">
-          <div class="curriculum-sidebar-card" id="curriculumAccordion"></div>
-        </aside>
+        <!-- Bento Grid Liquid Glass -->
+        <div class="bento-features-grid">
+          
+          <div class="bento-card bento-card-large">
+            <div class="bento-icon">
+              <svg class="icon-bento" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            </div>
+            <h3>Validade Jurídica Inquestionável</h3>
+            <p>
+              Todos os treinamentos são elaborados e chancelados rigorosamente de acordo com o Anexo II da NR-01 (Portaria MTP nº 6.730/2020), possuindo validade integral em todo o território nacional perante a Secretaria de Inspeção do Trabalho (SIT/MTE) e fiscalizações do eSocial.
+            </p>
+            <div class="bento-footer-tag">✓ Amparo Normativo MTE / eSocial</div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-icon">
+              <svg class="icon-bento" viewBox="0 0 24 24"><path d="M12 15l-2 5 4-2 4 2-2-5"/><path d="M12 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+            </div>
+            <h3>Assinatura Dupla CRM & CREA</h3>
+            <p>
+              Certificados emitidos com responsabilidade técnica de Médico do Trabalho (CRM-SP 148.920) e Engenheiro de Segurança do Trabalho (CREA-SP), integrando o PCMSO e PGR.
+            </p>
+            <div class="bento-footer-tag">✓ QR Code com Validação Pública</div>
+          </div>
+
+          <div class="bento-card">
+            <div class="bento-icon">
+              <svg class="icon-bento" viewBox="0 0 24 24"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+            </div>
+            <h3>Checkout Transparente Asaas D+0</h3>
+            <p>
+              Pagamento via PIX com liberação instantânea da sala de aula, parcelamento em até 12x no cartão de crédito e emissão automática de Nota Fiscal Eletrônica (NFS-e).
+            </p>
+            <div class="bento-footer-tag">✓ Emissão Instantânea de NFS-e</div>
+          </div>
+
+          <div class="bento-card bento-card-wide">
+            <div class="bento-icon">
+              <svg class="icon-bento" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </div>
+            <h3>Ambiente Interativo de Aprendizagem & Provas</h3>
+            <p>
+              Videoaulas em alta definição, simulações gráficas em 3D, telemetria de aproveitamento, material didático complementar para download (modelos de APR, POP e Checklists) e avaliação de fixação com nota mínima de 70%.
+            </p>
+            <div class="bento-footer-tag">✓ Experiência EAD de Alta Performance</div>
+          </div>
+
+        </div>
+
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 4: AVALIAÇÃO FINAL HOMOLOGADA MTE     -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewExam" style="display: none;">
-      <div id="examContainer"></div>
+    <!-- Planos Individuais (Substituindo Planos Corporativos) -->
+    <section class="landing-pricing-section" id="secPlanos">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">INVESTIMENTO INDIVIDUAL</div>
+          <h2 class="section-title">Planos Individuais para Profissionais de SST</h2>
+          <p class="section-subtitle">
+            Capacite-se em todas as Normas Regulamentadoras, mantenha suas reciclagens em dia e impulsione sua carreira com certificação oficial.
+          </p>
+        </div>
+
+        <!-- Cards de Planos Individuais Liquid Glass -->
+        <div class="pricing-glass-grid">
+          
+          <!-- Plano 1: Mensal Flex -->
+          <div class="pricing-glass-card">
+            <div class="pricing-card-header">
+              <span class="plan-type-badge">Sem Fidelidade</span>
+              <h3 class="plan-name">Plano Individual Mensal</h3>
+              <p class="plan-desc">Flexibilidade para você se capacitar ou renovar reciclagens sem compromisso de longo prazo.</p>
+            </div>
+            <div class="pricing-price-box">
+              <span class="price-currency">R$</span>
+              <span class="price-amount">49,90</span>
+              <span class="price-period">/mês</span>
+            </div>
+            <ul class="plan-features-list">
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Acesso completo a todas as 10+ NRs</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Emissão de Certificados com QR Code</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Assinaturas CRM-SP e CREA-SP</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Suporte pedagógico com instrutores</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Cancele quando quiser com 1 clique</li>
+            </ul>
+            <button type="button" class="btn btn-outline btn-block btn-subscribe-plan" data-plan="pass_monthly">
+              <span>Assinar Plano Mensal</span>
+            </button>
+          </div>
+
+          <!-- Plano 2: Anual Ilimitado (Destaque Mais Popular) -->
+          <div class="pricing-glass-card featured-gold-card">
+            <div class="card-featured-ribbon">⭐ MAIS RECOMENDADO (40% OFF)</div>
+            <div class="pricing-card-header">
+              <span class="plan-type-badge badge-gold">Acesso Total Anual</span>
+              <h3 class="plan-name">Plano Individual Anual Ilimitado</h3>
+              <p class="plan-desc">O pacote completo para técnicos, engenheiros e trabalhadores estarem 100% legalizados o ano todo.</p>
+            </div>
+            <div class="pricing-price-box">
+              <span class="price-currency">R$</span>
+              <span class="price-amount">29,90</span>
+              <span class="price-period">/mês</span>
+              <small class="price-billed-info">Faturado em 12x ou R$ 299,00 à vista no PIX</small>
+            </div>
+            <ul class="plan-features-list">
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> <strong>Acesso ilimitado a todas as 10+ NRs</strong></li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> <strong>Emissão ilimitada de Certificados Homologados</strong></li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Assinaturas de Médico do Trabalho e Engenheiro SST</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Reciclagens automáticas com avisos de vencimento</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Download de Modelos de APR, POP e Checklists</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Nota Fiscal Eletrônica (NFS-e Asaas) automática</li>
+            </ul>
+            <button type="button" class="btn btn-primary btn-block btn-glow btn-subscribe-plan" data-plan="pass_annual">
+              <span>Garantir Acesso Ilimitado</span>
+              <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+
+          <!-- Plano 3: Treinamento Avulso -->
+          <div class="pricing-glass-card">
+            <div class="pricing-card-header">
+              <span class="plan-type-badge">Acesso Vitalício</span>
+              <h3 class="plan-name">Treinamento Avulso (NR Única)</h3>
+              <p class="plan-desc">Adquira apenas a Norma Regulamentadora que você necessita para sua atividade imediata.</p>
+            </div>
+            <div class="pricing-price-box">
+              <span class="price-currency">R$</span>
+              <span class="price-amount">79,90</span>
+              <span class="price-period">único</span>
+            </div>
+            <ul class="plan-features-list">
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Acesso vitalício ao treinamento escolhido</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Certificado oficial emitido após o exame</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> QR Code e validade jurídica em todo o Brasil</li>
+              <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Material complementar em PDF</li>
+            </ul>
+            <button type="button" class="btn btn-outline btn-block btn-choose-single-course">
+              <span>Escolher uma NR no Catálogo</span>
+            </button>
+          </div>
+
+        </div>
+
+      </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 5: CERTIFICADO OFICIAL HOMOLOGADO     -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewCertificate" style="display: none;">
-      <div id="certificateContainer"></div>
+    <!-- Simulador Interativo de Certificado em Tempo Real -->
+    <section class="landing-simulator-section" id="secSimulador">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">TRANSPARÊNCIA E VALIDADE</div>
+          <h2 class="section-title">Simulador de Certificado Homologado</h2>
+          <p class="section-subtitle">
+            Veja exatamente como o seu certificado oficial será gerado com assinaturas técnicas e QR Code de autenticidade.
+          </p>
+        </div>
+
+        <div class="simulator-glass-wrapper">
+          
+          <!-- Controles do Simulador -->
+          <div class="simulator-controls">
+            <h4 class="sim-controls-title">Personalize sua Simulação:</h4>
+            
+            <div class="sim-input-group">
+              <label for="simInputName">Nome do Profissional:</label>
+              <input type="text" id="simInputName" class="sim-input" value="Carlos Alberto Mendonça" placeholder="Digite seu nome completo">
+            </div>
+
+            <div class="sim-input-group">
+              <label for="simSelectCourse">Norma Regulamentadora (NR):</label>
+              <select id="simSelectCourse" class="sim-select">
+                <option value="NR-35: Trabalho em Altura (8 horas)">NR-35: Trabalho em Altura (8h)</option>
+                <option value="NR-10: Segurança em Instalações Elétricas (40 horas)">NR-10: Segurança Elétrica (40h)</option>
+                <option value="NR-33: Espaços Confinados (16 horas)">NR-33: Espaços Confinados (16h)</option>
+                <option value="NR-12: Segurança no Trabalho em Máquinas (16 horas)">NR-12: Máquinas e Equipamentos (16h)</option>
+                <option value="NR-05: CIPA - Comissão Interna de Prevenção (20 horas)">NR-05: CIPA (20h)</option>
+              </select>
+            </div>
+
+            <div class="sim-badge-info">
+              <svg class="icon-svg" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>Válido conforme Portaria MTP nº 6.730/2020 e aceito por todas as empresas e auditorias fiscais do Brasil.</span>
+            </div>
+
+            <button type="button" class="btn btn-primary btn-block btn-glow" id="btnSimStartTraining">
+              <span>Fazer Este Treinamento Agora</span>
+            </button>
+          </div>
+
+          <!-- Visualização do Certificado em Liquid Glass -->
+          <div class="simulator-certificate-view">
+            <div class="live-certificate-card" id="simCertCard">
+              <div class="cert-header-row">
+                <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="cert-logo-img">
+                <div class="cert-auth-code">
+                  <span>AUTENTICIDADE REGISTRADA</span>
+                  <strong id="simCertCode">BRS-2026-88419</strong>
+                </div>
+              </div>
+
+              <div class="cert-title-block">
+                <h3 class="cert-main-heading">CERTIFICADO DE CAPACITAÇÃO PROFISSIONAL</h3>
+                <p class="cert-legal-text">Em conformidade com a Norma Regulamentadora NR-01 e Portaria MTP nº 6.730/2020</p>
+              </div>
+
+              <div class="cert-body-block">
+                <p>Certificamos que o(a) profissional</p>
+                <h4 class="cert-student-name" id="simCertStudentName">Carlos Alberto Mendonça</h4>
+                <p>concluiu com êxito o treinamento regulamentar de</p>
+                <h5 class="cert-course-name" id="simCertCourseName">NR-35: Trabalho em Altura (8 horas)</h5>
+                <p class="cert-pass-score">Aproveitamento: <strong>95%</strong> • Data de Emissão: <strong id="simCertDate">Hoje</strong></p>
+              </div>
+
+              <div class="cert-footer-row">
+                <div class="cert-signature-col">
+                  <div class="cert-sig-line"></div>
+                  <strong>Dr. Carlos Eduardo Menezes</strong>
+                  <span>Médico do Trabalho • CRM-SP 148.920 / RQE 72.104</span>
+                </div>
+
+                <div class="cert-qr-col">
+                  <div class="cert-mockup-qr">
+                    <svg viewBox="0 0 24 24" class="qr-svg-sim"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="3" height="3"/><rect x="18" y="18" width="3" height="3"/></svg>
+                  </div>
+                  <small>Verificação Pública</small>
+                </div>
+
+                <div class="cert-signature-col">
+                  <div class="cert-sig-line"></div>
+                  <strong>Eng. Ricardo S. Albuquerque</strong>
+                  <span>Engenheiro de Segurança • CREA-SP 506.128.932-D</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 6: PAINEL SESMT & FATURAMENTO ASAAS   -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewDashboard" style="display: none;">
-      <div id="dashboardContainer"></div>
+    <!-- Como Funciona (3 Passos Simples) -->
+    <section class="landing-how-section">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">PROCESSO DESCOMPLICADO</div>
+          <h2 class="section-title">Como Funciona a Capacitação?</h2>
+          <p class="section-subtitle">Em apenas 3 etapas você completa sua formação e emite seu certificado oficial.</p>
+        </div>
+
+        <div class="steps-glass-grid">
+          
+          <div class="step-card">
+            <div class="step-number-badge">01</div>
+            <h4>Escolha seu Treinamento ou Plano</h4>
+            <p>Selecione a Norma Regulamentadora que você precisa ou assine o Plano Individual Anual com acesso ilimitado a todas as NRs.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-badge">02</div>
+            <h4>Assista às Aulas & Faça o Teste</h4>
+            <p>Acesse a Sala de Treinamento interativa, assista aos módulos em vídeo, estude o material didático e realize a prova de fixação.</p>
+          </div>
+
+          <div class="step-card">
+            <div class="step-number-badge">03</div>
+            <h4>Emita seu Certificado Homologado</h4>
+            <p>Receba na hora seu certificado oficial com QR Code, assinado por Médico do Trabalho e Engenheiro de Segurança, pronto para o trabalho.</p>
+          </div>
+
+        </div>
+
+      </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- VIEW 7: SOBRE O GRUPO BRASEG               -->
-    <!-- ========================================== -->
-    <section class="view-panel" id="viewDocs" style="display: none;">
-      <div id="docsMountContainer"></div>
+    <!-- FAQ (Perguntas Frequentes em Glass Accordion) -->
+    <section class="landing-faq-section" id="secFaq">
+      <div class="landing-container">
+        
+        <div class="section-header-center">
+          <div class="section-badge">DÚVIDAS FREQUENTES</div>
+          <h2 class="section-title">Perguntas Frequentes</h2>
+          <p class="section-subtitle">Tire suas dúvidas sobre a validade jurídica, aceitação e funcionamento da plataforma.</p>
+        </div>
+
+        <div class="faq-accordion-list">
+          
+          <details class="faq-glass-item" open>
+            <summary class="faq-glass-question">
+              <span>Os certificados emitidos pelo Grupo BRASEG são aceitos em todas as empresas?</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-glass-answer">
+              <p>
+                <strong>Sim, com validade em 100% do território nacional.</strong> Nossos treinamentos são desenvolvidos e homologados conforme os critérios pedagógicos estabelecidos no Anexo II da NR-01 (Portaria MTP nº 6.730/2020), possuindo assinaturas de Responsáveis Técnicos habilitados (Médico do Trabalho com CRM/RQE e Engenheiro de Segurança do Trabalho com CREA).
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-glass-item">
+            <summary class="faq-glass-question">
+              <span>Como funciona a verificação de autenticidade por QR Code?</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-glass-answer">
+              <p>
+                Cada certificado possui um código alfanumérico único e um QR Code criptográfico. Qualquer empresa contratante, técnico de segurança ou auditor fiscal do trabalho pode apontar a câmera do celular para o QR Code e consultar a autenticidade dos dados, data de emissão, nota obtida e credenciais dos responsáveis técnicos em nosso banco de dados.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-glass-item">
+            <summary class="faq-glass-question">
+              <span>Quanto tempo demora para liberar o acesso após o pagamento?</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-glass-answer">
+              <p>
+                A liberação é <strong>imediata (D+0)</strong> para pagamentos realizados via PIX ou Cartão de Crédito através do gateway transparente Asaas. Assim que o pagamento é identificado, sua matrícula é confirmada e a Sala de Treinamento fica disponível instantaneamente.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-glass-item">
+            <summary class="faq-glass-question">
+              <span>O que é o Plano Individual Anual Ilimitado?</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-glass-answer">
+              <p>
+                É a assinatura individual ideal para técnicos de segurança, engenheiros, eletricistas e profissionais de manutenção. Com ela, você tem acesso irrestrito a todas as 10+ Normas Regulamentadoras disponíveis na plataforma durante 12 meses, podendo emitir quantos certificados precisar, realizar reciclagens e baixar todos os materiais de apoio.
+              </p>
+            </div>
+          </details>
+
+          <details class="faq-glass-item">
+            <summary class="faq-glass-question">
+              <span>Os treinamentos atendem às exigências do eSocial (Eventos S-2220 e S-2240)?</span>
+              <svg class="icon-chevron" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg>
+            </summary>
+            <div class="faq-glass-answer">
+              <p>
+                Sim. A plataforma gera automaticamente os registros e dados estruturados exigidos pelo eSocial, facilitando a vinculação dos treinamentos aos ASOs (S-2220) e às Condições Ambientais do Trabalho (S-2240).
+              </p>
+            </div>
+          </details>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Banner Final de Conversão Liquid Glass -->
+    <section class="landing-cta-banner">
+      <div class="landing-container">
+        <div class="cta-banner-card">
+          <div class="banner-content">
+            <div class="banner-badge">COMECE HOJE MESMO</div>
+            <h2 class="banner-title">Pronto para Conquistar sua Certificação Oficial?</h2>
+            <p class="banner-desc">
+              Junte-se a mais de 25.000 profissionais em todo o Brasil e garanta sua conformidade com o Grupo BRASEG.
+            </p>
+            <div class="banner-actions">
+              <button type="button" class="btn btn-lg btn-primary btn-glow" id="btnBannerJoin">
+                <span>Garantir Acesso Ilimitado</span>
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+              <a href="https://api.whatsapp.com/send?phone=5514997609595" target="_blank" class="btn btn-lg btn-whatsapp">
+                <svg class="icon-svg" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                <span>Falar com o SESMT no WhatsApp</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
   </main>
 
-  <!-- Container do Checkout Asaas -->
-  <div id="checkoutModalContainer"></div>
 
-  <!-- Rodapé Institucional do Grupo BRASEG -->
-  <footer class="app-footer no-print">
-    <div class="footer-container">
-      <div class="footer-col brand-col">
-        <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="footer-logo">
-        <p class="footer-company-info">
-          <strong>Grupo BRASEG Consultoria e Treinamentos Ltda.</strong><br>
-          Av. Marechal Rondon, 850 - Centro - Lençóis Paulista - SP<br>
-          CNPJ: 18.234.567/0001-89 • Tel: (14) 3283-2060
-        </p>
-        <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="footer-whatsapp-btn">
-          Atendimento Direto via WhatsApp
-        </a>
-      </div>
-
-      <div class="footer-col">
-        <h4>Treinamentos Regulamentares</h4>
-        <ul class="footer-links-list">
-          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-35: Trabalho em Altura (8h)</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-10: Segurança Elétrica e LOTO (40h)</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-33: Espaços Confinados (16h)</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-31: Tratores e Máquinas Agrícolas (24h)</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-12: Segurança de Máquinas (16h)</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Soluções para Empresas</h4>
-        <ul class="footer-links-list">
-          <li><a href="#" class="footer-nav-link" data-view="dashboard">Portal do Gestor SESMT</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="dashboard">Agendamento de Exames & ASO (NR-07)</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="dashboard">Faturamento & Notas Fiscais Asaas</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="dashboard">Lotes XML para o eSocial S-2220/2240</a></li>
-          <li><a href="#" class="footer-nav-link" data-view="membership">Contratação de Licenças Corporativas</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h4>Corpo Técnico Responsável</h4>
-        <div class="technical-directors-info">
-          <p>
-            <strong>Dr. Carlos Eduardo Menezes</strong><br>
-            Médico Coordenador do PCMSO<br>
-            CRM-SP 148.920 / RQE 72.104
-          </p>
-          <p style="margin-top: 8px;">
-            <strong>Eng. Ricardo S. Albuquerque</strong><br>
-            Engenheiro de Segurança do Trabalho<br>
-            CREA-SP 506.128.932-D
-          </p>
+  <!-- ========================================== -->
+  <!-- VIEW 2: CATÁLOGO COMPLETO DA PLATAFORMA    -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewCatalog" style="display: none;">
+    <div class="platform-container">
+      
+      <div class="catalog-page-header">
+        <div>
+          <span class="platform-breadcrumb">Plataforma EAD • Catálogo Oficial</span>
+          <h2 class="platform-title">Treinamentos e Capacitações Regulamentares</h2>
+        </div>
+        <div class="catalog-search-wrap">
+          <svg class="icon-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="catalogSearchInput" class="catalog-search-input" placeholder="Buscar por NR, título ou palavra-chave...">
         </div>
       </div>
-    </div>
 
-    <div class="footer-bottom-row">
-      <div class="bottom-inner">
-        <span>&copy; 2026 Grupo BRASEG Consultoria e Treinamentos Ltda. Todos os direitos reservados.</span>
-        <span>Conformidade com a NR-01 (Portaria MTP nº 6.730/2020) &bull; Certificação Digital com QR Code</span>
+      <!-- Filtros de Categoria da Plataforma -->
+      <div class="platform-filters-bar">
+        <button type="button" class="filter-tab active" data-cat="all">Todas as Normas</button>
+        <button type="button" class="filter-tab" data-cat="industrial">Trabalho em Altura & Eletricidade</button>
+        <button type="button" class="filter-tab" data-cat="management">CIPA & Primeiros Socorros</button>
+        <button type="button" class="filter-tab" data-cat="special">Máquinas, Inflamáveis & Confinados</button>
+        <button type="button" class="filter-tab" data-cat="rural">Agroflorestal (NR-31)</button>
       </div>
+
+      <!-- Grid de Cursos na Plataforma -->
+      <div class="platform-courses-grid" id="coursesGrid">
+        <!-- Injetado dinamicamente via app.js -->
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 3: SALA DE AULA INTERATIVA (PLAYER)   -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewPlayer" style="display: none;">
+    <div class="player-layout-container">
+      
+      <!-- Topo do Player -->
+      <div class="player-top-header">
+        <button type="button" class="btn btn-sm btn-glass" id="btnBackToCatalog">
+          <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></svg>
+          <span>Voltar ao Catálogo</span>
+        </button>
+        <div class="player-title-box">
+          <h2 class="player-active-title" id="playerCourseTitle">NR-35: Trabalho em Altura</h2>
+          <span class="player-active-norma" id="playerCourseNorma">Portaria MTP nº 4.218 • Carga Horária: 8 horas</span>
+        </div>
+        <div class="player-actions-right">
+          <span class="player-live-badge">SESSÃO ATIVA</span>
+        </div>
+      </div>
+
+      <!-- Grid Principal do Player -->
+      <div class="player-main-grid">
+        
+        <!-- Coluna de Vídeo e Abas Pedagógicas -->
+        <div class="player-video-column">
+          
+          <!-- Mount do Video Player -->
+          <div id="videoPlayerMount" class="video-player-viewport"></div>
+
+          <!-- Abas Pedagógicas Liquid Glass -->
+          <div class="pedagogical-tabs-wrapper">
+            <div class="pedagogical-tabs-nav">
+              <button type="button" class="pedagogical-tab-btn active" data-tab="tabNotes">
+                <svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                <span>Anotações Técnicas</span>
+              </button>
+              <button type="button" class="pedagogical-tab-btn" data-tab="tabSummary">
+                <svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span>Resumo Normativo</span>
+              </button>
+              <button type="button" class="pedagogical-tab-btn" data-tab="tabMaterials">
+                <svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Modelos APR / POP (Download)</span>
+              </button>
+              <button type="button" class="pedagogical-tab-btn" data-tab="tabForum">
+                <svg class="icon-svg-xs" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span>Fórum com Especialistas</span>
+              </button>
+            </div>
+
+            <!-- Conteúdo das Abas -->
+            <div class="pedagogical-tab-content">
+              
+              <!-- Aba Anotações -->
+              <div class="pedagogical-tab-panel active" id="tabNotes">
+                <form id="addNoteForm" class="note-add-form">
+                  <input type="text" id="newNoteInput" class="note-text-input" placeholder="Adicionar apontamento sincronizado com o vídeo...">
+                  <button type="submit" class="btn btn-sm btn-primary">Salvar</button>
+                </form>
+                <div id="notesList" class="notes-items-list"></div>
+              </div>
+
+              <!-- Aba Resumo -->
+              <div class="pedagogical-tab-panel" id="tabSummary">
+                <div id="tabSummaryContent"></div>
+              </div>
+
+              <!-- Aba Materiais -->
+              <div class="pedagogical-tab-panel" id="tabMaterials">
+                <div id="attachmentsList"></div>
+              </div>
+
+              <!-- Aba Fórum -->
+              <div class="pedagogical-tab-panel" id="tabForum">
+                <form id="askForumForm" class="forum-ask-form">
+                  <input type="text" id="forumQuestionInput" class="note-text-input" placeholder="Envie sua dúvida técnica para os instrutores da BRASEG...">
+                  <button type="submit" class="btn btn-sm btn-primary">Enviar Dúvida</button>
+                </form>
+                <div id="forumQuestionsList"></div>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Coluna Lateral de Módulos e Avaliação -->
+        <div class="player-sidebar-column">
+          <div class="player-sidebar-glass">
+            <h3 class="sidebar-title">Grade Curricular</h3>
+            <div id="curriculumAccordion" class="curriculum-accordion"></div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 4: PROVA / ENGINE DE AVALIAÇÃO        -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewExam" style="display: none;">
+    <div class="platform-container">
+      <div id="examContainer"></div>
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 5: CERTIFICADO HOMOLOGADO (VETORIAL)  -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewCertificate" style="display: none;">
+    <div class="platform-container">
+      <div id="certificateContainer"></div>
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 6: PLANOS INDIVIDUAIS (NA PLATAFORMA) -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewMembership" style="display: none;">
+    <div class="platform-container">
+      <div class="section-header-center">
+        <div class="section-badge">ASSINATURAS INDIVIDUAIS</div>
+        <h2 class="section-title">Planos Individuais BRASEG EAD</h2>
+        <p class="section-subtitle">Escolha o plano ideal para se capacitar e emitir certificados em todas as NRs.</p>
+      </div>
+
+      <div class="pricing-glass-grid" style="margin-top: 32px;">
+        
+        <div class="pricing-glass-card">
+          <div class="pricing-card-header">
+            <span class="plan-type-badge">Sem Fidelidade</span>
+            <h3 class="plan-name">Plano Individual Mensal</h3>
+            <p class="plan-desc">Flexibilidade para você se capacitar ou renovar reciclagens sem compromisso.</p>
+          </div>
+          <div class="pricing-price-box">
+            <span class="price-currency">R$</span>
+            <span class="price-amount">49,90</span>
+            <span class="price-period">/mês</span>
+          </div>
+          <ul class="plan-features-list">
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Acesso completo a todas as 10+ NRs</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Emissão de Certificados com QR Code</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Assinaturas CRM-SP e CREA-SP</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Cancele quando quiser com 1 clique</li>
+          </ul>
+          <button type="button" class="btn btn-outline btn-block btn-select-plan" data-plan="pass_monthly">
+            <span>Assinar Plano Mensal</span>
+          </button>
+        </div>
+
+        <div class="pricing-glass-card featured-gold-card">
+          <div class="card-featured-ribbon">⭐ MAIS RECOMENDADO (40% OFF)</div>
+          <div class="pricing-card-header">
+            <span class="plan-type-badge badge-gold">Acesso Total Anual</span>
+            <h3 class="plan-name">Plano Individual Anual Ilimitado</h3>
+            <p class="plan-desc">Acesso ilimitado a todas as NRs, certificados oficiais e reciclagens garantidas por 1 ano.</p>
+          </div>
+          <div class="pricing-price-box">
+            <span class="price-currency">R$</span>
+            <span class="price-amount">29,90</span>
+            <span class="price-period">/mês</span>
+            <small class="price-billed-info">Faturado em 12x ou R$ 299,00 à vista</small>
+          </div>
+          <ul class="plan-features-list">
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> <strong>Acesso ilimitado a todas as 10+ NRs</strong></li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> <strong>Emissão ilimitada de Certificados Homologados</strong></li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Assinaturas de Médico do Trabalho e Engenheiro SST</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Reciclagens automáticas com avisos de vencimento</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Download de Modelos de APR, POP e Checklists</li>
+            <li><svg class="icon-check" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg> Nota Fiscal Eletrônica (NFS-e Asaas) automática</li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-block btn-glow btn-select-plan" data-plan="pass_annual">
+            <span>Garantir Acesso Ilimitado</span>
+            <svg class="icon-svg-sm" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 7: PAINEL DO ALUNO & SESMT / ASOS     -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewDashboard" style="display: none;">
+    <div class="platform-container">
+      <div id="dashboardContainer"></div>
+    </div>
+  </main>
+
+
+  <!-- ========================================== -->
+  <!-- VIEW 8: SOBRE O GRUPO BRASEG (DOCS)        -->
+  <!-- ========================================== -->
+  <main class="view-panel" id="viewDocs" style="display: none;">
+    <div class="platform-container">
+      <div id="docsMountContainer"></div>
+    </div>
+  </main>
+
+
+  <!-- Footer Executivo de Alta Precisão -->
+  <footer class="app-footer no-print">
+    <div class="footer-container-fluid">
+      
+      <div class="footer-main-grid">
+        
+        <div class="footer-brand-col">
+          <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="footer-logo">
+          <p class="footer-tagline-text">
+            Consultoria especializada em Medicina e Segurança do Trabalho, treinamentos regulamentares (NRs) e conformidade eSocial.
+          </p>
+          <div class="footer-security-badges">
+            <span class="sec-badge">🔒 Conexão TLS 1.3</span>
+            <span class="sec-badge">🛡️ Portaria MTP 6.730/2020</span>
+          </div>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Normas Regulamentadoras</h4>
+          <ul>
+            <li><a href="#" class="footer-course-link" data-id="nr35">NR-35: Trabalho em Altura</a></li>
+            <li><a href="#" class="footer-course-link" data-id="nr10">NR-10: Segurança em Eletricidade</a></li>
+            <li><a href="#" class="footer-course-link" data-id="nr33">NR-33: Espaços Confinados</a></li>
+            <li><a href="#" class="footer-course-link" data-id="nr12">NR-12: Máquinas e Equipamentos</a></li>
+            <li><a href="#" class="footer-course-link" data-id="nr05">NR-05: CIPA</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-links-col">
+          <h4>Plataforma & Navegação</h4>
+          <ul>
+            <li><a href="#" class="footer-nav-link" data-view="landing">Página Inicial</a></li>
+            <li><a href="#" class="footer-nav-link" data-view="catalog">Catálogo de Cursos</a></li>
+            <li><a href="#" class="footer-nav-link" data-view="membership">Planos Individuais</a></li>
+            <li><a href="#" class="footer-nav-link" data-view="dashboard">Painel do Aluno & ASOs</a></li>
+            <li><a href="#" class="footer-nav-link" data-view="docs">Corpo Técnico (CRM / CREA)</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-contact-col">
+          <h4>Sede & Contato</h4>
+          <p><strong>Grupo BRASEG Consultoria e Treinamentos</strong></p>
+          <p>Lençóis Paulista - SP | CNPJ: 18.234.567/0001-89</p>
+          <p>Telefone: (14) 3283-2060</p>
+          <p>WhatsApp: (14) 99760-9595</p>
+          <a href="https://www.brasegconsultoria.com.br/" target="_blank" class="footer-ext-link">
+            www.brasegconsultoria.com.br ↗
+          </a>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div class="footer-copyright">
+          © 2026 Grupo BRASEG Consultoria e Treinamentos Ltda. Todos os direitos reservados.
+        </div>
+        <div class="footer-compliance">
+          Homologado conforme Anexo II da NR-01 • Certificação com QR Code e Rastreabilidade Pública Nacional.
+        </div>
+      </div>
+
     </div>
   </footer>
 
+  <!-- Container do Motor de Checkout Transparente Asaas -->
+  <div id="checkoutModalContainer"></div>
+
   <!-- Scripts JavaScript (Módulos ES6) -->
-  <script type="module" src="js/coursesData.js"></script>
-  <script type="module" src="js/state.js"></script>
-  <script type="module" src="js/videoPlayer.js"></script>
-  <script type="module" src="js/examEngine.js"></script>
-  <script type="module" src="js/certificate.js"></script>
-  <script type="module" src="js/dashboard.js"></script>
-  <script type="module" src="js/checkoutEngine.js"></script>
   <script type="module" src="js/app.js"></script>
+
 </body>
 </html>

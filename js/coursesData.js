@@ -933,31 +933,54 @@ export const COURSES_DATA = [
 export const SUBSCRIPTION_PLANS = [
   {
     id: "pass_annual",
-    name: "BRASEG Pass Anual",
+    name: "Plano Individual Anual (Ilimitado)",
     price: 299.00,
     period: "ano",
-    monthlyEquivalent: "R$ 24,90/mês",
-    description: "Acesso irrestrito a todas as 10 NRs, reciclagens automáticas e emissão ilimitada de certificados oficiais com QR Code e NFS-e.",
+    badge: "Mais Recomendado (40% OFF)",
+    popular: true,
+    monthlyEquivalent: "12x de R$ 29,90 ou R$ 299/ano",
+    description: "Acesso total e irrestrito para você se capacitar em todas as 10+ NRs do Brasil com certificados oficiais instantâneos.",
     features: [
-      "Acesso completo a todas as 10 Normas Regulamentadoras;",
-      "Certificados com assinaturas digitais de Médicos (CRM) e Engenheiros (CREA);",
-      "Simulações industriais interativas e telemetria;",
-      "Suporte técnico-normativo com corpo técnico do Grupo BRASEG;",
-      "Emissão automática de Nota Fiscal de Serviços (NFS-e Asaas)."
+      "Acesso ilimitado a todas as 10+ Normas Regulamentadoras (NR-35, NR-10, NR-33, NR-12, etc.);",
+      "Emissão ilimitada de Certificados Homologados com QR Code e validação pública nacional;",
+      "Assinaturas digitais de Médico do Trabalho (CRM-SP) e Engenheiro de Segurança (CREA-SP);",
+      "Reciclagens automáticas e avisos de vencimento antes do prazo regulamentar;",
+      "Download de modelos editáveis de APR, Permissão de Trabalho (PT), Checklists e POPs;",
+      "Suporte pedagógico direto com o corpo técnico do Grupo BRASEG.",
+      "Emissão automática de Nota Fiscal Eletrônica (NFS-e Asaas) para dedução e reembolso."
     ]
   },
   {
     id: "pass_monthly",
-    name: "BRASEG Pass Mensal",
-    price: 39.90,
+    name: "Plano Individual Mensal (Flex)",
+    price: 49.90,
     period: "mês",
-    monthlyEquivalent: "R$ 39,90/mês",
-    description: "Flexibilidade para realização de capacitações pontuais sem compromisso de longo prazo.",
+    badge: "Sem Fidelidade",
+    popular: false,
+    monthlyEquivalent: "R$ 49,90/mês",
+    description: "Flexibilidade total para você realizar suas capacitações pontuais ou reciclagens sem compromisso anual.",
     features: [
-      "Acesso a todos os cursos enquanto a assinatura estiver ativa;",
-      "Certificados oficiais liberados após aprovação nas avaliações;",
-      "Suporte técnico via fórum e WhatsApp.",
-      "Cancelamento facilitado a qualquer momento."
+      "Acesso completo a todas as NRs enquanto a assinatura estiver ativa;",
+      "Emissão de Certificados Oficiais após 70% de acerto na prova de fixação;",
+      "Assinatura médica e de engenharia com verificação por QR Code;",
+      "Suporte técnico via WhatsApp e Fórum Pedagógico;",
+      "Cancelamento simplificado com 1 clique a qualquer momento."
+    ]
+  },
+  {
+    id: "pass_single",
+    name: "Treinamento Individual Avulso",
+    price: 79.90,
+    period: "curso",
+    badge: "Acesso Vitalício",
+    popular: false,
+    monthlyEquivalent: "A partir de R$ 79,90 único",
+    description: "Adquira apenas a Norma Regulamentadora que você precisa agora, com acesso vitalício e certificado homologado.",
+    features: [
+      "Acesso vitalício ao treinamento escolhido e a todas as atualizações de normas;",
+      "Certificado emitido na hora após conclusão do teste;",
+      "Material didático completo em PDF para download;",
+      "Registro homologado no banco nacional de dados de SST."
     ]
   }
 ];

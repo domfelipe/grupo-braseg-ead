@@ -7,7 +7,7 @@ import { COURSES_DATA, INITIAL_EMPLOYEES } from './coursesData.js';
 
 export const State = {
   theme: 'dark', // 'dark' | 'light'
-  activeView: 'catalog', // 'catalog' | 'player' | 'exam' | 'certificate' | 'dashboard' | 'docs' | 'membership'
+  activeView: 'landing', // 'landing' | 'catalog' | 'player' | 'exam' | 'certificate' | 'dashboard' | 'docs' | 'membership'
   activeCourseId: 'nr35',
   activeLessonId: 'l1_1',
   activeCategory: 'all',
@@ -15,6 +15,11 @@ export const State = {
   corporateSlots: 15,
   subscriptions: [], // ['pass_annual', etc]
   unlockedCourses: ['nr35', 'nr10', 'nr31', 'nr06'], // cursos já liberados inicialmente
+  auth: {
+    isAuthenticated: false,
+    user: null,
+    token: null
+  },
   orders: [
     {
       orderId: 'PED-ASAAS-89412',
@@ -110,6 +115,7 @@ export const State = {
         corporateSlots: this.corporateSlots,
         subscriptions: this.subscriptions,
         unlockedCourses: this.unlockedCourses,
+        auth: this.auth,
         orders: this.orders,
         currentStudent: this.currentStudent,
         employees: this.employees,
@@ -122,6 +128,28 @@ export const State = {
     } catch (e) {
       console.warn('Erro ao salvar estado:', e);
     }
+  },
+
+  isAuthenticated() {
+    return !!(this.auth && this.auth.isAuthenticated && this.auth.user);
+  },
+
+  login(user) {
+    this.auth = {
+      isAuthenticated: true,
+      user: user,
+      token: 'clerk_session_tok_' + Math.random().toString(36).substring(2)
+    };
+    this.save();
+  },
+
+  logout() {
+    this.auth = {
+      isAuthenticated: false,
+      user: null,
+      token: null
+    };
+    this.save();
   },
 
   setTheme(theme) {

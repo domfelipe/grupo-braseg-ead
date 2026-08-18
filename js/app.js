@@ -1,6 +1,6 @@
 /**
- * Grupo BRASEG EAD - Aplicação SPA Principal
- * Padrão Corporativo Suíço / Apple Enterprise
+ * Grupo BRASEG EAD - Aplicação Principal
+ * Padrão Liquid Glass & Motion Standard (Apple / Linear Enterprise)
  * Grupo BRASEG Consultoria e Treinamentos - Lençóis Paulista / SP
  */
 
@@ -11,6 +11,7 @@ import { ExamEngine } from './examEngine.js';
 import { CertificateManager } from './certificate.js';
 import { DashboardManager } from './dashboard.js';
 import { CheckoutEngine } from './checkoutEngine.js';
+import { ClerkAuth } from './clerkAuth.js';
 
 class App {
   constructor() {
@@ -19,6 +20,7 @@ class App {
     this.certificateManager = null;
     this.dashboardManager = null;
     this.checkoutEngine = null;
+    this.clerkAuth = null;
     this.activeCategory = 'all';
 
     this.init();
@@ -27,7 +29,23 @@ class App {
   init() {
     State.init();
 
-    // Inicializar sub-módulos
+    // 1. Inicializar Motor de Autenticação Clerk
+    this.clerkAuth = new ClerkAuth({
+      onAuthChange: (user) => {
+        this.updateHeaderAuthUI(user);
+        if (user) {
+          this.showToast(`Bem-vindo, ${user.name}! Sessão autenticada via Clerk.`);
+        } else {
+          this.showToast('Sessão encerrada com sucesso.');
+          this.navigateTo('landing');
+        }
+      },
+      onOpenPlatform: (view, courseId) => {
+        this.navigateTo(view || 'catalog', courseId);
+      }
+    });
+
+    // 2. Inicializar Sub-Módulos da Plataforma
     this.examEngine = new ExamEngine({
       onViewCertificate: (courseId) => this.navigateTo('certificate', courseId),
       onBackToVideos: (courseId) => this.navigateTo('player', courseId)
@@ -39,18 +57,18 @@ class App {
     this.checkoutEngine = new CheckoutEngine({
       onNavigateToCourse: (courseId) => {
         this.navigateTo('player', courseId);
-        this.showToast('Matrícula homologada via Asaas Gateway.');
+        this.showToast('Matrícula homologada com sucesso via Asaas Gateway.');
       },
       onNavigateToCatalog: () => {
         this.navigateTo('catalog');
-        this.showToast('Assinatura ativada com sucesso.');
+        this.showToast('Plano Individual ativado com sucesso.');
       }
     });
 
     this.dashboardManager = new DashboardManager('dashboardContainer');
     this.dashboardManager.onStudentSwitched = (student) => {
-      this.updateHeaderProfile();
-      this.showToast(`Perfil alterado: ${student.name}`);
+      this.updateHeaderAuthUI(State.auth?.user);
+      this.showToast(`Perfil selecionado: ${student.name}`);
       this.renderCatalog();
     };
     this.dashboardManager.onEmployeeAddedToast = (msg) => this.showToast(msg);
@@ -58,25 +76,42 @@ class App {
       this.checkoutEngine.openCheckout('pack', pack);
     };
 
+    // 3. Bind Global de Eventos e Renderização Inicial
     this.bindGlobalEvents();
-    this.updateHeaderProfile();
+    this.bindLandingEvents();
+    this.bindSimulatorEvents();
+    this.updateHeaderAuthUI(State.auth?.user);
     this.applyTheme(State.theme);
 
-    // Renderizar View Inicial
-    this.navigateTo(State.activeView || 'catalog', State.activeCourseId);
+    // 4. Renderizar a View Inicial (Padrão: landing)
+    this.navigateTo(State.activeView || 'landing', State.activeCourseId);
   }
 
   bindGlobalEvents() {
-    // Logo Click -> Catálogo
+    // Logo Click -> Landing Page
     document.getElementById('brandLogo')?.addEventListener('click', () => {
-      this.navigateTo('catalog');
+      this.navigateTo('landing');
     });
 
-    // Navegação Principal (Tabs do Header)
-    document.querySelectorAll('.nav-item').forEach(link => {
-      link.addEventListener('click', (e) => {
+    // Navegação Landing Page (Smooth Scroll)
+    document.querySelectorAll('#navLandingMenu .nav-item').forEach(btn => {
+      btn.addEventListener('click', (e) => {
         e.preventDefault();
-        const targetView = link.getAttribute('data-view');
+        const targetId = btn.getAttribute('data-scroll');
+        if (State.activeView !== 'landing') {
+          this.navigateTo('landing');
+          setTimeout(() => this.scrollToSection(targetId), 100);
+        } else {
+          this.scrollToSection(targetId);
+        }
+      });
+    });
+
+    // Navegação Plataforma (Troca de View)
+    document.querySelectorAll('#navPlatformMenu .nav-item').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetView = btn.getAttribute('data-view');
         this.navigateTo(targetView);
       });
     });
@@ -90,17 +125,62 @@ class App {
       });
     });
 
-    // Hero CTAs
-    document.getElementById('btnHeroStartCourse')?.addEventListener('click', () => {
-      this.navigateTo('player', 'nr35');
+    document.querySelectorAll('.footer-course-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const courseId = link.getAttribute('data-id');
+        this.navigateTo('player', courseId);
+      });
     });
 
-    document.getElementById('btnPlayFeaturedHero')?.addEventListener('click', () => {
-      this.navigateTo('player', 'nr35');
+    // Auth Buttons no Header
+    document.getElementById('btnHeaderLogin')?.addEventListener('click', () => {
+      this.clerkAuth.open({ redirectTo: 'catalog' });
     });
 
-    document.getElementById('btnHeroPass')?.addEventListener('click', () => {
-      this.navigateTo('membership');
+    document.getElementById('btnHeaderCta')?.addEventListener('click', () => {
+      if (this.clerkAuth.isAuthenticated()) {
+        this.navigateTo('catalog');
+      } else {
+        this.clerkAuth.open({ redirectTo: 'catalog' });
+      }
+    });
+
+    // Clerk User Button Dropdown Toggle
+    const clerkUserButton = document.getElementById('clerkUserButton');
+    clerkUserButton?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clerkUserButton.classList.toggle('open');
+    });
+
+    document.addEventListener('click', () => {
+      clerkUserButton?.classList.remove('open');
+    });
+
+    // Itens do Dropdown do Clerk
+    document.getElementById('dropItemPlatform')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.navigateTo('player', State.activeCourseId);
+    });
+
+    document.getElementById('dropItemCatalog')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.navigateTo('catalog');
+    });
+
+    document.getElementById('dropItemDashboard')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.navigateTo('dashboard');
+    });
+
+    document.getElementById('dropItemCertificates')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.navigateTo('certificate', State.activeCourseId);
+    });
+
+    document.getElementById('dropItemLogout')?.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.clerkAuth.logout();
     });
 
     // Botão Voltar ao Catálogo no Player
@@ -115,10 +195,10 @@ class App {
       this.applyTheme(nextTheme);
     });
 
-    // Filtros de Categoria no Catálogo
-    document.querySelectorAll('.filter-tab').forEach(pill => {
-      pill.addEventListener('click', (e) => {
-        document.querySelectorAll('.filter-tab').forEach(p => p.classList.remove('active'));
+    // Filtros de Categoria no Catálogo da Plataforma
+    document.querySelectorAll('.platform-filters-bar .filter-tab').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.platform-filters-bar .filter-tab').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         this.activeCategory = pill.getAttribute('data-cat');
         State.setCategory(this.activeCategory);
@@ -131,11 +211,108 @@ class App {
     catalogSearch?.addEventListener('input', () => {
       this.renderCatalog();
     });
+  }
 
-    // Profile Card -> Dashboard
-    document.getElementById('headerProfileCard')?.addEventListener('click', () => {
-      this.navigateTo('dashboard');
+  bindLandingEvents() {
+    // CTAs da Hero
+    document.getElementById('btnHeroExplorePlans')?.addEventListener('click', () => {
+      this.scrollToSection('secPlanos');
     });
+
+    document.getElementById('btnHeroOpenPlatform')?.addEventListener('click', () => {
+      if (this.clerkAuth.isAuthenticated()) {
+        this.navigateTo('player', 'nr35');
+      } else {
+        this.clerkAuth.open({ redirectTo: 'player', courseId: 'nr35' });
+      }
+    });
+
+    document.getElementById('btnHeroPlayMockup')?.addEventListener('click', () => {
+      if (this.clerkAuth.isAuthenticated()) {
+        this.navigateTo('player', 'nr35');
+      } else {
+        this.clerkAuth.open({ redirectTo: 'player', courseId: 'nr35' });
+      }
+    });
+
+    // Filtros de Categoria da Vitrine de NRs na Landing
+    document.querySelectorAll('.nrs-filter-bar .filter-tab-glass').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.nrs-filter-bar .filter-tab-glass').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        const cat = tab.getAttribute('data-cat');
+        this.renderLandingNrs(cat);
+      });
+    });
+
+    // CTAs dos Planos Individuais na Landing
+    document.querySelectorAll('.btn-subscribe-plan').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const planId = btn.getAttribute('data-plan');
+        const plan = SUBSCRIPTION_PLANS.find(p => p.id === planId) || SUBSCRIPTION_PLANS[0];
+        this.checkoutEngine.openCheckout('subscription', plan);
+      });
+    });
+
+    document.querySelector('.btn-choose-single-course')?.addEventListener('click', () => {
+      this.scrollToSection('secNrs');
+    });
+
+    // Banner Final CTA
+    document.getElementById('btnBannerJoin')?.addEventListener('click', () => {
+      const plan = SUBSCRIPTION_PLANS[0]; // Anual
+      this.checkoutEngine.openCheckout('subscription', plan);
+    });
+  }
+
+  bindSimulatorEvents() {
+    const inputName = document.getElementById('simInputName');
+    const selectCourse = document.getElementById('simSelectCourse');
+    const studentNameEl = document.getElementById('simCertStudentName');
+    const courseNameEl = document.getElementById('simCertCourseName');
+    const certCodeEl = document.getElementById('simCertCode');
+    const certDateEl = document.getElementById('simCertDate');
+
+    if (certDateEl) {
+      certDateEl.textContent = new Date().toLocaleDateString('pt-BR');
+    }
+
+    inputName?.addEventListener('input', () => {
+      if (studentNameEl) {
+        studentNameEl.textContent = inputName.value.trim() || 'Carlos Alberto Mendonça';
+      }
+    });
+
+    selectCourse?.addEventListener('change', () => {
+      if (courseNameEl) {
+        courseNameEl.textContent = selectCourse.value;
+      }
+      if (certCodeEl) {
+        certCodeEl.textContent = `BRS-2026-${Math.floor(10000 + Math.random() * 90000)}`;
+      }
+    });
+
+    document.getElementById('btnSimStartTraining')?.addEventListener('click', () => {
+      const courseVal = selectCourse?.value || '';
+      let courseId = 'nr35';
+      if (courseVal.includes('NR-10')) courseId = 'nr10';
+      if (courseVal.includes('NR-33')) courseId = 'nr33';
+      if (courseVal.includes('NR-12')) courseId = 'nr12';
+      if (courseVal.includes('NR-05')) courseId = 'nr05';
+
+      if (this.clerkAuth.isAuthenticated()) {
+        this.navigateTo('player', courseId);
+      } else {
+        this.clerkAuth.open({ redirectTo: 'player', courseId: courseId });
+      }
+    });
+  }
+
+  scrollToSection(sectionId) {
+    const el = document.getElementById(sectionId);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   applyTheme(theme) {
@@ -146,12 +323,27 @@ class App {
     }
   }
 
-  updateHeaderProfile() {
-    const nameEl = document.getElementById('headerUserName');
-    const roleEl = document.getElementById('headerUserRole');
+  updateHeaderAuthUI(user) {
+    const unloggedActions = document.getElementById('headerUnloggedActions');
+    const loggedActions = document.getElementById('headerLoggedActions');
+    const userNameEl = document.getElementById('clerkUserName');
+    const userRoleEl = document.getElementById('clerkUserRole');
+    const userAvatarEl = document.getElementById('clerkUserAvatar');
+    const dropdownFullName = document.getElementById('dropdownUserFullName');
+    const dropdownEmail = document.getElementById('dropdownUserEmail');
 
-    if (nameEl) nameEl.textContent = State.currentStudent.name;
-    if (roleEl) roleEl.textContent = `${State.currentStudent.role}`;
+    if (user && user.name) {
+      if (unloggedActions) unloggedActions.style.display = 'none';
+      if (loggedActions) loggedActions.style.display = 'flex';
+      if (userNameEl) userNameEl.textContent = user.name.split(' ')[0];
+      if (userRoleEl) userRoleEl.textContent = (user.role || 'Aluno Matriculado').split('(')[0];
+      if (userAvatarEl && user.avatar) userAvatarEl.src = user.avatar;
+      if (dropdownFullName) dropdownFullName.textContent = user.name;
+      if (dropdownEmail) dropdownEmail.textContent = user.email || 'aluno@braseg.com.br';
+    } else {
+      if (unloggedActions) unloggedActions.style.display = 'flex';
+      if (loggedActions) loggedActions.style.display = 'none';
+    }
   }
 
   navigateTo(view, courseId = null, lessonId = null) {
@@ -160,9 +352,19 @@ class App {
     if (lessonId) State.activeLessonId = lessonId;
     State.save();
 
-    // Atualizar classe ativa no menu
-    document.querySelectorAll('.nav-item').forEach(link => {
-      link.classList.toggle('active', link.getAttribute('data-view') === view);
+    // Alternar Menus do Header entre Modo Landing e Modo Plataforma
+    const isLanding = view === 'landing';
+    const navLandingMenu = document.getElementById('navLandingMenu');
+    const navPlatformMenu = document.getElementById('navPlatformMenu');
+
+    if (navLandingMenu && navPlatformMenu) {
+      navLandingMenu.style.display = isLanding ? 'flex' : 'none';
+      navPlatformMenu.style.display = isLanding ? 'none' : 'flex';
+    }
+
+    // Atualizar classe ativa nos botões da barra de navegação
+    document.querySelectorAll('#navPlatformMenu .nav-item').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-view') === view);
     });
 
     // Ocultar todas as seções de visualização
@@ -178,6 +380,12 @@ class App {
 
     // Renderizar a view selecionada
     switch (view) {
+      case 'landing':
+        document.getElementById('viewLanding').style.display = 'block';
+        this.renderLandingNrs('all');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+
       case 'catalog':
         document.getElementById('viewCatalog').style.display = 'block';
         this.renderCatalog();
@@ -222,9 +430,92 @@ class App {
         break;
 
       default:
-        document.getElementById('viewCatalog').style.display = 'block';
-        this.renderCatalog();
+        document.getElementById('viewLanding').style.display = 'block';
+        this.renderLandingNrs('all');
     }
+  }
+
+  renderLandingNrs(category = 'all') {
+    const grid = document.getElementById('landingCoursesGrid');
+    if (!grid) return;
+
+    const filtered = COURSES_DATA.filter(course => {
+      return category === 'all' || course.category === category;
+    });
+
+    grid.innerHTML = filtered.map(course => {
+      const isUnlocked = State.isCourseUnlocked(course.id);
+
+      return `
+        <div class="glass-nr-card" data-id="${course.id}">
+          <div class="nr-card-media">
+            <img src="${course.thumb}" alt="${course.title}" class="nr-card-image" loading="lazy" onerror="this.src='assets/images/nr35.jpg'">
+            <span class="nr-card-badge">${course.code}</span>
+            <span class="nr-card-duration">Carga: ${course.duration}</span>
+          </div>
+
+          <div class="nr-card-body">
+            <div class="nr-card-cat">${course.categoryLabel || 'Norma Regulamentadora'}</div>
+            <h3 class="nr-card-title">${course.title}</h3>
+            <p class="nr-card-desc">${course.subtitle || course.description}</p>
+
+            <div class="nr-card-footer">
+              <div class="nr-price-wrap">
+                ${course.originalPrice ? `<span class="price-strike">R$ ${course.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
+                <span class="price-main">R$ ${course.price.toFixed(2).replace('.', ',')}</span>
+              </div>
+
+              <div class="nr-actions-group">
+                <button type="button" class="btn btn-sm btn-outline btn-nr-preview" data-id="${course.id}">
+                  Prévia
+                </button>
+                <button type="button" class="btn btn-sm btn-primary btn-nr-enroll" data-id="${course.id}">
+                  ${isUnlocked ? 'Acessar' : 'Matricular-se'}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    // Bind cliques nos botões da vitrine
+    grid.querySelectorAll('.btn-nr-preview').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = btn.getAttribute('data-id');
+        if (this.clerkAuth.isAuthenticated()) {
+          this.navigateTo('player', cid);
+        } else {
+          this.clerkAuth.open({ redirectTo: 'player', courseId: cid });
+        }
+      });
+    });
+
+    grid.querySelectorAll('.btn-nr-enroll').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const cid = btn.getAttribute('data-id');
+        const isUnlocked = State.isCourseUnlocked(cid);
+        if (isUnlocked) {
+          this.navigateTo('player', cid);
+        } else {
+          const course = State.getCourse(cid);
+          this.checkoutEngine.openCheckout('course', course);
+        }
+      });
+    });
+
+    grid.querySelectorAll('.glass-nr-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const cid = card.getAttribute('data-id');
+        if (this.clerkAuth.isAuthenticated()) {
+          this.navigateTo('player', cid);
+        } else {
+          this.clerkAuth.open({ redirectTo: 'player', courseId: cid });
+        }
+      });
+    });
   }
 
   renderCatalog() {
@@ -258,7 +549,6 @@ class App {
             <h3 class="card-main-title">${course.title}</h3>
             <p class="card-description-text">${course.subtitle || course.description}</p>
 
-            <!-- Barra de Progresso do Aluno -->
             <div class="card-progress-indicator">
               <div class="progress-info-text">
                 <span>Progresso: <strong>${prog.percent}%</strong></span>
@@ -269,7 +559,6 @@ class App {
               </div>
             </div>
 
-            <!-- Preço e Ações -->
             <div class="card-footer-controls">
               <div class="pricing-info-block">
                 ${course.originalPrice ? `<span class="price-strike-val">R$ ${course.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
@@ -289,7 +578,7 @@ class App {
                   </button>
                 ` : `
                   <button type="button" class="btn btn-sm btn-outline btn-buy-single-course" data-id="${course.id}">
-                    Contratar
+                    Matricular-se
                   </button>
                 `}
               </div>
@@ -299,7 +588,7 @@ class App {
       `;
     }).join('');
 
-    // Bind cliques nos botões dos cards
+    // Bind cliques nos botões do catálogo da plataforma
     grid.querySelectorAll('.btn-access-course').forEach(btn => {
       btn.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -401,7 +690,7 @@ class App {
 
     sidebar.innerHTML = `
       <div>
-        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--glass-border); padding-bottom: 12px;">
           <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 6px;">
             <span style="color: var(--text-secondary);">Progresso do Treinamento</span>
             <strong style="color: var(--color-accent-gold); font-family: var(--font-mono);">${prog.percent}%</strong>
@@ -411,9 +700,9 @@ class App {
           </div>
         </div>
 
-        <div style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: flex; flex-direction: column; gap: 10px;">
           ${course.modules.map(mod => `
-            <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px;">
+            <div style="background: var(--bg-surface-2); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); padding: 10px;">
               <strong style="font-size: 0.8rem; color: var(--color-accent-gold); display: block; margin-bottom: 6px;">${mod.title}</strong>
               <div style="display: flex; flex-direction: column; gap: 4px;">
                 ${mod.lessons.map(l => {
@@ -421,7 +710,7 @@ class App {
                   const isActive = l.id === activeLesson.id;
 
                   return `
-                    <div class="sidebar-lesson-item" data-lesson-id="${l.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; border-radius: var(--radius-xs); background: ${isActive ? 'var(--color-primary)' : 'transparent'}; cursor: pointer;">
+                    <div class="sidebar-lesson-item" data-lesson-id="${l.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; border-radius: var(--radius-xs); background: ${isActive ? 'var(--color-accent-blue)' : 'transparent'}; cursor: pointer;">
                       <div style="display: flex; align-items: center; gap: 8px;">
                         <span style="font-size: 0.75rem; color: ${isCompleted ? 'var(--color-success)' : (isActive ? '#ffffff' : 'var(--text-muted)')};">${isCompleted ? '✓' : (isActive ? '▶' : '○')}</span>
                         <div>
@@ -436,7 +725,7 @@ class App {
             </div>
           `).join('')}
 
-          <div style="background: var(--color-primary-dark); border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+          <div style="background: var(--bg-surface-3); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); padding: 14px; text-align: center; margin-top: 6px;">
             <strong style="display: block; font-size: 0.85rem; color: #ffffff; margin-bottom: 2px;">Avaliação Final MTE</strong>
             <small style="color: var(--text-secondary); display: block; margin-bottom: 10px;">${prog.isPassed ? `Aprovado com ${prog.score}%` : 'Obrigatória para Emissão'}</small>
             <button type="button" class="btn btn-primary btn-sm btn-block" id="btnSidebarExam">
@@ -445,7 +734,7 @@ class App {
           </div>
 
           ${prog.isPassed ? `
-            <button type="button" class="btn btn-outline btn-sm btn-block" id="btnSidebarCert">
+            <button type="button" class="btn btn-outline btn-sm btn-block" id="btnSidebarCert" style="margin-top: 4px;">
               Visualizar Certificado Homologado
             </button>
           ` : ''}
@@ -535,7 +824,7 @@ class App {
           ${(lesson.keyPoints || []).map(k => `<li style="margin-bottom: 4px;">${k}</li>`).join('')}
         </ul>
 
-        <div style="background: var(--bg-surface-2); border-left: 3px solid var(--color-primary); padding: 10px 14px; border-radius: var(--radius-xs); font-size: 0.78rem; color: var(--text-muted);">
+        <div style="background: var(--bg-surface-2); border-left: 3px solid var(--color-accent-blue); padding: 10px 14px; border-radius: var(--radius-xs); font-size: 0.78rem; color: var(--text-muted);">
           <strong>Amparo Legal:</strong> ${course.norm} • Portaria MTP nº 6.730/2020.
         </div>
       </div>
@@ -553,7 +842,7 @@ class App {
     ];
 
     list.innerHTML = materials.map(att => `
-      <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-2); padding: 10px 14px; border-radius: var(--radius-xs); margin-bottom: 8px; border: 1px solid var(--border-subtle);">
+      <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-2); padding: 10px 14px; border-radius: var(--radius-xs); margin-bottom: 8px; border: 1px solid var(--glass-border);">
         <div>
           <strong style="display: block; font-size: 0.82rem; color: var(--text-primary);">${att.title}</strong>
           <small style="color: var(--text-muted); font-size: 0.72rem;">${att.type} • ${att.size} • Grupo BRASEG</small>
@@ -582,7 +871,7 @@ class App {
     const questions = State.forumQuestions.filter(q => q.courseId === course.id);
 
     list.innerHTML = questions.map(q => `
-      <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-xs); padding: 12px; margin-bottom: 10px;">
+      <div style="background: var(--bg-surface-2); border: 1px solid var(--glass-border); border-radius: var(--radius-xs); padding: 12px; margin-bottom: 10px;">
         <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px;">
           <strong>${q.author} (${q.role})</strong>
           <span>${q.date}</span>
@@ -616,8 +905,8 @@ class App {
 
     container.innerHTML = `
       <div style="max-width: 1100px; margin: 32px auto; padding: 0 24px;">
-        <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px; text-align: center; margin-bottom: 24px;">
-          <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" style="height: 48px; margin-bottom: 12px;">
+        <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-lg); padding: 36px; text-align: center; margin-bottom: 24px; backdrop-filter: var(--glass-backdrop);">
+          <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" style="height: 48px; margin: 0 auto 12px auto;">
           <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.companyName}</h2>
           <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 16px;">
             "${BRASEG_INSTITUTIONAL.mission}"
@@ -633,14 +922,14 @@ class App {
         </div>
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-          <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">
+          <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 24px; backdrop-filter: var(--glass-backdrop);">
             <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Coordenação Médica (PCMSO)</h3>
             <p style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent-gold);">${BRASEG_INSTITUTIONAL.technicalDirectors[0].name}</p>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.technicalDirectors[0].credential}</p>
             <p style="font-size: 0.8rem; color: var(--text-secondary);">Coordenação de exames ocupacionais (ASO Admissional, Periódico, Demissional) e conformidade eSocial S-2220.</p>
           </div>
 
-          <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">
+          <div style="background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: var(--radius-md); padding: 24px; backdrop-filter: var(--glass-backdrop);">
             <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Engenharia de Segurança (SST)</h3>
             <p style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent-gold);">${BRASEG_INSTITUTIONAL.technicalDirectors[1].name}</p>
             <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.technicalDirectors[1].credential}</p>
@@ -670,7 +959,7 @@ class App {
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'appToast';
-      toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: var(--bg-surface-1); color: var(--text-primary); border: 1px solid var(--border-medium); padding: 10px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; z-index: 9999; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(10px); transition: all 0.2s ease; pointer-events: none;';
+      toast.style.cssText = 'position: fixed; bottom: 24px; right: 24px; background: var(--bg-surface-elevated); color: var(--text-primary); border: 1px solid var(--glass-border); padding: 12px 18px; border-radius: 8px; font-size: 0.84rem; font-weight: 600; z-index: 9999; box-shadow: var(--shadow-lg); backdrop-filter: var(--glass-backdrop); opacity: 0; transform: translateY(10px); transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none;';
       document.body.appendChild(toast);
     }
     toast.textContent = message;
@@ -679,7 +968,7 @@ class App {
     setTimeout(() => {
       toast.style.opacity = '0';
       toast.style.transform = 'translateY(10px)';
-    }, 3000);
+    }, 3200);
   }
 
   playSuccessChime() {
