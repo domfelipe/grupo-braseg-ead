@@ -1,9 +1,9 @@
 /**
- * BRASEG EAD - Catálogo Oficial de Cursos e Treinamentos Regulamentares (NRs)
+ * BRASEG EAD - Catálogo Oficial de Treinamentos Regulamentares (NRs)
  * Grupo BRASEG Consultoria e Treinamentos - Lençóis Paulista / SP
- * Responsáveis Técnicos:
- * - Dr. Carlos Eduardo Menezes (Médico do Trabalho - CRM/SP 148.920 / RQE 72.104)
- * - Eng. Ricardo S. Albuquerque (Eng. de Segurança do Trabalho - CREA/SP 506.128.932-D)
+ * Responsabilidade Técnica:
+ * - Dr. Carlos Eduardo Menezes (Médico do Trabalho - CRM-SP 148.920 / RQE 72.104)
+ * - Eng. Ricardo S. Albuquerque (Engenheiro de Segurança do Trabalho - CREA-SP 506.128.932-D)
  */
 
 export const COURSES_DATA = [
@@ -13,18 +13,16 @@ export const COURSES_DATA = [
     category: "industrial",
     categoryLabel: "Industrial & Construção",
     title: "NR-35: Trabalho em Altura",
-    subtitle: "Capacitação Obrigatória para Atividades Acima de 2,00m",
-    badge: "Mais Vendido • MTE",
+    subtitle: "Capacitação Técnica para Atividades Acima de 2,00m",
+    badge: "Portaria MTP nº 4.218",
     duration: "8 horas",
-    validity: "2 anos (Reciclagem Bienal)",
-    norm: "Portaria MTP nº 4.218 / Norma Regulamentadora nº 35",
+    validity: "Reciclagem Bienal (2 anos)",
+    norm: "NR-35 / Portaria MTP nº 4.218",
     price: 89.90,
     originalPrice: 149.90,
     featured: true,
     rating: 4.9,
     studentsCount: 1420,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr35.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -36,13 +34,7 @@ export const COURSES_DATA = [
       role: "Médico Coordenador do PCMSO (CRM-SP 148.920)",
       notes: "Apto para atividades com risco de queda conforme ASO com EEG/ECG."
     },
-    description: "Treinamento técnico-normativo focado no planejamento, organização e execução de trabalhos em altura. Aborda análise de risco (APR), seleção de pontos de ancoragem, cálculo de Zona Livre de Queda (ZLQ) e técnicas de resgate emergencial.",
-    learningGoals: [
-      "Compreender os limites legais e requisitos da NR-35 atualizada;",
-      "Calcular o Fator de Queda (FQ) e a Zona Livre de Queda (ZLQ);",
-      "Inspecionar rigorosamente cinturões paraquedistas, talabartes com absorvedor e trava-quedas;",
-      "Elaborar e emitir Permissão de Trabalho (PT) e Análise Preliminar de Risco (APR)."
-    ],
+    description: "Treinamento técnico focado no planejamento, organização e execução de trabalhos em altura. Aborda análise de risco (APR), seleção de pontos de ancoragem, cálculo de Zona Livre de Queda (ZLQ) e procedimentos de resgate emergencial.",
     modules: [
       {
         id: "m1",
@@ -69,11 +61,11 @@ export const COURSES_DATA = [
                 explanation: "Conforme o item 35.1.2 da NR-35, considera-se trabalho em altura toda atividade executada acima de 2,00 m do nível inferior, onde haja risco de queda."
               }
             ],
-            transcript: "Olá! Seja bem-vindo ao treinamento oficial de NR-35 do Grupo BRASEG. Neste módulo inicial, vamos compreender a legislação vigente, as responsabilidades do empregador e do trabalhador, e como estruturar uma Análise Preliminar de Risco eficiente para trabalhos acima de dois metros de altura.",
+            transcript: "Bem-vindo ao treinamento oficial de NR-35 do Grupo BRASEG. Neste módulo inicial, analisamos a legislação vigente, as responsabilidades legais do empregador e do trabalhador, e como estruturar uma Análise Preliminar de Risco eficiente para trabalhos acima de dois metros de altura.",
             keyPoints: [
               "Trabalho em altura: acima de 2,00m do nível inferior;",
               "Obrigatória a emissão de Permissão de Trabalho (PT);",
-              "Exame de aptidão médica no ASO com avaliação para trabalho em altura."
+              "Exame de aptidão médica no ASO com avaliação clínica para trabalho em altura."
             ]
           },
           {
@@ -197,18 +189,16 @@ export const COURSES_DATA = [
     category: "industrial",
     categoryLabel: "Industrial & Elétrica",
     title: "NR-10: Segurança em Instalações Elétricas",
-    subtitle: "Prevenção de Choques, Arco Elétrico e Sistema LOTO",
-    badge: "Alta Voltagem",
+    subtitle: "Prevenção de Choques, Arco Elétrico e Desenergização Segura (LOTO)",
+    badge: "Portaria MTb nº 598",
     duration: "40 horas",
-    validity: "2 anos",
-    norm: "Portaria MTb nº 598 / Norma Regulamentadora nº 10",
+    validity: "Reciclagem Bienal (2 anos)",
+    norm: "NR-10 / Portaria MTb nº 598",
     price: 139.90,
     originalPrice: 199.90,
     featured: true,
     rating: 4.95,
     studentsCount: 980,
-    color: "#002e5a",
-    accentColor: "#f4c602",
     thumb: "assets/images/nr10.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -220,13 +210,7 @@ export const COURSES_DATA = [
       role: "Médico Coordenador do PCMSO (CRM-SP 148.920)",
       notes: "Protocolo de atendimento a queimaduras por arco elétrico e fibrilação ventricular."
     },
-    description: "Capacitação completa para profissionais que interagem direta ou indiretamente em instalações elétricas e serviços com eletricidade. Foco nas 6 etapas de desenergização segura (LOTO), zonas de risco e EPIs com proteção contra arco voltaico.",
-    learningGoals: [
-      "Executar as 6 etapas da desenergização controlada (LOTO);",
-      "Identificar Zonas Livre, Controlada e de Risco conforme NR-10;",
-      "Selecionar vestimentas ATPV e EPIs dielétricos adequados;",
-      "Aplicar manobras de emergência em casos de choque elétrico e queimaduras."
-    ],
+    description: "Capacitação técnica para profissionais que interagem em instalações elétricas e serviços com eletricidade. Foco nas 6 etapas de desenergização controlada (LOTO), zonas de risco e EPIs com classificação ATPV.",
     modules: [
       {
         id: "m1",
@@ -253,7 +237,7 @@ export const COURSES_DATA = [
                 explanation: "A passagem da corrente de 60Hz pelo músculo cardíaco no período vulnerável do ciclo pode induzir fibrilação ventricular instantânea, parando a circulação sanguínea."
               }
             ],
-            transcript: "Bem-vindo ao treinamento de NR-10 do Grupo BRASEG. A eletricidade é uma forma de energia invisível que exige respeito absoluto. Uma corrente de apenas 50 miliamperes já é suficiente para causar fibrilação ventricular e morte súbita.",
+            transcript: "Bem-vindo ao treinamento de NR-10 do Grupo BRASEG. A eletricidade é uma forma de energia que exige disciplina técnica. Uma corrente de apenas 50 miliamperes já é suficiente para causar fibrilação ventricular e parada cardíaca.",
             keyPoints: [
               "Fibrilação ventricular a partir de 30mA a 50mA;",
               "Calor do arco elétrico pode atingir até 20.000°C;",
@@ -264,7 +248,7 @@ export const COURSES_DATA = [
       },
       {
         id: "m2",
-        title: "Módulo 2: Procedimentos de Desenergização Segura (Regra de Ouro)",
+        title: "Módulo 2: Procedimentos de Desenergização Segura",
         duration: "05:00",
         lessons: [
           {
@@ -309,18 +293,6 @@ export const COURSES_DATA = [
         ],
         correctIndex: 0,
         explanation: "Zona de Risco é o espaço ao redor do ponto energizado onde a aproximação só é permitida a trabalhadores autorizados e com procedimentos específicos."
-      },
-      {
-        id: "q2",
-        question: "O Prontuário de Instalações Elétricas (PIE) é obrigatório para estabelecimentos com carga instalada superior a:",
-        options: [
-          "10 kW",
-          "75 kW",
-          "500 kW",
-          "1000 kW"
-        ],
-        correctIndex: 1,
-        explanation: "Conforme o item 10.2.4 da NR-10, estabelecimentos com carga instalada superior a 75 kW devem constituir e manter atualizado o PIE."
       }
     ]
   },
@@ -331,39 +303,31 @@ export const COURSES_DATA = [
     categoryLabel: "Industrial & Químico",
     title: "NR-33: Espaços Confinados",
     subtitle: "Vigia, Trabalhador Autorizado e Supervisor de Entrada",
-    badge: "Atmosfera Crítica",
+    badge: "Portaria MTP nº 1.690",
     duration: "16 horas",
-    validity: "1 ano (Reciclagem Anual)",
-    norm: "Portaria MTP nº 1.690 / Norma Regulamentadora nº 33",
+    validity: "Reciclagem Anual (1 ano)",
+    norm: "NR-33 / Portaria MTP nº 1.690",
     price: 119.90,
     originalPrice: 179.90,
     featured: false,
     rating: 4.88,
     studentsCount: 750,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr33.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
-      role: "Especialista em Gestão de Espaços Confinados (CREA-SP)",
+      role: "Especialista em Espaços Confinados (CREA-SP)",
       company: "Grupo BRASEG Consultoria"
     },
     medicalEndorsement: {
       name: "Dr. Carlos Eduardo Menezes",
       role: "Médico do Trabalho (CRM-SP 148.920)",
-      notes: "Avaliação para trabalho em ambientes hipóxicos ou enclausurados com teste espirométrico."
+      notes: "Avaliação para trabalho em ambientes enclausurados com teste espirométrico."
     },
-    description: "Capacitação completa para reconhecimento, avaliação e controle dos riscos em espaços confinados. Abrange operação de detectores multigás (O2, LEL, CO, H2S), ventilação por insuflação/exaustão, emissão da PET e técnicas de resgate com tripé.",
-    learningGoals: [
-      "Operar detectores multigás e calibrar sensores (Bump Test);",
-      "Definir e fiscalizar os limites seguros de O2 (19,5% a 23,0%);",
-      "Preencher e assinar a Permissão de Entrada e Trabalho (PET);",
-      "Executar as funções exclusivas do Vigia sem abandonar o posto."
-    ],
+    description: "Capacitação completa para reconhecimento, avaliação e controle dos riscos em espaços confinados. Operação de detectores multigás (O2, LEL, CO, H2S), ventilação forçada, emissão da PET e técnicas de resgate com tripé.",
     modules: [
       {
         id: "m1",
-        title: "Módulo 1: Definição, Reconhecimento e Monitoramento Atmosférico",
+        title: "Módulo 1: Monitoramento Atmosférico e Funções do Vigia",
         duration: "04:30",
         lessons: [
           {
@@ -386,11 +350,11 @@ export const COURSES_DATA = [
                 explanation: "Abaixo de 19,5% ocorre asfixia e perda de consciência; acima de 23,0% há enriquecimento de oxigênio com risco extremo de combustão e explosão espontânea."
               }
             ],
-            transcript: "Espaços confinados como silos, galerias, reatores e tanques não foram projetados para ocupação humana contínua. Antes de abrir a tampa de visita, o monitoramento dos 4 gases deve ser realizado em todos os estratos (topo, meio e fundo).",
+            transcript: "Espaços confinados não foram projetados para ocupação humana contínua. Antes de abrir a tampa de visita, o monitoramento dos 4 gases deve ser realizado em todos os estratos (topo, meio e fundo).",
             keyPoints: [
               "O2 seguro: 19,5% a 23,0%;",
               "LEL / Inflamabilidade: deve ser 0% (máximo permitido 10% com ventilação);",
-              "CO tóxico limite 25 ppm / H2S tóxico limite 10 ppm (gás sulfídrico paralisador olfativo)."
+              "CO tóxico limite 25 ppm / H2S tóxico limite 10 ppm."
             ]
           }
         ]
@@ -399,7 +363,7 @@ export const COURSES_DATA = [
     examQuestions: [
       {
         id: "q1",
-        question: "Qual é a responsabilidade indelegável do Vigia em um espaço confinado?",
+        question: "Qual é a responsabilidade do Vigia em um espaço confinado?",
         options: [
           "Permanecer continuamente fora do espaço confinado junto à entrada, acompanhando os trabalhos e acionando o plano de emergência se necessário",
           "Entrar no tanque para ajudar o trabalhador a carregar ferramentas pesadas",
@@ -418,21 +382,19 @@ export const COURSES_DATA = [
     categoryLabel: "Industrial & Automação",
     title: "NR-12: Segurança em Máquinas e Equipamentos",
     subtitle: "Proteções Físicas, Cortinas de Luz e Paradas de Emergência",
-    badge: "Segurança de Máquinas",
+    badge: "Portaria SEPRT nº 916",
     duration: "16 horas",
-    validity: "2 anos",
-    norm: "Portaria SEPRT nº 916 / Norma Regulamentadora nº 12",
+    validity: "Reciclagem Bienal (2 anos)",
+    norm: "NR-12 / Portaria SEPRT nº 916",
     price: 109.90,
     originalPrice: 159.90,
     featured: false,
     rating: 4.91,
     studentsCount: 620,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr12.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
-      role: "Especialista em Automação e NR-12 (CREA-SP)",
+      role: "Especialista em Automação Industrial e NR-12 (CREA-SP)",
       company: "Grupo BRASEG Consultoria"
     },
     medicalEndorsement: {
@@ -440,17 +402,11 @@ export const COURSES_DATA = [
       role: "Médico do Trabalho (CRM-SP 148.920)",
       notes: "Prevenção de amputações, esmagamentos e lesões por aprisionamento mecânico."
     },
-    description: "Capacitação sobre medidas de proteção coletiva, dispositivos de intertravamento de segurança, cortinas de luz ópticas, botões tipo cogumelo de parada emergencial e procedimentos seguros de limpeza, manutenção e operação de maquinário industrial.",
-    learningGoals: [
-      "Identificar zonas de prensagem, corte, cisalhamento e enrolamento mecânico;",
-      "Verificar o correto funcionamento de intertravamentos e chaves de segurança;",
-      "Compreender a função das cortinas ópticas e relés de segurança;",
-      "Realizar inspeção pré-operacional (checklist de partida segura)."
-    ],
+    description: "Capacitação sobre medidas de proteção coletiva, dispositivos de intertravamento de segurança, cortinas de luz ópticas, botões de parada emergencial e procedimentos seguros de operação e manutenção de maquinário industrial.",
     modules: [
       {
         id: "m1",
-        title: "Módulo 1: Princípios Gerais e Zonas de Perigo em Máquinas",
+        title: "Módulo 1: Princípios Gerais e Zonas de Perigo",
         duration: "04:00",
         lessons: [
           {
@@ -473,7 +429,7 @@ export const COURSES_DATA = [
                 explanation: "Conforme o item 12.5 da NR-12, a abertura de proteção intertravada deve interromper instantaneamente as funções perigosas da máquina."
               }
             ],
-            transcript: "Olá! A NR-12 visa garantir a integridade física dos operadores de máquinas e prensas. Proteções físicas e ópticas não podem ser burladas ou neutralizadas por nenhum operador. O botão de emergência deve ser acionado sempre que houver anormalidade operacional.",
+            transcript: "A NR-12 visa garantir a integridade física dos operadores de máquinas e prensas. Proteções físicas e ópticas não podem ser burladas por nenhum operador. O botão de emergência deve ser acionado sempre que houver anormalidade operacional.",
             keyPoints: [
               "Proibido burlar fins de curso ou sensores ópticos;",
               "Botão de parada de emergência não pode ser usado como chave liga/desliga comum;",
@@ -505,17 +461,15 @@ export const COURSES_DATA = [
     categoryLabel: "Agroflorestal & Canavieiro",
     title: "NR-31.7 & NR-31.12: Tratores e Máquinas Agrícolas",
     subtitle: "Operação Segura de Tratores, Colhedoras e Implementos Florestais",
-    badge: "Destaque Regional BRASEG",
+    badge: "Portaria SEPRT nº 22.677",
     duration: "24 horas",
-    validity: "3 anos",
-    norm: "Portaria SEPRT nº 22.677 / Norma Regulamentadora nº 31",
+    validity: "Reciclagem Trienal (3 anos)",
+    norm: "NR-31 / Portaria SEPRT nº 22.677",
     price: 129.90,
     originalPrice: 189.90,
     featured: true,
     rating: 4.98,
     studentsCount: 1150,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr31.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -525,15 +479,9 @@ export const COURSES_DATA = [
     medicalEndorsement: {
       name: "Dr. Carlos Eduardo Menezes",
       role: "Médico do Trabalho (CRM-SP 148.920)",
-      notes: "Prevenção de traumas em terrenos inclinados e vibração de corpo inteiro (VMB/VCI)."
+      notes: "Prevenção de traumas em terrenos inclinados e vibração de corpo inteiro (VCI)."
     },
-    description: "Treinamento especializado voltado para o agronegócio, setor canavieiro e indústrias de celulose (forte presença regional da BRASEG em Lençóis Paulista). Foco em proteção da Tomada de Potência (TDP), estrutura de proteção contra capotamento (EPCC/ROPS), e operação em declives.",
-    learningGoals: [
-      "Operar tratores equipados com EPCC (Estrutura de Proteção Contra Capotamento) e cinto;",
-      "Inspecionar e manter o escudo protetor da Tomada de Potência (TDP) e eixo cardan;",
-      "Calcular ângulos limites de inclinação para prevenir tombamentos laterais;",
-      "Aplicar regras de trânsito em estradas vicinais e frentes de corte/plantio."
-    ],
+    description: "Treinamento especializado voltado para o agronegócio, setor canavieiro e indústrias de celulose. Foco em proteção da Tomada de Potência (TDP), estrutura de proteção contra capotamento (EPCC/ROPS) e operação em declives.",
     modules: [
       {
         id: "m1",
@@ -557,14 +505,14 @@ export const COURSES_DATA = [
                   "Para diminuir o ruído do motor"
                 ],
                 correctIndex: 1,
-                explanation: "O eixo cardan gira a 540 ou 1000 RPM com torque massivo. A falta de capa protetora íntegra é a causa mais comum de acidentes fatais por enrolamento mecânico no campo."
+                explanation: "O eixo cardan gira a 540 ou 1000 RPM com torque massivo. A falta de capa protetora íntegra é a causa mais comum de acidentes graves por enrolamento mecânico no campo."
               }
             ],
-            transcript: "Bem-vindo ao módulo de NR-31 da BRASEG. Em operações agrícolas e florestais, o trator é uma ferramenta indispensável, mas que exige extremo cuidado. Nunca trabalhe com eixo cardan desprotegido e sempre utilize o cinto de segurança junto com o arco EPCC contra capotamentos.",
+            transcript: "Bem-vindo ao módulo de NR-31 da BRASEG. Em operações agrícolas e florestais, o trator exige extremo cuidado. Nunca trabalhe com eixo cardan desprotegido e sempre utilize o cinto de segurança junto com o arco EPCC contra capotamentos.",
             keyPoints: [
               "Capa protetora do cardan deve ter trava anti-giro de corrente;",
-              "Obrigatoriedade do uso do cinto de segurança para manter o operador dentro da gaiola EPCC em caso de tombamento;",
-              "Proibido transportar caronas em para-lamas ou implementos agrícolas."
+              "Obrigatoriedade do uso do cinto de segurança para manter o operador dentro da gaiola EPCC;",
+              "Proibido transportar passageiros em para-lamas ou implementos agrícolas."
             ]
           }
         ]
@@ -591,18 +539,16 @@ export const COURSES_DATA = [
     category: "industrial",
     categoryLabel: "Industrial & Químico",
     title: "NR-20: Segurança com Inflamáveis e Combustíveis",
-    subtitle: "Curso Básico / Intermediário - Classificação de Instalações e Tanques",
-    badge: "Inflamáveis & Explosão",
+    subtitle: "Classificação de Instalações, Controle de Estática e Permissão a Quente",
+    badge: "Portaria SEPRT nº 1.360",
     duration: "16 horas",
-    validity: "2 anos",
-    norm: "Portaria SEPRT nº 1.360 / Norma Regulamentadora nº 20",
+    validity: "Reciclagem Bienal (2 anos)",
+    norm: "NR-20 / Portaria SEPRT nº 1.360",
     price: 119.90,
     originalPrice: 169.90,
     featured: false,
     rating: 4.87,
     studentsCount: 480,
-    color: "#002e5a",
-    accentColor: "#f4c602",
     thumb: "assets/images/nr20.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -614,13 +560,7 @@ export const COURSES_DATA = [
       role: "Médico do Trabalho (CRM-SP 148.920)",
       notes: "Monitoramento de exposição a vapores de hidrocarbonetos e benzeno."
     },
-    description: "Treinamento obrigatório para colaboradores que adentram e laboram na área de manuseio, armazenamento ou transferência de líquidos inflamáveis e gases liquefeitos. Classificação de áreas Ex (Zona 0, 1 e 2) e combate a princípios de incêndio classe B.",
-    learningGoals: [
-      "Compreender ponto de fulgor, ponto de combustão e limites de explosividade (LEL/UEL);",
-      "Controlar fontes de eletricidade estática e aterramento em descarregamento de tanques;",
-      "Operar sistemas de contenção de vazamentos (bacias de contenção);",
-      "Emitir Permissão de Trabalho a Quente em áreas com vapores inflamáveis."
-    ],
+    description: "Treinamento obrigatório para colaboradores que adentram a área de manuseio, armazenamento ou transferência de líquidos inflamáveis e gases liquefeitos. Classificação de áreas Ex e prevenção de explosões.",
     modules: [
       {
         id: "m1",
@@ -647,11 +587,11 @@ export const COURSES_DATA = [
                 explanation: "A NR-20 define líquidos inflamáveis como aqueles que possuem ponto de fulgor menor ou igual a 60°C."
               }
             ],
-            transcript: "Trabalhar com inflamáveis requer a eliminação do triângulo do fogo. A eletricidade estática gerada pelo fluxo de líquidos em mangueiras é uma das principais fontes invisíveis de ignição. Sempre conecte o cabo terra antes de iniciar o descarregamento.",
+            transcript: "Trabalhar com inflamáveis requer a eliminação de qualquer fonte de ignição. A eletricidade estática gerada pelo fluxo de líquidos em mangueiras é uma das principais causas de faíscas. Conecte o cabo terra antes de iniciar o descarregamento.",
             keyPoints: [
               "Ponto de fulgor: menor temperatura em que o líquido libera vapores inflamáveis;",
               "Uso obrigatório de ferramentas anti-faísca (bronze/berílio);",
-              "Equipotencialização de tanques de abastecimento."
+              "Equipotencialização e aterramento de tanques."
             ]
           }
         ]
@@ -678,18 +618,16 @@ export const COURSES_DATA = [
     category: "geral",
     categoryLabel: "Segurança Geral & CIPA",
     title: "NR-05: CIPA e Prevenção de Assédio",
-    subtitle: "Comissão Interna de Prevenção de Acidentes e Inclusão no Trabalho",
-    badge: "Gestão CIPA • Lei 14.457",
+    subtitle: "Comissão Interna de Prevenção de Acidentes e Conformidade com a Lei 14.457/22",
+    badge: "Lei nº 14.457 / NR-05",
     duration: "20 horas",
-    validity: "1 ano",
-    norm: "Portaria MTP nº 4.219 / Lei nº 14.457 / NR-05 Atualizada",
+    validity: "Mandato Anual (1 ano)",
+    norm: "NR-05 / Lei nº 14.457/2022",
     price: 99.90,
     originalPrice: 149.90,
     featured: false,
     rating: 4.93,
     studentsCount: 890,
-    color: "#002e5a",
-    accentColor: "#647f9c",
     thumb: "assets/images/nr05.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -701,13 +639,7 @@ export const COURSES_DATA = [
       role: "Médico do Trabalho (CRM-SP 148.920)",
       notes: "Saúde mental ocupacional, prevenção ao estresse laboral e canal de denúncias éticas."
     },
-    description: "Capacitação completa para cipeiros titulares e suplentes, e designados de CIPA. Inclui a nova atribuição legal de prevenção e combate ao assédio sexual e moral no ambiente corporativo, elaboração do Mapa de Riscos e organização da SIPAT.",
-    learningGoals: [
-      "Elaborar o Mapa de Riscos Ocupacionais conforme os grupos de riscos;",
-      "Investigar acidentes de trabalho pelo método da árvore de causas;",
-      "Implementar políticas ativas de prevenção e combate ao assédio moral e sexual;",
-      "Realizar inspeções periódicas de segurança nos postos de trabalho."
-    ],
+    description: "Capacitação completa para cipeiros titulares, suplentes e designados de CIPA. Inclui a nova atribuição legal de prevenção e combate ao assédio no ambiente corporativo, elaboração do Mapa de Riscos e organização da SIPAT.",
     modules: [
       {
         id: "m1",
@@ -765,18 +697,16 @@ export const COURSES_DATA = [
     category: "geral",
     categoryLabel: "Segurança Geral",
     title: "NR-06: Equipamentos de Proteção Individual (EPI)",
-    subtitle: "Uso Correto, Certificado de Aprovação (CA) e Higienização",
-    badge: "Uso Essencial",
+    subtitle: "Uso Correto, Certificado de Aprovação (CA) e Hierarquia de Controle",
+    badge: "Portaria MTP nº 2.175",
     duration: "4 horas",
-    validity: "1 ano",
-    norm: "Portaria MTP nº 2.175 / Norma Regulamentadora nº 06",
+    validity: "Reciclagem Anual (1 ano)",
+    norm: "NR-06 / Portaria MTP nº 2.175",
     price: 49.90,
     originalPrice: 79.90,
     featured: false,
     rating: 4.85,
     studentsCount: 1680,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr06.jpg",
     instructor: {
       name: "Eng. Ricardo S. Albuquerque",
@@ -788,13 +718,7 @@ export const COURSES_DATA = [
       role: "Médico do Trabalho (CRM-SP 148.920)",
       notes: "Atenuação de ruído por protetor auditivo e proteção respiratória contra particulados."
     },
-    description: "Orientações fundamentais sobre direitos e deveres do empregador e trabalhador quanto ao fornecimento gratuito, seleção adequada, guarda, conservação e obrigatoriedade de consulta do CA válido no portal do Ministério do Trabalho.",
-    learningGoals: [
-      "Identificar o Certificado de Aprovação (CA) gravado no EPI;",
-      "Executar a higienização e armazenamento corretos;",
-      "Reconhecer quando o EPI deve ser substituído imediatamente;",
-      "Compreender a hierarquia de controle (EPC sobre EPI)."
-    ],
+    description: "Orientações fundamentais sobre direitos e deveres quanto ao fornecimento gratuito, seleção adequada, guarda, conservação e obrigatoriedade de consulta do CA válido no portal do Ministério do Trabalho.",
     modules: [
       {
         id: "m1",
@@ -852,18 +776,16 @@ export const COURSES_DATA = [
     category: "geral",
     categoryLabel: "Saúde & Ergonomia",
     title: "NR-17: Ergonomia e Biomecânica Ocupacional",
-    subtitle: "Prevenção de LER/DORT, Postura Correta e Conforto nos Postos",
-    badge: "Saúde Biomecânica",
+    subtitle: "Prevenção de LER/DORT, Postura Correta e Adequação Biomecânica",
+    badge: "Portaria MTP nº 423",
     duration: "8 horas",
-    validity: "2 anos",
-    norm: "Portaria MTP nº 423 / Norma Regulamentadora nº 17",
+    validity: "Reciclagem Bienal (2 anos)",
+    norm: "NR-17 / Portaria MTP nº 423",
     price: 69.90,
     originalPrice: 109.90,
     featured: false,
     rating: 4.89,
     studentsCount: 540,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/nr17.jpg",
     instructor: {
       name: "Dr. Carlos Eduardo Menezes",
@@ -875,13 +797,7 @@ export const COURSES_DATA = [
       role: "Médico Coordenador do PCMSO (CRM-SP 148.920)",
       notes: "Redução de queixas osteomusculares e adequação da Análise Ergonômica do Trabalho (AET)."
     },
-    description: "Capacitação sobre adaptação das condições de trabalho às características psicofisiológicas dos trabalhadores. Foco no levantamento manual de cargas, mobiliário ergonômico, iluminação, organização do trabalho e ginástica laboral compensatória.",
-    learningGoals: [
-      "Executar o levantamento manual de cargas com flexão de joelhos e coluna reta;",
-      "Regular cadeiras, monitores e apoios de punho e pés em estações administrativas;",
-      "Identificar sinais precoces de fadiga osteomuscular (LER/DORT);",
-      "Compreender a metodologia da AEP (Avaliação Ergonômica Preliminar)."
-    ],
+    description: "Capacitação sobre adaptação das condições de trabalho às características psicofisiológicas dos trabalhadores. Foco no levantamento manual de cargas, mobiliário ergonômico e organização do trabalho.",
     modules: [
       {
         id: "m1",
@@ -908,7 +824,7 @@ export const COURSES_DATA = [
                 explanation: "Flexionar os joelhos transfere a força mecânica para os músculos fortes das coxas e glúteos, reduzindo a pressão de compressão sobre as vértebras L4-L5 e L5-S1."
               }
             ],
-            transcript: "Olá! A ergonomia não é apenas sobre conforto, é sobre preservação da sua capacidade laboral ao longo de toda a vida. Pequenos ajustes na altura do monitor e pausas ativas para alongamento evitam dores crônicas na cervical e lombar.",
+            transcript: "A ergonomia é sobre preservação da sua capacidade funcional ao longo de toda a vida profissional. Pequenos ajustes na altura do monitor e pausas ativas evitam sobrecargas crônicas na coluna vertebral.",
             keyPoints: [
               "Monitor na altura da linha dos olhos;",
               "Pés apoiados integralmente no chão ou em suporte;",
@@ -939,18 +855,16 @@ export const COURSES_DATA = [
     category: "saude",
     categoryLabel: "Emergência & Primeiros Socorros",
     title: "Primeiros Socorros e Suporte Básico de Vida",
-    subtitle: "RCP de Alta Qualidade, Desengasgo (Heimlich) e Uso do DEA",
-    badge: "Salva Vidas • AHA",
+    subtitle: "RCP de Alta Qualidade, Desengasgo e Operação do DEA",
+    badge: "Diretrizes AHA / NR-07",
     duration: "8 horas",
-    validity: "1 ano",
-    norm: "Portaria MTE / Diretrizes Internacionais AHA / NR-07",
+    validity: "Reciclagem Anual (1 ano)",
+    norm: "Portaria MTE / Diretrizes AHA / NR-07",
     price: 79.90,
     originalPrice: 129.90,
     featured: true,
     rating: 4.96,
     studentsCount: 1340,
-    color: "#002e5a",
-    accentColor: "#3774c2",
     thumb: "assets/images/socorros.jpg",
     instructor: {
       name: "Dr. Carlos Eduardo Menezes",
@@ -962,13 +876,7 @@ export const COURSES_DATA = [
       role: "Médico Coordenador do PCMSO (CRM-SP 148.920)",
       notes: "Protocolo de Cadeia de Sobrevivência com desfibrilação precoce (DEA)."
     },
-    description: "Treinamento prático e teórico fundamental para socorristas e brigadistas corporativos. Protocolo da Cadeia de Sobrevivência da American Heart Association (AHA): reconhecimento da Parada Cardiorrespiratória (PCR), compressões torácicas eficazes, Desfibrilador Externo Automático (DEA), controle de hemorragias com torniquete e manobra de Heimlich.",
-    learningGoals: [
-      "Reconhecer uma Parada Cardiorrespiratória em menos de 10 segundos;",
-      "Executar compressões torácicas contínuas a 100-120 bpm na profundidade de 5 a 6 cm;",
-      "Instalar e seguir os comandos de voz do Desfibrilador Externo Automático (DEA);",
-      "Desengasgar adultos e crianças com a Manobra de Heimlich."
-    ],
+    description: "Treinamento prático e teórico fundamental para socorristas e brigadistas. Protocolo da American Heart Association (AHA): reconhecimento da PCR, compressões torácicas eficazes, operação do DEA, controle de hemorragias e desengasgo.",
     modules: [
       {
         id: "m1",
@@ -1026,34 +934,30 @@ export const SUBSCRIPTION_PLANS = [
   {
     id: "pass_annual",
     name: "BRASEG Pass Anual",
-    badge: "Melhor Custo-Benefício",
     price: 299.00,
     period: "ano",
     monthlyEquivalent: "R$ 24,90/mês",
-    installments: "em até 12x de R$ 29,90",
-    description: "Acesso ilimitado a todas as 10 NRs, reciclagens automáticas, simuladores em tempo real e emissão ilimitada de certificados oficiais com QR Code.",
+    description: "Acesso irrestrito a todas as 10 NRs, reciclagens automáticas e emissão ilimitada de certificados oficiais com QR Code e NFS-e.",
     features: [
       "Acesso completo a todas as 10 Normas Regulamentadoras;",
-      "Certificados com assinaturas digitais válidas no MTE;",
+      "Certificados com assinaturas digitais de Médicos (CRM) e Engenheiros (CREA);",
       "Simulações industriais interativas e telemetria;",
-      "Plantão de dúvidas com Médico do Trabalho e Engenheiro SST;",
-      "Emissão automática de Nota Fiscal (NFS-e Asaas);"
+      "Suporte técnico-normativo com corpo técnico do Grupo BRASEG;",
+      "Emissão automática de Nota Fiscal de Serviços (NFS-e Asaas)."
     ]
   },
   {
     id: "pass_monthly",
     name: "BRASEG Pass Mensal",
-    badge: "Sem Fidelidade",
     price: 39.90,
     period: "mês",
     monthlyEquivalent: "R$ 39,90/mês",
-    installments: "Cobrança recorrente no Cartão ou PIX",
-    description: "Flexibilidade total para profissionais e autônomos realizarem seus cursos conforme a demanda imediata de trabalho.",
+    description: "Flexibilidade para realização de capacitações pontuais sem compromisso de longo prazo.",
     features: [
       "Acesso a todos os cursos enquanto a assinatura estiver ativa;",
-      "Certificados oficiais liberados após aprovação nas provas;",
-      "Suporte técnico via WhatsApp e fórum.",
-      "Cancele quando quiser sem multas."
+      "Certificados oficiais liberados após aprovação nas avaliações;",
+      "Suporte técnico via fórum e WhatsApp.",
+      "Cancelamento facilitado a qualquer momento."
     ]
   }
 ];
@@ -1066,7 +970,7 @@ export const B2B_CORPORATE_PACKS = [
     price: 490.00,
     slotPrice: 49.00,
     badge: "Pequenas Equipes",
-    description: "Ideal para frentes de trabalho pontuais ou pequenas empresas prestadoras de serviço.",
+    description: "Ideal para frentes de trabalho pontuais ou empresas prestadoras de serviços.",
     features: ["10 matrículas em qualquer NR;", "Gestão centralizada no Painel SESMT;", "Emissão de Fatura e Boleto CNPJ."]
   },
   {
@@ -1075,10 +979,10 @@ export const B2B_CORPORATE_PACKS = [
     slots: 50,
     price: 1890.00,
     slotPrice: 37.80,
-    badge: "Mais Escolhido por SESMTs",
+    badge: "Média Escala",
     popular: true,
-    description: "Perfeito para indústrias, usinas sucroalcooleiras e operações agroflorestais regionais.",
-    features: ["50 matrículas flexíveis;", "Customização com logo da sua empresa nos certificados;", "Exportação eSocial S-2220/S-2240;", "Faturamento faturado via Asaas."]
+    description: "Recomendado para indústrias, usinas sucroalcooleiras e operações agroflorestais.",
+    features: ["50 matrículas flexíveis sem validade de expiração;", "Customização de logotipo nos certificados;", "Exportação eSocial S-2220/S-2240;", "Faturamento via Asaas com NFS-e."]
   },
   {
     id: "pack_100",
@@ -1086,8 +990,8 @@ export const B2B_CORPORATE_PACKS = [
     slots: 100,
     price: 3290.00,
     slotPrice: 32.90,
-    badge: "Máxima Economia (35% OFF)",
-    description: "Escala total para grandes plantas industriais e terceirizadas de grande porte.",
+    badge: "Alta Escala (35% OFF)",
+    description: "Estrutura corporativa completa para grandes plantas industriais e terceirizadas.",
     features: ["100 matrículas sem validade de expiração;", "Co-marcação personalizada;", "Consultor dedicado BRASEG;", "Integração direta de ASOs e PCMSO."]
   }
 ];

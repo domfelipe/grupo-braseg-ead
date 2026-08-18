@@ -1,11 +1,7 @@
 /**
- * Asaas Gateway & Checkout Transparente Liquid Glass
- * Grupo BRASEG Consultoria e Treinamentos - Lençóis Paulista / SP
- * Substituição moderna do Conta Azul com suporte a:
- * - PIX Dinâmico Instantâneo (QR Code + Copia e Cola + Webhook em tempo real)
- * - Cartão de Crédito em até 12x com validação interativa
- * - Boleto Bancário / Fatura CNPJ (Febraban D+0)
- * - Cupons de Desconto & Emissão Automática de NFS-e Municipal
+ * BRASEG EAD - Motor de Checkout Transparente Asaas Gateway
+ * Padrão Corporativo B2B / B2C (Stripe / Apple Pay Style)
+ * Suporte a PIX com confirmação em tempo real via Webhook, Cartão até 12x, Boleto CNPJ e NFS-e
  */
 
 import { State } from './state.js';
@@ -13,482 +9,354 @@ import { BRASEG_INSTITUTIONAL } from './coursesData.js';
 
 export class CheckoutEngine {
   constructor(options = {}) {
-    this.options = options;
-    this.currentItem = null; // { type: 'course'|'subscription'|'pack', data: ... }
-    this.selectedMethod = 'pix'; // 'pix' | 'credit_card' | 'boleto'
-    this.appliedCoupon = null;
-    this.discountPercent = 0;
-    this.installments = 1;
-    this.pixTimerInterval = null;
-    this.pixSecondsLeft = 900; // 15 minutos
-    this.isOpen = false;
-    this.modalEl = null;
+    this.containerId = options.containerId || 'checkoutModalContainer';
+    this.onNavigateToCourse = options.onNavigateToCourse || null;
+    this.onNavigateToCatalog = options.onNavigateToCatalog || null;
 
-    this.init();
-  }
-
-  init() {
-    let container = document.getElementById('checkoutModalContainer');
-    if (!container) {
-      container = document.createElement('div');
-      container.id = 'checkoutModalContainer';
-      document.body.appendChild(container);
-    }
-    this.modalEl = container;
-  }
-
-  openCheckout(itemType, itemData) {
-    this.currentItem = { type: itemType, data: itemData };
+    this.currentOrder = null;
     this.selectedMethod = 'pix';
     this.appliedCoupon = null;
-    this.discountPercent = 0;
-    this.installments = 1;
-    this.pixSecondsLeft = 900;
-    this.isOpen = true;
+    this.pixCountdownSeconds = 900; // 15 minutos
+    this.pixTimerInterval = null;
+    this.webhookChecking = false;
 
-    this.render();
-    this.startPixTimer();
-  }
-
-  closeCheckout() {
-    this.isOpen = false;
-    if (this.pixTimerInterval) clearInterval(this.pixTimerInterval);
-    if (this.modalEl) {
-      this.modalEl.innerHTML = '';
-    }
-  }
-
-  calculateTotal() {
-    if (!this.currentItem) return { original: 0, final: 0, discount: 0 };
-    const price = this.currentItem.data.price || 0;
-    const discount = (price * this.discountPercent) / 100;
-    const final = Math.max(0, price - discount);
-    return {
-      original: price,
-      discount: discount,
-      final: final
+    this.couponDatabase = {
+      'BRASEG10': { type: 'percent', value: 10, label: '10% de Desconto Institucional' },
+      'SESMT20': { type: 'percent', value: 20, label: '20% de Desconto Corporativo SESMT' },
+      'DIRETORIA': { type: 'percent', value: 50, label: '50% de Desconto Especial Diretoria' }
     };
   }
 
-  startPixTimer() {
-    if (this.pixTimerInterval) clearInterval(this.pixTimerInterval);
-    this.pixTimerInterval = setInterval(() => {
-      if (this.pixSecondsLeft > 0 && this.isOpen) {
-        this.pixSecondsLeft--;
-        const timerEl = document.getElementById('pixCountdownTimer');
-        if (timerEl) {
-          const mins = Math.floor(this.pixSecondsLeft / 60);
-          const secs = this.pixSecondsLeft % 60;
-          timerEl.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-        }
+  openCheckout(itemType, itemData) {
+    this.appliedCoupon = null;
+    this.selectedMethod = 'pix';
+    this.pixCountdownSeconds = 900;
+    clearInterval(this.pixTimerInterval);
+
+    let price = 0;
+    let title = '';
+    let description = '';
+    let itemId = '';
+
+    if (itemType === 'course') {
+      price = itemData.price || 89.90;
+      title = `${itemData.code}: ${itemData.title}`;
+      description = `Certificação Regulamentar Homologada • Carga Horária: ${itemData.duration}`;
+      itemId = itemData.id;
+    } else if (itemType === 'subscription') {
+      price = itemData.price || 299.00;
+      title = itemData.name;
+      description = itemData.description;
+      itemId = itemData.id;
+    } else if (itemType === 'pack') {
+      price = itemData.price || 1890.00;
+      title = itemData.name;
+      description = `${itemData.slots} Licenças Corporativas Flexíveis com Faturamento CNPJ`;
+      itemId = itemData.id;
+    }
+
+    this.currentOrder = {
+      id: `PED-${Date.now().toString().slice(-6)}`,
+      itemType,
+      itemId,
+      title,
+      description,
+      originalPrice: price,
+      finalPrice: price,
+      discount: 0,
+      createdAt: new Date().toISOString(),
+      student: {
+        name: State.currentStudent.name,
+        cpf: State.currentStudent.cpf,
+        company: State.currentStudent.company,
+        cnpj: State.currentStudent.cnpj
       }
-    }, 1000);
+    };
+
+    this.renderModal();
+    this.startPixCountdown();
   }
 
-  generatePixCopiaECola(price) {
-    const randomHex = Math.random().toString(36).substring(2, 10).toUpperCase();
-    return `00020126580014br.gov.bcb.pix0136asaas-pix-${randomHex}@braseg.com.br520400005303986540${price.toFixed(2)}5802BR5925GRUPO BRASEG TREINAMENTOS6015LENCOIS PAULISTA62070503***6304`;
-  }
+  renderModal() {
+    const container = document.getElementById(this.containerId);
+    if (!container) return;
 
-  render() {
-    if (!this.isOpen || !this.currentItem) return;
+    const ord = this.currentOrder;
+    const finalPriceFmt = `R$ ${ord.finalPrice.toFixed(2).replace('.', ',')}`;
 
-    const { original, discount, final } = this.calculateTotal();
-    const item = this.currentItem.data;
-    const student = State.currentStudent;
-    const pixCode = this.generatePixCopiaECola(final);
-
-    this.modalEl.innerHTML = `
+    container.innerHTML = `
       <div class="checkout-backdrop" id="checkoutBackdrop">
-        <div class="checkout-liquid-modal animate-slide-up">
-          <!-- Top Header com Logo e Fechar -->
-          <div class="checkout-header">
-            <div class="checkout-brand">
-              <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="checkout-logo">
-              <div class="checkout-badge-asaas">
-                <span class="pulse-dot"></span>
-                <span>Checkout Seguro Asaas</span>
+        <div class="checkout-modal-card" id="checkoutCard">
+          
+          <!-- Cabeçalho do Checkout -->
+          <div class="checkout-top-bar">
+            <div class="checkout-brand-info">
+              <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="checkout-logo-img">
+              <div class="security-seal">
+                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Ambiente Seguro • Asaas Gateway (BACEN)
               </div>
             </div>
-            <button class="btn-close-checkout" id="btnCloseCheckout" title="Fechar">✕</button>
+            <button class="btn-close-modal" id="btnCloseCheckout" title="Fechar Checkout">✕</button>
           </div>
 
-          <div class="checkout-body-grid">
-            <!-- Coluna Esquerda: Resumo da Compra & Cupom -->
-            <div class="checkout-summary-col">
-              <h3 class="checkout-section-title">Resumo do Pedido</h3>
+          <!-- Grade Principal Dividida (Resumo x Pagamento) -->
+          <div class="checkout-split-grid">
+            
+            <!-- Coluna Esquerda: Resumo do Pedido -->
+            <div class="checkout-col-summary">
+              <h3 class="checkout-heading">Resumo da Contratação</h3>
               
-              <div class="checkout-item-card">
-                <div class="item-icon-tag">
-                  ${this.currentItem.type === 'subscription' ? '👑' : (this.currentItem.type === 'pack' ? '🏢' : '📜')}
-                </div>
-                <div class="item-details">
-                  <strong class="item-title">${item.name || item.title}</strong>
-                  <span class="item-subtitle">${item.subtitle || item.description}</span>
-                  <div class="item-meta">
-                    ${item.code ? `<span class="badge-code">${item.code}</span>` : ''}
-                    <span class="badge-cert">Certificado MTE Incluso</span>
-                  </div>
-                </div>
+              <div class="order-item-box">
+                <span class="order-item-title">${ord.title}</span>
+                <span class="order-item-desc">${ord.description}</span>
               </div>
 
               <!-- Cupom de Desconto -->
-              <div class="checkout-coupon-box">
-                <label for="couponInput">Possui cupom de desconto ou parceria?</label>
-                <div class="coupon-input-group">
-                  <input type="text" id="couponInput" placeholder="Ex: BRASEG10, SESMT20" value="${this.appliedCoupon || ''}" ${this.appliedCoupon ? 'disabled' : ''}>
-                  <button class="btn btn-sm ${this.appliedCoupon ? 'btn-danger' : 'btn-outline'}" id="btnApplyCoupon">
-                    ${this.appliedCoupon ? 'Remover' : 'Aplicar'}
-                  </button>
+              <div class="coupon-section">
+                <label>Cupom Promocional ou Convênio:</label>
+                <div class="coupon-input-row">
+                  <input type="text" id="checkoutCouponInput" placeholder="Ex: BRASEG10, SESMT20" value="${this.appliedCoupon ? this.appliedCoupon.code : ''}">
+                  <button type="button" class="btn btn-outline btn-sm" id="btnApplyCoupon">Aplicar</button>
                 </div>
-                ${this.appliedCoupon ? `
-                  <span class="coupon-success-msg">✅ Cupom "${this.appliedCoupon}" ativado (${this.discountPercent}% de desconto)!</span>
-                ` : ''}
+                ${this.appliedCoupon ? `<div style="font-size: 0.72rem; color: #4ade80; margin-top: 4px; font-weight: 600;">✓ ${this.appliedCoupon.label} aplicado com sucesso!</div>` : ''}
               </div>
 
-              <!-- Totais Financeiros -->
-              <div class="checkout-pricing-table">
-                <div class="price-row">
-                  <span>Valor Original</span>
-                  <span>R$ ${original.toFixed(2).replace('.', ',')}</span>
+              <!-- Demonstrativo de Valores -->
+              <div class="price-summary-card">
+                <div class="summary-row">
+                  <span>Valor Original:</span>
+                  <span>R$ ${ord.originalPrice.toFixed(2).replace('.', ',')}</span>
                 </div>
-                ${discount > 0 ? `
-                  <div class="price-row discount">
-                    <span>Desconto Aplicado (${this.discountPercent}%)</span>
-                    <span>- R$ ${discount.toFixed(2).replace('.', ',')}</span>
+                ${ord.discount > 0 ? `
+                  <div class="summary-row" style="color: #4ade80;">
+                    <span>Desconto Aplicado:</span>
+                    <span>- R$ ${ord.discount.toFixed(2).replace('.', ',')}</span>
                   </div>
                 ` : ''}
-                <div class="price-row total">
-                  <span>Total a Pagar</span>
-                  <strong class="total-amount">R$ ${final.toFixed(2).replace('.', ',')}</strong>
+                <div class="summary-row total-row">
+                  <span>Total a Pagar:</span>
+                  <strong>${finalPriceFmt}</strong>
                 </div>
               </div>
 
-              <!-- Dados do Faturamento (Comprador) -->
-              <div class="checkout-buyer-info">
-                <small class="buyer-label">Faturar para:</small>
-                <div class="buyer-card">
-                  <strong>${student.name}</strong>
-                  <span>CPF: ${student.cpf} • ${student.company}</span>
-                  <small>Emissão automática de NFS-e (Lençóis Paulista/SP)</small>
-                </div>
+              <!-- Tomador do Serviço -->
+              <div class="buyer-credentials-card">
+                <strong>Tomador do Serviço (NFS-e):</strong>
+                <span>${ord.student.name}</span>
+                <span>CPF: ${ord.student.cpf} • ${ord.student.company}</span>
+                <span style="font-size: 0.68rem; color: #64748b; margin-top: 4px; display: block;">Nota Fiscal emitida pela Prefeitura de Lençóis Paulista/SP</span>
               </div>
             </div>
 
-            <!-- Coluna Direita: Meios de Pagamento Asaas -->
-            <div class="checkout-payment-col">
-              <h3 class="checkout-section-title">Forma de Pagamento</h3>
-
-              <!-- Seletor de Abas -->
-              <div class="payment-tabs-nav">
-                <button class="payment-tab-btn ${this.selectedMethod === 'pix' ? 'active' : ''}" data-method="pix">
-                  <span class="tab-icon">⚡</span>
-                  <span>PIX Instantâneo</span>
-                  <small class="tab-badge-instant">Liberação Imediata</small>
+            <!-- Coluna Direita: Métodos de Pagamento Asaas -->
+            <div class="checkout-col-payment">
+              <h3 class="checkout-heading">Forma de Pagamento</h3>
+              
+              <!-- Seletor de Métodos -->
+              <div class="payment-tabs-selector">
+                <button type="button" class="payment-tab-button ${this.selectedMethod === 'pix' ? 'active' : ''}" data-method="pix">
+                  PIX Instantâneo
                 </button>
-                <button class="payment-tab-btn ${this.selectedMethod === 'credit_card' ? 'active' : ''}" data-method="credit_card">
-                  <span class="tab-icon">💳</span>
-                  <span>Cartão de Crédito</span>
-                  <small>Até 12x</small>
+                <button type="button" class="payment-tab-button ${this.selectedMethod === 'card' ? 'active' : ''}" data-method="card">
+                  Cartão de Crédito
                 </button>
-                <button class="payment-tab-btn ${this.selectedMethod === 'boleto' ? 'active' : ''}" data-method="boleto">
-                  <span class="tab-icon">📄</span>
-                  <span>Boleto / CNPJ</span>
-                  <small>Faturamento D+0</small>
+                <button type="button" class="payment-tab-button ${this.selectedMethod === 'boleto' ? 'active' : ''}" data-method="boleto">
+                  Boleto / Fatura CNPJ
                 </button>
               </div>
 
-              <!-- Conteúdo da Aba Selecionada -->
-              <div class="payment-tab-content">
-                ${this.renderPaymentMethodContent(final, pixCode)}
+              <!-- Conteúdo Dinâmico do Método -->
+              <div id="paymentMethodContent">
+                ${this.renderMethodContent()}
               </div>
+
             </div>
+
           </div>
+
         </div>
       </div>
     `;
 
-    this.bindEvents();
+    this.bindModalEvents();
   }
 
-  renderPaymentMethodContent(finalPrice, pixCode) {
+  renderMethodContent() {
+    const ord = this.currentOrder;
+    const finalPriceFmt = `R$ ${ord.finalPrice.toFixed(2).replace('.', ',')}`;
+
     if (this.selectedMethod === 'pix') {
+      const pixCode = `00020126580014br.gov.bcb.pix0136braseg-asaas-${ord.id}-lp-sp5204000053039865405${ord.finalPrice.toFixed(2)}5802BR5925GRUPO BRASEG CONSULTORIA6016LENCOIS PAULISTA62070503***6304`;
+
       return `
-        <div class="pix-payment-box animate-fade-in">
-          <div class="pix-instruction">
-            <p>Abra o app do seu banco, escolha <strong>Pagar com PIX</strong> e aponte a câmera para o QR Code abaixo:</p>
+        <div class="pix-render-card">
+          <div class="pix-qr-frame">
+            <svg width="140" height="140" viewBox="0 0 140 140" fill="none">
+              <rect width="140" height="140" fill="white"/>
+              <!-- Quadrados de Âncora PIX -->
+              <rect x="10" y="10" width="35" height="35" fill="#002e5a"/>
+              <rect x="15" y="15" width="25" height="25" fill="white"/>
+              <rect x="20" y="20" width="15" height="15" fill="#002e5a"/>
+              
+              <rect x="95" y="10" width="35" height="35" fill="#002e5a"/>
+              <rect x="100" y="15" width="25" height="25" fill="white"/>
+              <rect x="105" y="20" width="15" height="15" fill="#002e5a"/>
+
+              <rect x="10" y="95" width="35" height="35" fill="#002e5a"/>
+              <rect x="15" y="100" width="25" height="25" fill="white"/>
+              <rect x="20" y="105" width="15" height="15" fill="#002e5a"/>
+
+              <!-- Padrão de Bits -->
+              <rect x="55" y="15" width="10" height="10" fill="#002e5a"/>
+              <rect x="75" y="15" width="10" height="10" fill="#002e5a"/>
+              <rect x="55" y="35" width="10" height="10" fill="#002e5a"/>
+              <rect x="75" y="35" width="10" height="10" fill="#002e5a"/>
+              <rect x="55" y="55" width="30" height="30" fill="#002e5a"/>
+              <rect x="62" y="62" width="16" height="16" fill="white"/>
+              <rect x="67" y="67" width="6" height="6" fill="#002e5a"/>
+              <rect x="15" y="55" width="10" height="25" fill="#002e5a"/>
+              <rect x="35" y="65" width="12" height="10" fill="#002e5a"/>
+              <rect x="95" y="55" width="10" height="25" fill="#002e5a"/>
+              <rect x="115" y="65" width="12" height="10" fill="#002e5a"/>
+              <rect x="55" y="95" width="15" height="15" fill="#002e5a"/>
+              <rect x="80" y="105" width="15" height="20" fill="#002e5a"/>
+              <rect x="105" y="95" width="20" height="10" fill="#002e5a"/>
+            </svg>
           </div>
 
-          <div class="pix-qrcode-container">
-            <!-- QR Code Vetorial SVG em Alta Definição -->
-            <div class="qrcode-wrapper">
-              <svg class="pix-svg-qr" viewBox="0 0 200 200" width="180" height="180">
-                <rect width="200" height="200" fill="#ffffff" rx="12" />
-                <!-- Marcadores de Canto do QR Code -->
-                <rect x="15" y="15" width="45" height="45" fill="#002e5a" rx="6"/>
-                <rect x="23" y="23" width="29" height="29" fill="#ffffff" rx="3"/>
-                <rect x="29" y="29" width="17" height="17" fill="#f4c602" rx="2"/>
-
-                <rect x="140" y="15" width="45" height="45" fill="#002e5a" rx="6"/>
-                <rect x="148" y="23" width="29" height="29" fill="#ffffff" rx="3"/>
-                <rect x="154" y="29" width="17" height="17" fill="#f4c602" rx="2"/>
-
-                <rect x="15" y="140" width="45" height="45" fill="#002e5a" rx="6"/>
-                <rect x="23" y="148" width="29" height="29" fill="#ffffff" rx="3"/>
-                <rect x="29" y="154" width="17" height="17" fill="#f4c602" rx="2"/>
-
-                <!-- Padrão de Dados Simulado -->
-                <rect x="70" y="20" width="10" height="10" fill="#002e5a" />
-                <rect x="90" y="20" width="10" height="10" fill="#002e5a" />
-                <rect x="110" y="20" width="10" height="10" fill="#002e5a" />
-                <rect x="70" y="40" width="10" height="10" fill="#3774c2" />
-                <rect x="100" y="40" width="10" height="10" fill="#002e5a" />
-                <rect x="120" y="40" width="10" height="10" fill="#3774c2" />
-
-                <rect x="20" y="70" width="10" height="10" fill="#002e5a" />
-                <rect x="40" y="70" width="10" height="10" fill="#3774c2" />
-                <rect x="70" y="70" width="20" height="20" fill="#002e5a" />
-                <rect x="100" y="70" width="10" height="10" fill="#3774c2" />
-                <rect x="120" y="70" width="20" height="10" fill="#002e5a" />
-                <rect x="150" y="70" width="10" height="10" fill="#3774c2" />
-                <rect x="170" y="70" width="10" height="10" fill="#002e5a" />
-
-                <rect x="20" y="100" width="20" height="10" fill="#3774c2" />
-                <rect x="50" y="100" width="10" height="10" fill="#002e5a" />
-                <rect x="80" y="95" width="40" height="20" fill="#002e5a" rx="4" />
-                <text x="100" y="109" font-family="'Inter', sans-serif" font-size="8" font-weight="900" fill="#f4c602" text-anchor="middle">BRASEG</text>
-                <rect x="130" y="100" width="20" height="10" fill="#3774c2" />
-                <rect x="160" y="100" width="20" height="10" fill="#002e5a" />
-
-                <rect x="70" y="130" width="10" height="10" fill="#002e5a" />
-                <rect x="90" y="130" width="20" height="10" fill="#3774c2" />
-                <rect x="120" y="130" width="10" height="10" fill="#002e5a" />
-                <rect x="140" y="130" width="20" height="10" fill="#3774c2" />
-
-                <rect x="70" y="150" width="20" height="10" fill="#3774c2" />
-                <rect x="100" y="150" width="10" height="10" fill="#002e5a" />
-                <rect x="120" y="150" width="20" height="10" fill="#002e5a" />
-                <rect x="150" y="150" width="10" height="10" fill="#3774c2" />
-                <rect x="170" y="150" width="10" height="10" fill="#002e5a" />
-              </svg>
-            </div>
-
-            <div class="pix-timer-box">
-              <span>QR Code válido por:</span>
-              <strong id="pixCountdownTimer" class="timer-digits">15:00</strong>
-            </div>
+          <div class="pix-timer-indicator">
+            QR Code expira em: <strong id="pixTimerDisplay">15:00</strong>
           </div>
 
-          <!-- Chave Copia e Cola -->
-          <div class="pix-copia-cola-group">
-            <label>Ou copie o código PIX Copia e Cola:</label>
-            <div class="copy-input-wrap">
-              <input type="text" id="pixCopiaColaInput" readonly value="${pixCode}">
-              <button class="btn btn-outline" id="btnCopyPix">📋 Copiar</button>
-            </div>
+          <div class="copy-field-wrap">
+            <input type="text" readonly value="${pixCode}" id="pixCopiaColaInput">
+            <button type="button" class="btn btn-outline btn-sm" id="btnCopyPix">Copiar Código</button>
           </div>
 
-          <!-- Gatilho de Aprovação em Tempo Real via Webhook Asaas -->
-          <div class="pix-webhook-sim-box">
-            <div class="webhook-info">
-              <span class="live-pulse"></span>
-              <span>Aguardando liquidação no Banco Central / Asaas...</span>
+          <div class="webhook-simulation-block">
+            <div class="webhook-status-label">
+              <span class="pulse-circle"></span>
+              Aguardando confirmação bancária em tempo real...
             </div>
-            <button class="btn btn-success btn-block" id="btnSimulatePixWebhook">
-              ⚡ Simular Confirmação Instantânea (Webhook Asaas)
+            <button type="button" class="btn btn-success btn-sm btn-block" id="btnSimulateWebhook">
+              Simular Confirmação Bancária Asaas
             </button>
           </div>
         </div>
       `;
     }
 
-    if (this.selectedMethod === 'credit_card') {
-      const p1 = (finalPrice / 1).toFixed(2).replace('.', ',');
-      const p3 = (finalPrice / 3).toFixed(2).replace('.', ',');
-      const p6 = (finalPrice / 6).toFixed(2).replace('.', ',');
-      const p12 = ((finalPrice * 1.08) / 12).toFixed(2).replace('.', ',');
+    if (this.selectedMethod === 'card') {
+      const installments = [];
+      for (let i = 1; i <= 12; i++) {
+        const val = (ord.finalPrice / i).toFixed(2).replace('.', ',');
+        installments.push(`<option value="${i}">${i}x de R$ ${val} ${i === 1 ? '(à vista sem juros)' : 'sem juros'}</option>`);
+      }
 
       return `
-        <form class="card-payment-form animate-fade-in" id="cardPaymentForm">
-          <!-- Cartão Interativo Visual -->
-          <div class="interactive-card-preview">
-            <div class="card-chip"></div>
-            <div class="card-number-display" id="dispCardNumber">•••• •••• •••• ••••</div>
-            <div class="card-meta-row">
-              <div>
-                <small>TITULAR</small>
-                <div id="dispCardName">NOME DO TITULAR</div>
-              </div>
-              <div>
-                <small>VALIDADE</small>
-                <div id="dispCardExpiry">MM/AA</div>
-              </div>
+        <form class="card-form-body" id="cardPaymentForm">
+          <div class="form-field">
+            <label>Número do Cartão de Crédito:</label>
+            <input type="text" id="cardNumberInput" placeholder="0000 0000 0000 0000" maxlength="19" required value="4532 8901 2345 6789">
+          </div>
+
+          <div class="form-field">
+            <label>Nome Impresso no Cartão:</label>
+            <input type="text" id="cardHolderInput" placeholder="NOME DO TITULAR" required value="${ord.student.name.toUpperCase()}">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-field">
+              <label>Validade:</label>
+              <input type="text" id="cardExpiryInput" placeholder="MM/AA" maxlength="5" required value="08/29">
+            </div>
+            <div class="form-field">
+              <label>Código CVV:</label>
+              <input type="password" id="cardCvvInput" placeholder="123" maxlength="4" required value="892">
             </div>
           </div>
 
-          <div class="form-group">
-            <label>Número do Cartão</label>
-            <input type="text" id="cardNumInput" placeholder="0000 0000 0000 0000" maxlength="19" required>
-          </div>
-
-          <div class="form-group">
-            <label>Nome Impresso no Cartão</label>
-            <input type="text" id="cardNameInput" placeholder="Ex: CARLOS A MENDONCA" required>
-          </div>
-
-          <div class="form-row-2">
-            <div class="form-group">
-              <label>Validade</label>
-              <input type="text" id="cardExpiryInput" placeholder="MM/AA" maxlength="5" required>
-            </div>
-            <div class="form-group">
-              <label>CVV / Cód. Segurança</label>
-              <input type="password" id="cardCvvInput" placeholder="123" maxlength="4" required>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label>Opções de Parcelamento (Asaas Gateway)</label>
-            <select id="cardInstallmentsSelect" class="form-select">
-              <option value="1">1x de R$ ${p1} sem juros (À vista)</option>
-              <option value="2">2x de R$ ${(finalPrice / 2).toFixed(2).replace('.', ',')} sem juros</option>
-              <option value="3">3x de R$ ${p3} sem juros</option>
-              <option value="6">6x de R$ ${p6} sem juros</option>
-              <option value="12">12x de R$ ${p12} (com taxa reduzida)</option>
+          <div class="form-field">
+            <label>Condição de Parcelamento:</label>
+            <select class="form-select-ctrl" id="cardInstallmentsSelect">
+              ${installments.join('')}
             </select>
           </div>
 
-          <button type="submit" class="btn btn-primary btn-block" id="btnSubmitCard">
-            🔒 Pagar R$ ${finalPrice.toFixed(2).replace('.', ',')} com Cartão de Crédito
+          <button type="submit" class="btn btn-primary btn-block" style="margin-top: 10px;">
+            Confirmar Pagamento (${finalPriceFmt})
           </button>
         </form>
       `;
     }
 
     if (this.selectedMethod === 'boleto') {
-      const barcode = `00190.00009 03004.182345 56700.018902 8 ${Math.floor(1000 + Math.random() * 9000)}00000${Math.round(finalPrice * 100)}`;
-      const dueDate = new Date();
-      dueDate.setDate(dueDate.getDate() + 3);
+      const barcode = `34191.79001 01043.510047 91020.150008 3 981200000${Math.round(ord.finalPrice * 100)}`;
 
       return `
-        <div class="boleto-payment-box animate-fade-in">
-          <div class="boleto-header-info">
-            <strong>Boleto Bancário / Fatura Corporativa Asaas</strong>
-            <span>Vencimento em: <strong>${dueDate.toLocaleDateString('pt-BR')}</strong> (3 dias úteis)</span>
+        <div class="pix-render-card" style="text-align: left;">
+          <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 12px;">
+            O boleto bancário é registrado diretamente no sistema do Banco Central via Asaas, com vencimento para <strong>3 dias úteis</strong>.
           </div>
 
-          <div class="barcode-visual-card">
-            <div class="barcode-lines">
-              ${Array.from({ length: 42 }).map((_, i) => `<span style="width: ${(i % 3 + 1) * 2}px; background: #002e5a; height: 48px; margin: 0 1px;"></span>`).join('')}
-            </div>
-            <div class="barcode-digits">${barcode}</div>
-          </div>
-
-          <div class="form-group" style="margin-top: 16px;">
-            <label>Linha Digitável:</label>
-            <div class="copy-input-wrap">
-              <input type="text" id="barcodeDigitsInput" readonly value="${barcode}">
-              <button class="btn btn-outline" id="btnCopyBarcode">📋 Copiar Linha</button>
+          <div class="form-field">
+            <label>Linha Digitável Febraban:</label>
+            <div class="copy-field-wrap">
+              <input type="text" readonly value="${barcode}" id="boletoLineInput">
+              <button type="button" class="btn btn-outline btn-sm" id="btnCopyBoleto">Copiar</button>
             </div>
           </div>
 
-          <div class="boleto-actions">
-            <button class="btn btn-outline" id="btnDownloadBoletoPdf">
-              ⬇️ Baixar Boleto em PDF
-            </button>
-            <button class="btn btn-success" id="btnSimulateBoletoCompensation">
-              ⚡ Simular Compensação Bancária D+0
-            </button>
+          <div style="background: var(--bg-input); padding: 12px; border-radius: var(--radius-xs); border: 1px solid var(--border-subtle); margin-bottom: 14px; text-align: center;">
+            <div style="font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 2px; color: var(--text-primary); font-weight: 700; margin-bottom: 4px;">
+              ||| | |||| ||| ||||| || |||||| |||| ||| ||||
+            </div>
+            <span style="font-size: 0.7rem; color: var(--text-muted);">Banco Asaas S.A. (Código 461) • Beneficiário: Grupo BRASEG</span>
           </div>
+
+          <button type="button" class="btn btn-success btn-block" id="btnSimulateBoletoCompensation">
+            Simular Compensação D+0 (Aprovar Pedido)
+          </button>
         </div>
       `;
     }
-
-    return '';
   }
 
-  bindEvents() {
+  bindModalEvents() {
     // Fechar Modal
-    document.getElementById('btnCloseCheckout')?.addEventListener('click', () => this.closeCheckout());
-    document.getElementById('checkoutBackdrop')?.addEventListener('click', (e) => {
-      if (e.target.id === 'checkoutBackdrop') this.closeCheckout();
+    document.getElementById('btnCloseCheckout')?.addEventListener('click', () => {
+      this.closeModal();
     });
 
-    // Troca de Abas de Pagamento
-    this.modalEl.querySelectorAll('.payment-tab-btn').forEach(btn => {
+    document.getElementById('checkoutBackdrop')?.addEventListener('click', (e) => {
+      if (e.target.id === 'checkoutBackdrop') this.closeModal();
+    });
+
+    // Alternar Método
+    document.querySelectorAll('.payment-tab-button').forEach(btn => {
       btn.addEventListener('click', () => {
         this.selectedMethod = btn.getAttribute('data-method');
-        this.render();
+        this.renderModal();
       });
     });
 
-    // Cupom de Desconto
-    const btnCoupon = document.getElementById('btnApplyCoupon');
-    const inputCoupon = document.getElementById('couponInput');
-    btnCoupon?.addEventListener('click', () => {
-      if (this.appliedCoupon) {
-        this.appliedCoupon = null;
-        this.discountPercent = 0;
-        this.render();
-        return;
-      }
-
-      const code = (inputCoupon.value || '').trim().toUpperCase();
-      if (code === 'BRASEG10') {
-        this.appliedCoupon = 'BRASEG10';
-        this.discountPercent = 10;
-        this.render();
-      } else if (code === 'SESMT20') {
-        this.appliedCoupon = 'SESMT20';
-        this.discountPercent = 20;
-        this.render();
-      } else if (code === 'DIRETORIA') {
-        this.appliedCoupon = 'DIRETORIA';
-        this.discountPercent = 50;
-        this.render();
-      } else {
-        alert('Cupom inválido ou expirado. Tente "BRASEG10" para 10% OFF.');
-      }
+    // Cupom
+    document.getElementById('btnApplyCoupon')?.addEventListener('click', () => {
+      this.applyCoupon();
     });
 
-    // PIX: Copiar Código
+    // PIX: Copiar
     document.getElementById('btnCopyPix')?.addEventListener('click', () => {
       const input = document.getElementById('pixCopiaColaInput');
-      if (input) {
-        input.select();
-        navigator.clipboard?.writeText(input.value);
-        const btn = document.getElementById('btnCopyPix');
-        if (btn) btn.textContent = '✅ Copiado!';
-        setTimeout(() => { if (btn) btn.textContent = '📋 Copiar'; }, 2000);
-      }
+      input?.select();
+      navigator.clipboard.writeText(input.value);
+      alert('Código PIX Copia e Cola copiado com sucesso!');
     });
 
-    // PIX: Simular Webhook Asaas
-    document.getElementById('btnSimulatePixWebhook')?.addEventListener('click', () => {
-      this.processApprovedPayment('PIX Instantâneo');
-    });
-
-    // Cartão: Interatividade dos Campos
-    const cardNum = document.getElementById('cardNumInput');
-    const cardName = document.getElementById('cardNameInput');
-    const cardExp = document.getElementById('cardExpiryInput');
-
-    cardNum?.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 16);
-      v = v.replace(/(\d{4})(?=\d)/g, '$1 ');
-      e.target.value = v;
-      document.getElementById('dispCardNumber').textContent = v || '•••• •••• •••• ••••';
-    });
-
-    cardName?.addEventListener('input', (e) => {
-      document.getElementById('dispCardName').textContent = e.target.value.toUpperCase() || 'NOME DO TITULAR';
-    });
-
-    cardExp?.addEventListener('input', (e) => {
-      let v = e.target.value.replace(/\D/g, '').substring(0, 4);
-      if (v.length >= 2) v = v.substring(0, 2) + '/' + v.substring(2, 4);
-      e.target.value = v;
-      document.getElementById('dispCardExpiry').textContent = v || 'MM/AA';
+    // PIX: Simular Webhook
+    document.getElementById('btnSimulateWebhook')?.addEventListener('click', () => {
+      this.processApprovedPayment('PIX Instantâneo Asaas');
     });
 
     // Cartão: Submit
@@ -498,164 +366,169 @@ export class CheckoutEngine {
       this.processApprovedPayment(`Cartão de Crédito (${inst}x)`);
     });
 
-    // Boleto: Copiar Linha
-    document.getElementById('btnCopyBarcode')?.addEventListener('click', () => {
-      const input = document.getElementById('barcodeDigitsInput');
-      if (input) {
-        input.select();
-        navigator.clipboard?.writeText(input.value);
-        const btn = document.getElementById('btnCopyBarcode');
-        if (btn) btn.textContent = '✅ Copiado!';
-        setTimeout(() => { if (btn) btn.textContent = '📋 Copiar Linha'; }, 2000);
-      }
+    // Boleto: Copiar & Compensar
+    document.getElementById('btnCopyBoleto')?.addEventListener('click', () => {
+      const input = document.getElementById('boletoLineInput');
+      input?.select();
+      navigator.clipboard.writeText(input.value);
+      alert('Linha digitável do boleto copiada!');
     });
 
-    // Boleto: Download
-    document.getElementById('btnDownloadBoletoPdf')?.addEventListener('click', () => {
-      const { final } = this.calculateTotal();
-      this.simulateDownloadBoleto(final);
-    });
-
-    // Boleto: Compensação D+0
     document.getElementById('btnSimulateBoletoCompensation')?.addEventListener('click', () => {
-      this.processApprovedPayment('Boleto Bancário Asaas (Compensado D+0)');
+      this.processApprovedPayment('Boleto Bancário D+0 (Compensado)');
     });
   }
 
-  processApprovedPayment(paymentMethodText) {
-    const { original, discount, final } = this.calculateTotal();
-    const item = this.currentItem.data;
-    const student = State.currentStudent;
-    const invoiceNumber = `NFSE-2026-${Math.floor(100000 + Math.random() * 900000)}`;
-    const orderId = `PED-ASAAS-${Math.floor(10000 + Math.random() * 90000)}`;
+  applyCoupon() {
+    const input = document.getElementById('checkoutCouponInput');
+    const code = (input?.value || '').trim().toUpperCase();
 
-    const orderData = {
-      orderId: orderId,
-      invoiceNumber: invoiceNumber,
+    if (!code) return;
+
+    if (this.couponDatabase[code]) {
+      const rule = this.couponDatabase[code];
+      const disc = (this.currentOrder.originalPrice * rule.value) / 100;
+      this.currentOrder.discount = disc;
+      this.currentOrder.finalPrice = Math.max(0, this.currentOrder.originalPrice - disc);
+      this.appliedCoupon = { code, ...rule };
+      this.renderModal();
+    } else {
+      alert(`O cupom "${code}" não é válido para esta modalidade.`);
+    }
+  }
+
+  startPixCountdown() {
+    clearInterval(this.pixTimerInterval);
+    this.pixTimerInterval = setInterval(() => {
+      this.pixCountdownSeconds--;
+      if (this.pixCountdownSeconds <= 0) {
+        clearInterval(this.pixTimerInterval);
+      }
+      const el = document.getElementById('pixTimerDisplay');
+      if (el) {
+        const mins = Math.floor(this.pixCountdownSeconds / 60);
+        const secs = this.pixCountdownSeconds % 60;
+        el.textContent = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      }
+    }, 1000);
+  }
+
+  processApprovedPayment(methodLabel) {
+    clearInterval(this.pixTimerInterval);
+
+    const ord = this.currentOrder;
+    const nfseNumber = `NFSE-2026-${Math.floor(100000 + Math.random() * 900000)}`;
+
+    const completedOrder = {
+      orderId: ord.id,
+      itemType: ord.itemType,
+      itemId: ord.itemId,
+      title: ord.title,
+      price: ord.finalPrice,
+      method: methodLabel,
       date: new Date().toLocaleDateString('pt-BR'),
-      time: new Date().toLocaleTimeString('pt-BR'),
-      itemType: this.currentItem.type,
-      itemId: item.id,
-      itemName: item.name || item.title,
-      itemCode: item.code || 'PASS',
-      amount: final,
-      originalAmount: original,
-      discount: discount,
-      coupon: this.appliedCoupon,
-      paymentMethod: paymentMethodText,
-      buyerName: student.name,
-      buyerCpf: student.cpf,
-      buyerCompany: student.company,
-      buyerCnpj: student.cnpj,
-      status: 'PAGO_CONFIRMADO',
-      nfseUrl: `#download-nfse-${invoiceNumber}`
+      timestamp: new Date().toISOString(),
+      nfse: nfseNumber,
+      status: 'pago'
     };
 
-    // Salvar no estado global
-    State.recordOrder(orderData);
+    // Atualizar Estado da Aplicação
+    State.recordOrder(completedOrder);
 
-    // Se foi compra de curso individual, desbloquear o curso imediatamente
-    if (this.currentItem.type === 'course') {
-      State.unlockCourse(item.id);
-    } else if (this.currentItem.type === 'subscription') {
-      State.activateSubscription(item.id);
-    } else if (this.currentItem.type === 'pack') {
-      State.addCorporateSlots(item.slots);
+    if (ord.itemType === 'course') {
+      State.unlockCourse(ord.itemId);
+    } else if (ord.itemType === 'subscription') {
+      State.activateSubscription(ord.itemId);
+    } else if (ord.itemType === 'pack') {
+      const slots = ord.itemId === 'pack_10' ? 10 : (ord.itemId === 'pack_50' ? 50 : 100);
+      State.addCorporateSlots(slots);
     }
 
-    this.renderSuccessScreen(orderData);
+    this.renderSuccessReceipt(completedOrder);
   }
 
-  renderSuccessScreen(orderData) {
-    this.modalEl.innerHTML = `
-      <div class="checkout-backdrop" id="checkoutBackdrop">
-        <div class="checkout-liquid-modal success-card animate-scale-up">
-          <div class="success-hero">
-            <div class="success-icon-badge">🎉</div>
-            <h2 class="success-title">Pagamento Aprovado com Sucesso!</h2>
-            <p class="success-subtitle">O gateway Asaas confirmou a transação instantaneamente. Seu acesso já está liberado!</p>
+  renderSuccessReceipt(order) {
+    const card = document.getElementById('checkoutCard');
+    if (!card) return;
 
-            <div class="success-receipt-card">
-              <div class="receipt-row">
-                <span>Pedido:</span>
-                <strong>${orderData.orderId}</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Item Adquirido:</span>
-                <strong>${orderData.itemName}</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Valor Liquidado:</span>
-                <strong class="receipt-price">R$ ${orderData.amount.toFixed(2).replace('.', ',')} (${orderData.paymentMethod})</strong>
-              </div>
-              <div class="receipt-row">
-                <span>Nota Fiscal Eletrônica:</span>
-                <strong style="color: var(--braseg-gold);">${orderData.invoiceNumber} (Prefeitura de Lençóis Paulista/SP)</strong>
-              </div>
-            </div>
+    card.innerHTML = `
+      <div style="text-align: center; padding: 20px 10px;">
+        <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; background: rgba(22, 163, 74, 0.15); border: 2px solid #16a34a; border-radius: 50%; color: #16a34a; font-size: 1.8rem; margin-bottom: 16px;">
+          ✓
+        </div>
 
-            <div class="success-actions-group">
-              ${this.currentItem.type === 'course' ? `
-                <button class="btn btn-primary btn-lg" id="btnGoToCourseNow">
-                  ▶️ Acessar Sala de Aula Agora
-                </button>
-              ` : `
-                <button class="btn btn-primary btn-lg" id="btnGoToCatalogNow">
-                  📚 Explorar Catálogo com Acesso Total
-                </button>
-              `}
-              <button class="btn btn-outline" id="btnDownloadNfseSim">
-                📄 Baixar Comprovante & NFS-e
-              </button>
-            </div>
+        <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">
+          Pagamento Aprovado com Sucesso!
+        </h2>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); max-width: 500px; margin: 0 auto 20px;">
+          A transação foi confirmada via <strong>Gateway Asaas</strong> e a matrícula já está devidamente registrada no sistema educacional do Grupo BRASEG.
+        </p>
+
+        <!-- Fatura / Comprovante -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; max-width: 550px; margin: 0 auto 24px; text-align: left;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.75rem; border-bottom: 1px solid var(--border-subtle); padding-bottom: 8px; margin-bottom: 8px;">
+            <span>Identificador: <strong>${order.orderId}</strong></span>
+            <span>Data: <strong>${order.date}</strong></span>
           </div>
+
+          <div style="font-size: 0.82rem; color: var(--text-primary); margin-bottom: 4px;">
+            Item: <strong>${order.title}</strong>
+          </div>
+          <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 8px;">
+            Forma: ${order.method} • Valor Pago: <strong>R$ ${order.price.toFixed(2).replace('.', ',')}</strong>
+          </div>
+
+          <div style="background: rgba(0, 46, 90, 0.35); border: 1px solid var(--border-medium); padding: 10px; border-radius: var(--radius-xs); font-size: 0.72rem; color: #cbd5e1;">
+            <strong>Nota Fiscal Eletrônica de Serviços (NFS-e):</strong><br>
+            Nº ${order.nfse} • Prefeitura Municipal de Lençóis Paulista/SP<br>
+            Prestador: ${BRASEG_INSTITUTIONAL.companyName} (CNPJ ${BRASEG_INSTITUTIONAL.cnpj})
+          </div>
+        </div>
+
+        <!-- Ações Pós-Compra -->
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <button type="button" class="btn btn-outline" id="btnDownloadReceiptNfse">
+            ⬇️ Baixar Espelho da NFS-e
+          </button>
+          
+          <button type="button" class="btn btn-primary" id="btnProceedToCourse">
+            ${order.itemType === 'course' ? 'Acessar Sala de Treinamento →' : 'Ir para o Catálogo / Painel →'}
+          </button>
         </div>
       </div>
     `;
 
-    document.getElementById('btnGoToCourseNow')?.addEventListener('click', () => {
-      const cid = this.currentItem.data.id;
-      this.closeCheckout();
-      if (this.options.onNavigateToCourse) {
-        this.options.onNavigateToCourse(cid);
-      }
+    document.getElementById('btnDownloadReceiptNfse')?.addEventListener('click', () => {
+      this.downloadNfseFile(order);
     });
 
-    document.getElementById('btnGoToCatalogNow')?.addEventListener('click', () => {
-      this.closeCheckout();
-      if (this.options.onNavigateToCatalog) {
-        this.options.onNavigateToCatalog();
+    document.getElementById('btnProceedToCourse')?.addEventListener('click', () => {
+      this.closeModal();
+      if (order.itemType === 'course' && this.onNavigateToCourse) {
+        this.onNavigateToCourse(order.itemId);
+      } else if (this.onNavigateToCatalog) {
+        this.onNavigateToCatalog();
       }
-    });
-
-    document.getElementById('btnDownloadNfseSim')?.addEventListener('click', () => {
-      this.simulateDownloadNfse(orderData);
     });
   }
 
-  simulateDownloadBoleto(price) {
-    const content = `BANCO DO BRASIL / ASAAS GESTAO FINANCEIRA S.A.\nBOLETO BANCARIO REGISTRADO - FEBRABAN D+0\n\nBeneficiario: GRUPO BRASEG CONSULTORIA E TREINAMENTOS LTDA\nCNPJ: 18.234.567/0001-89\nCidade: Lencois Paulista - SP\n\nPagador: ${State.currentStudent.name}\nCPF/CNPJ: ${State.currentStudent.cpf} - ${State.currentStudent.company}\n\nValor do Documento: R$ ${price.toFixed(2).replace('.', ',')}\nVencimento: 3 dias uteis apos emissao\n\nLinha Digitavel: 00190.00009 03004.182345 56700.018902 8 984500000${Math.round(price * 100)}\n\nApos o vencimento cobrar juros de 1% ao mes e multa de 2%.`;
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  downloadNfseFile(order) {
+    const textContent = `PREFEITURA MUNICIPAL DE LENÇÓIS PAULISTA - SP\nSECRETARIA DE FINANÇAS E TRIBUTAÇÃO\nNOTA FISCAL DE SERVIÇOS ELETRÔNICA - NFS-e\n\nNÚMERO DA NFS-e: ${order.nfse}\nDATA/HORA DE EMISSÃO: ${new Date().toLocaleString('pt-BR')}\nCÓDIGO DE VERIFICAÇÃO: BRASEG-LP-${order.orderId}\n\nPRESTADOR DE SERVIÇOS:\nRazão Social: ${BRASEG_INSTITUTIONAL.companyName}\nCNPJ: ${BRASEG_INSTITUTIONAL.cnpj}\nEndereço: ${BRASEG_INSTITUTIONAL.address}\n\nTOMADOR DE SERVIÇOS:\nNome/Razão: ${State.currentStudent.name}\nCPF/CNPJ: ${State.currentStudent.cpf}\nEmpresa Vinculada: ${State.currentStudent.company}\n\nDISCRIMINAÇÃO DOS SERVIÇOS:\nCódigo do Serviço: 08.02 - Instrução, treinamento, orientação pedagógica e avaliação em SST (NRs).\nDescrição: Treinamento Regulamentar EAD - ${order.title}\nValor Total dos Serviços: R$ ${order.price.toFixed(2).replace('.', ',')}\nBase de Cálculo ISSQN: R$ ${order.price.toFixed(2).replace('.', ',')}\nAlíquota: 2.00%\nValor do ISSQN: R$ ${(order.price * 0.02).toFixed(2).replace('.', ',')}\n\nConformidade com a NR-01 (Portaria MTP nº 6.730/2020) e eSocial S-2220/2240.`;
+
+    const blob = new Blob([textContent], { type: 'text/plain;charset=utf-8' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `Boleto_Asaas_BRASEG_${Date.now()}.txt`;
+    a.download = `NFSE_${order.nfse}_BRASEG.txt`;
     document.body.appendChild(a);
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
   }
 
-  simulateDownloadNfse(orderData) {
-    const content = `PREFEITURA MUNICIPAL DE LENCOIS PAULISTA - ESTADO DE SAO PAULO\nSECRETARIA MUNICIPAL DE FINANCAS\nNOTA FISCAL DE SERVICOS ELETRONICA - NFS-e\n\nNumero da Nota: ${orderData.invoiceNumber}\nData e Hora de Emissao: ${orderData.date} ${orderData.time}\nCodigo de Verificacao: BRAS-${Math.random().toString(36).substring(2, 8).toUpperCase()}\n\nPRESTADOR DE SERVICOS:\nRazao Social: GRUPO BRASEG CONSULTORIA E TREINAMENTOS LTDA\nCNPJ: 18.234.567/0001-89\nEndereco: Av. Marechal Rondon, 850 - Lencois Paulista / SP\n\nTOMADOR DE SERVICOS:\nNome/Razao Social: ${orderData.buyerName}\nCPF/CNPJ: ${orderData.buyerCpf} / ${orderData.buyerCompany}\n\nDISCRIMINACAO DOS SERVICOS:\n01. Capacitacao e Treinamento Profissional Regulamentar SST (${orderData.itemCode})\nDescricao: ${orderData.itemName}\nValor dos Servicos: R$ ${orderData.amount.toFixed(2).replace('.', ',')}\nDesconto Condicionado: R$ ${orderData.discount.toFixed(2).replace('.', ',')}\nForma de Pagamento: ${orderData.paymentMethod} (Processado via Asaas Gateway)\n\nBase de Calculo ISSQN: R$ ${orderData.amount.toFixed(2).replace('.', ',')} | Aliquota: 2,00% | ISS Retido: Nao`;
-    const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `${orderData.invoiceNumber}_BRASEG.txt`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(url);
+  closeModal() {
+    clearInterval(this.pixTimerInterval);
+    const container = document.getElementById(this.containerId);
+    if (container) container.innerHTML = '';
   }
 }

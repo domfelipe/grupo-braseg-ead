@@ -1,10 +1,10 @@
 /**
- * Grupo BRASEG EAD - Aplicação Principal & Roteador SPA
- * Plataforma Oficial de Streaming & Treinamentos em SST (NRs)
+ * Grupo BRASEG EAD - Aplicação SPA Principal
+ * Padrão Corporativo Suíço / Apple Enterprise
  * Grupo BRASEG Consultoria e Treinamentos - Lençóis Paulista / SP
  */
 
-import { COURSES_DATA, SUBSCRIPTION_PLANS, B2B_CORPORATE_PACKS, BRASEG_INSTITUTIONAL } from './coursesData.js';
+import { COURSES_DATA, SUBSCRIPTION_PLANS, BRASEG_INSTITUTIONAL } from './coursesData.js';
 import { State } from './state.js';
 import { VideoPlayer } from './videoPlayer.js';
 import { ExamEngine } from './examEngine.js';
@@ -39,18 +39,18 @@ class App {
     this.checkoutEngine = new CheckoutEngine({
       onNavigateToCourse: (courseId) => {
         this.navigateTo('player', courseId);
-        this.showToast('Matrícula ativada via Asaas Gateway! Bons estudos.');
+        this.showToast('Matrícula homologada via Asaas Gateway.');
       },
       onNavigateToCatalog: () => {
         this.navigateTo('catalog');
-        this.showToast('Assinatura BRASEG Pass ativada com sucesso!');
+        this.showToast('Assinatura ativada com sucesso.');
       }
     });
 
     this.dashboardManager = new DashboardManager('dashboardContainer');
     this.dashboardManager.onStudentSwitched = (student) => {
       this.updateHeaderProfile();
-      this.showToast(`Perfil alterado para: ${student.name}`);
+      this.showToast(`Perfil alterado: ${student.name}`);
       this.renderCatalog();
     };
     this.dashboardManager.onEmployeeAddedToast = (msg) => this.showToast(msg);
@@ -72,8 +72,8 @@ class App {
       this.navigateTo('catalog');
     });
 
-    // Navegação Principal (Pill Menu)
-    document.querySelectorAll('.nav-link').forEach(link => {
+    // Navegação Principal (Tabs do Header)
+    document.querySelectorAll('.nav-item').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetView = link.getAttribute('data-view');
@@ -82,7 +82,7 @@ class App {
     });
 
     // Links de Rodapé
-    document.querySelectorAll('.footer-link').forEach(link => {
+    document.querySelectorAll('.footer-nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const targetView = link.getAttribute('data-view');
@@ -90,19 +90,9 @@ class App {
       });
     });
 
-    // Top Bar CTA Membership
-    document.getElementById('btnTopBarMembership')?.addEventListener('click', () => {
-      this.navigateTo('membership');
-    });
-
     // Hero CTAs
     document.getElementById('btnHeroStartCourse')?.addEventListener('click', () => {
       this.navigateTo('player', 'nr35');
-    });
-
-    document.getElementById('btnHeroBuyCourse')?.addEventListener('click', () => {
-      const course = State.getCourse('nr35');
-      this.checkoutEngine.openCheckout('course', course);
     });
 
     document.getElementById('btnHeroPass')?.addEventListener('click', () => {
@@ -122,9 +112,9 @@ class App {
     });
 
     // Filtros de Categoria no Catálogo
-    document.querySelectorAll('.cat-pill').forEach(pill => {
+    document.querySelectorAll('.filter-tab').forEach(pill => {
       pill.addEventListener('click', (e) => {
-        document.querySelectorAll('.cat-pill').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.filter-tab').forEach(p => p.classList.remove('active'));
         pill.classList.add('active');
         this.activeCategory = pill.getAttribute('data-cat');
         State.setCategory(this.activeCategory);
@@ -169,12 +159,12 @@ class App {
     State.save();
 
     // Atualizar classe ativa no menu
-    document.querySelectorAll('.nav-link').forEach(link => {
+    document.querySelectorAll('.nav-item').forEach(link => {
       link.classList.toggle('active', link.getAttribute('data-view') === view);
     });
 
     // Ocultar todas as seções de visualização
-    document.querySelectorAll('.view-section').forEach(sec => {
+    document.querySelectorAll('.view-panel').forEach(sec => {
       sec.style.display = 'none';
     });
 
@@ -254,56 +244,50 @@ class App {
       const isUnlocked = State.isCourseUnlocked(course.id);
 
       return `
-        <div class="liquid-course-card" data-id="${course.id}">
-          <div class="card-thumb-wrapper">
-            <img src="${course.thumb}" alt="${course.title}" class="card-thumb-img" loading="lazy" onerror="this.src='assets/images/nr35.jpg'">
-            <div class="card-top-badges">
-              <span class="badge-norma-code">${course.code}</span>
-              <span class="badge-duration-pill">⏱️ ${course.duration}</span>
-            </div>
+        <div class="executive-course-card" data-id="${course.id}">
+          <div class="card-media-wrapper">
+            <img src="${course.thumb}" alt="${course.title}" class="card-media-image" loading="lazy" onerror="this.src='assets/images/nr35.jpg'">
+            <span class="card-floating-badge">${course.code}</span>
+            <span class="card-duration-badge">Carga: ${course.duration}</span>
           </div>
 
-          <div class="card-info-body">
-            <div class="card-category-row">
-              <span>${course.categoryLabel || 'Norma Regulamentadora'}</span>
-              <span>⭐ ${course.rating || '4.9'}</span>
-            </div>
-
-            <h3 class="card-title">${course.title}</h3>
-            <p class="card-subtitle">${course.subtitle || course.description}</p>
+          <div class="card-body-content">
+            <div class="card-meta-category">${course.categoryLabel || 'Norma Regulamentadora'}</div>
+            <h3 class="card-main-title">${course.title}</h3>
+            <p class="card-description-text">${course.subtitle || course.description}</p>
 
             <!-- Barra de Progresso do Aluno -->
-            <div class="card-progress-box">
-              <div class="progress-labels">
+            <div class="card-progress-indicator">
+              <div class="progress-info-text">
                 <span>Progresso: <strong>${prog.percent}%</strong></span>
-                <span>${prog.completedCount}/${prog.totalCount} Aulas</span>
+                <span>${prog.completedCount}/${prog.totalCount} aulas</span>
               </div>
-              <div class="progress-track">
+              <div class="progress-track-bg">
                 <div class="progress-bar-fill" style="width: ${prog.percent}%;"></div>
               </div>
             </div>
 
-            <!-- Preço e Ações de Compra / Acesso -->
-            <div class="card-bottom-actions">
-              <div class="card-price-display">
-                ${course.originalPrice ? `<span class="price-strike">R$ ${course.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
-                <span class="price-current">R$ ${course.price.toFixed(2).replace('.', ',')}</span>
+            <!-- Preço e Ações -->
+            <div class="card-footer-controls">
+              <div class="pricing-info-block">
+                ${course.originalPrice ? `<span class="price-strike-val">R$ ${course.originalPrice.toFixed(2).replace('.', ',')}</span>` : ''}
+                <span class="price-active-val">R$ ${course.price.toFixed(2).replace('.', ',')}</span>
               </div>
 
-              <div class="card-buttons-group">
+              <div class="card-action-btns">
                 ${prog.isPassed ? `
-                  <button class="btn btn-sm btn-outline btn-card-cert" data-id="${course.id}" title="Ver Certificado">
-                    📜 Certificado
+                  <button type="button" class="btn btn-sm btn-outline btn-card-cert" data-id="${course.id}">
+                    Certificado
                   </button>
                 ` : ''}
 
                 ${isUnlocked ? `
-                  <button class="btn btn-sm btn-primary btn-access-course" data-id="${course.id}">
-                    ${prog.percent > 0 ? '▶️ Continuar' : '▶️ Assistir'}
+                  <button type="button" class="btn btn-sm btn-primary btn-access-course" data-id="${course.id}">
+                    ${prog.percent > 0 ? 'Continuar' : 'Acessar'}
                   </button>
                 ` : `
-                  <button class="btn btn-sm btn-hero-buy btn-buy-single-course" data-id="${course.id}" style="padding: 6px 12px; font-size: 0.8rem;">
-                    ⚡ Comprar (Asaas)
+                  <button type="button" class="btn btn-sm btn-outline btn-buy-single-course" data-id="${course.id}">
+                    Contratar
                   </button>
                 `}
               </div>
@@ -339,7 +323,7 @@ class App {
       });
     });
 
-    grid.querySelectorAll('.liquid-course-card').forEach(card => {
+    grid.querySelectorAll('.executive-course-card').forEach(card => {
       card.addEventListener('click', () => {
         const cid = card.getAttribute('data-id');
         const isUnlocked = State.isCourseUnlocked(cid);
@@ -354,7 +338,6 @@ class App {
   }
 
   renderMembershipView() {
-    // Botões de seleção de planos
     document.querySelectorAll('.btn-select-plan').forEach(btn => {
       btn.addEventListener('click', () => {
         const planId = btn.getAttribute('data-plan');
@@ -368,7 +351,6 @@ class App {
     const course = State.getCourse(courseId);
     if (!course) return;
 
-    // Achar aula atual ou primeira aula
     let targetLesson = null;
     if (lessonId) {
       course.modules.forEach(m => {
@@ -381,26 +363,24 @@ class App {
     }
     State.activeLessonId = targetLesson?.id || '';
 
-    // Atualizar Títulos da Página
     document.getElementById('playerCourseTitle').textContent = `${course.code}: ${course.title}`;
     document.getElementById('playerCourseNorma').textContent = `${course.norm} • Carga Horária: ${course.duration}`;
 
-    // Inicializar VideoPlayer
     if (!this.videoPlayer) {
       this.videoPlayer = new VideoPlayer('videoPlayerMount', {
         onLessonCompleted: (c, l) => {
           this.playSuccessChime();
-          this.showToast(`Aula "${l.title}" concluída com sucesso!`);
+          this.showToast(`Aula "${l.title}" concluída.`);
           this.renderSidebarModules(course, targetLesson);
           this.renderPlayerTabs(course, targetLesson);
         },
         onAddNoteRequest: (time, formatted) => {
-          const tabNotesBtn = document.querySelector('.tab-btn[data-tab="tabNotes"]');
+          const tabNotesBtn = document.querySelector('.pedagogical-tab-btn[data-tab="tabNotes"]');
           tabNotesBtn?.click();
           const noteInput = document.getElementById('newNoteInput');
           if (noteInput) {
             noteInput.focus();
-            noteInput.placeholder = `Adicionar anotação no minuto [${formatted}]...`;
+            noteInput.placeholder = `Anotação no minuto [${formatted}]...`;
           }
         }
       });
@@ -418,34 +398,33 @@ class App {
     const prog = State.getCourseProgress(course.id);
 
     sidebar.innerHTML = `
-      <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 20px; box-shadow: var(--glass-shadow);">
-        <div style="margin-bottom: 16px;">
-          <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 6px;">
-            <span>Progresso no Treinamento</span>
-            <strong style="color: var(--braseg-gold);">${prog.percent}%</strong>
+      <div>
+        <div style="margin-bottom: 16px; border-bottom: 1px solid var(--border-subtle); padding-bottom: 12px;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.78rem; margin-bottom: 6px;">
+            <span style="color: var(--text-secondary);">Progresso do Treinamento</span>
+            <strong style="color: var(--color-accent-gold); font-family: var(--font-mono);">${prog.percent}%</strong>
           </div>
-          <div class="progress-track">
+          <div class="progress-track-bg">
             <div class="progress-bar-fill" style="width: ${prog.percent}%;"></div>
           </div>
         </div>
 
-        <!-- Lista de Módulos e Aulas -->
-        <div style="display: flex; flex-direction: column; gap: 14px;">
-          ${course.modules.map((mod, modIdx) => `
-            <div style="background: var(--bg-elevated); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 12px;">
-              <strong style="font-size: 0.85rem; color: var(--braseg-gold); display: block; margin-bottom: 8px;">${mod.title}</strong>
-              <div style="display: flex; flex-direction: column; gap: 6px;">
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          ${course.modules.map(mod => `
+            <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 10px;">
+              <strong style="font-size: 0.8rem; color: var(--color-accent-gold); display: block; margin-bottom: 6px;">${mod.title}</strong>
+              <div style="display: flex; flex-direction: column; gap: 4px;">
                 ${mod.lessons.map(l => {
                   const isCompleted = State.isLessonCompleted(course.id, l.id);
                   const isActive = l.id === activeLesson.id;
 
                   return `
-                    <div class="sidebar-lesson-item" data-lesson-id="${l.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: var(--radius-sm); background: ${isActive ? 'rgba(0, 46, 90, 0.6)' : 'transparent'}; border: 1px solid ${isActive ? 'var(--braseg-gold)' : 'transparent'}; cursor: pointer;">
+                    <div class="sidebar-lesson-item" data-lesson-id="${l.id}" style="display: flex; align-items: center; justify-content: space-between; padding: 6px 8px; border-radius: var(--radius-xs); background: ${isActive ? 'var(--color-primary)' : 'transparent'}; cursor: pointer;">
                       <div style="display: flex; align-items: center; gap: 8px;">
-                        <span>${isCompleted ? '✅' : (isActive ? '▶️' : '⚪')}</span>
+                        <span style="font-size: 0.75rem; color: ${isCompleted ? 'var(--color-success)' : (isActive ? '#ffffff' : 'var(--text-muted)')};">${isCompleted ? '✓' : (isActive ? '▶' : '○')}</span>
                         <div>
-                          <strong style="display: block; font-size: 0.82rem; color: var(--text-primary);">${l.title}</strong>
-                          <small style="color: var(--text-muted);">⏱️ ${Math.floor(l.duration / 60)} min • Simulação Canvas</small>
+                          <strong style="display: block; font-size: 0.78rem; color: ${isActive ? '#ffffff' : 'var(--text-primary)'};">${l.title}</strong>
+                          <small style="color: ${isActive ? '#cbd5e1' : 'var(--text-muted)'}; font-size: 0.7rem;">${Math.floor(l.duration / 60)} min • Simulação</small>
                         </div>
                       </div>
                     </div>
@@ -455,26 +434,23 @@ class App {
             </div>
           `).join('')}
 
-          <!-- Card da Prova Final MTE -->
-          <div style="background: linear-gradient(135deg, #002e5a 0%, #001a35 100%); border: 1px solid var(--braseg-gold); border-radius: var(--radius-md); padding: 14px; text-align: center;">
-            <span style="font-size: 1.6rem; display: block; margin-bottom: 4px;">🏆</span>
-            <strong style="display: block; font-size: 0.9rem; color: #ffffff;">Avaliação Oficial MTE</strong>
-            <small style="color: #cbd5e1; display: block; margin-bottom: 10px;">${prog.isPassed ? `Aprovado com ${prog.score}%` : 'Obrigatória para Emissão do Certificado'}</small>
-            <button class="btn btn-primary btn-sm btn-block" id="btnSidebarExam">
-              ${prog.isPassed ? 'Revisar Prova Final' : 'Fazer Avaliação Final →'}
+          <div style="background: var(--color-primary-dark); border: 1px solid var(--border-medium); border-radius: var(--radius-sm); padding: 14px; text-align: center;">
+            <strong style="display: block; font-size: 0.85rem; color: #ffffff; margin-bottom: 2px;">Avaliação Final MTE</strong>
+            <small style="color: var(--text-secondary); display: block; margin-bottom: 10px;">${prog.isPassed ? `Aprovado com ${prog.score}%` : 'Obrigatória para Emissão'}</small>
+            <button type="button" class="btn btn-primary btn-sm btn-block" id="btnSidebarExam">
+              ${prog.isPassed ? 'Revisar Avaliação' : 'Iniciar Avaliação →'}
             </button>
           </div>
 
           ${prog.isPassed ? `
-            <button class="btn btn-hero-buy btn-sm btn-block" id="btnSidebarCert">
-              📜 Ver Certificado Homologado
+            <button type="button" class="btn btn-outline btn-sm btn-block" id="btnSidebarCert">
+              Visualizar Certificado Homologado
             </button>
           ` : ''}
         </div>
       </div>
     `;
 
-    // Bind clique nas aulas
     sidebar.querySelectorAll('.sidebar-lesson-item').forEach(row => {
       row.addEventListener('click', () => {
         const lid = row.getAttribute('data-lesson-id');
@@ -482,26 +458,20 @@ class App {
       });
     });
 
-    // Prova
     document.getElementById('btnSidebarExam')?.addEventListener('click', () => {
       this.navigateTo('exam', course.id);
     });
 
-    // Certificado
     document.getElementById('btnSidebarCert')?.addEventListener('click', () => {
       this.navigateTo('certificate', course.id);
     });
   }
 
   renderPlayerTabs(course, lesson) {
-    const tabsContainer = document.getElementById('playerTabsContainer');
-    if (!tabsContainer) return;
-
-    // Tab buttons click
-    document.querySelectorAll('.tab-btn').forEach(btn => {
+    document.querySelectorAll('.pedagogical-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.pedagogical-tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.pedagogical-tab-panel').forEach(p => p.classList.remove('active'));
 
         btn.classList.add('active');
         const targetTab = btn.getAttribute('data-tab');
@@ -509,7 +479,6 @@ class App {
       });
     });
 
-    // Renderizar conteúdo de cada aba
     this.renderNotesTab(course, lesson);
     this.renderSummaryTab(course, lesson);
     this.renderMaterialsTab(course, lesson);
@@ -526,14 +495,14 @@ class App {
     const courseNotes = State.notes.filter(n => n.courseId === course.id);
 
     list.innerHTML = courseNotes.length > 0 ? courseNotes.map(n => `
-      <div style="background: var(--bg-elevated); padding: 12px; border-radius: var(--radius-md); margin-bottom: 10px; border-left: 3px solid var(--braseg-gold);" data-id="${n.id}">
-        <div style="display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--text-muted); margin-bottom: 4px;">
-          <span style="font-family: var(--font-mono); color: var(--braseg-gold); font-weight: 700;">⏱️ [${n.timeFormatted}]</span>
+      <div style="background: var(--bg-surface-2); padding: 10px 12px; border-radius: var(--radius-xs); margin-bottom: 8px; border-left: 2px solid var(--color-accent-gold);" data-id="${n.id}">
+        <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 2px;">
+          <span style="font-family: var(--font-mono); color: var(--color-accent-gold); font-weight: 700;">[${n.timeFormatted}]</span>
           <span>${n.createdAt}</span>
         </div>
-        <p style="font-size: 0.88rem; color: var(--text-primary);">${n.text}</p>
+        <p style="font-size: 0.82rem; color: var(--text-primary);">${n.text}</p>
       </div>
-    `).join('') : '<p style="color: var(--text-muted); font-size: 0.85rem; padding: 10px;">Nenhuma anotação criada ainda. Pause o vídeo e salve seus apontamentos técnicos aqui!</p>';
+    `).join('') : '<p style="color: var(--text-muted); font-size: 0.8rem;">Nenhum apontamento registrado.</p>';
 
     form.onsubmit = (e) => {
       e.preventDefault();
@@ -546,7 +515,7 @@ class App {
       State.addNote(course.id, lesson.id, curTime, fmtTime, txt);
       input.value = '';
       this.renderNotesTab(course, lesson);
-      this.showToast('Anotação salva com sucesso!');
+      this.showToast('Anotação salva.');
     };
   }
 
@@ -555,17 +524,17 @@ class App {
     if (!container) return;
 
     container.innerHTML = `
-      <div style="line-height: 1.6; padding: 10px;">
-        <h3 style="font-size: 1.3rem; color: var(--braseg-blue); margin-bottom: 10px;">📝 Resumo Normativo & Transcrição da Aula</h3>
-        <p style="font-size: 0.92rem; color: var(--text-secondary); margin-bottom: 16px;">${lesson.transcript || 'Transcrição oficial gravada pelo corpo docente do Grupo BRASEG.'}</p>
+      <div>
+        <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Resumo Normativo & Transcrição Oficial</h3>
+        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.6;">${lesson.transcript}</p>
 
-        <h4 style="font-size: 1.05rem; color: var(--braseg-gold); margin-bottom: 8px;">Pontos Fundamentais de Segurança (Checkpoints MTE):</h4>
-        <ul style="padding-left: 20px; font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 16px;">
-          ${(lesson.keyPoints || []).map(k => `<li style="margin-bottom: 6px;">${k}</li>`).join('')}
+        <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--color-accent-gold); margin-bottom: 6px;">Checkpoints de Conformidade:</h4>
+        <ul style="padding-left: 18px; font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 14px;">
+          ${(lesson.keyPoints || []).map(k => `<li style="margin-bottom: 4px;">${k}</li>`).join('')}
         </ul>
 
-        <div style="background: var(--bg-elevated); border-left: 4px solid var(--braseg-navy); padding: 12px 16px; border-radius: 4px; font-size: 0.85rem; color: var(--text-muted);">
-          <strong>Amparo Legal:</strong> ${course.norm} • Portaria SEPRT / MTE nº 6.730/2020.
+        <div style="background: var(--bg-surface-2); border-left: 3px solid var(--color-primary); padding: 10px 14px; border-radius: var(--radius-xs); font-size: 0.78rem; color: var(--text-muted);">
+          <strong>Amparo Legal:</strong> ${course.norm} • Portaria MTP nº 6.730/2020.
         </div>
       </div>
     `;
@@ -576,22 +545,19 @@ class App {
     if (!list) return;
 
     const materials = [
-      { title: `Checklist Pré-Operacional de Segurança - ${course.code}`, type: 'PDF / Formato A4', size: '1.2 MB' },
+      { title: `Checklist Pré-Operacional de Segurança - ${course.code}`, type: 'PDF Técnico', size: '1.2 MB' },
       { title: `Modelo de Permissão de Trabalho (PT / APR) - ${course.code}`, type: 'DOCX Editável', size: '850 KB' },
-      { title: `Guia de Boas Práticas e Procedimentos Operacionais Padrão (POP)`, type: 'PDF Técnico', size: '2.4 MB' }
+      { title: `Procedimento Operacional Padrão (POP) - ${course.code}`, type: 'PDF Homologado', size: '2.4 MB' }
     ];
 
     list.innerHTML = materials.map(att => `
-      <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-elevated); padding: 14px; border-radius: var(--radius-md); margin-bottom: 10px; border: 1px solid var(--border-glass);">
-        <div style="display: flex; align-items: center; gap: 12px;">
-          <span style="font-size: 1.5rem;">📁</span>
-          <div>
-            <strong style="display: block; font-size: 0.9rem; color: var(--text-primary);">${att.title}</strong>
-            <small style="color: var(--text-muted);">${att.type} • ${att.size} • Grupo BRASEG</small>
-          </div>
+      <div style="display: flex; align-items: center; justify-content: space-between; background: var(--bg-surface-2); padding: 10px 14px; border-radius: var(--radius-xs); margin-bottom: 8px; border: 1px solid var(--border-subtle);">
+        <div>
+          <strong style="display: block; font-size: 0.82rem; color: var(--text-primary);">${att.title}</strong>
+          <small style="color: var(--text-muted); font-size: 0.72rem;">${att.type} • ${att.size} • Grupo BRASEG</small>
         </div>
-        <button class="btn btn-sm btn-outline btn-dl-mat" data-title="${att.title}">
-          ⬇️ Baixar Modelo
+        <button type="button" class="btn btn-sm btn-outline btn-dl-mat" data-title="${att.title}">
+          ⬇️ Download
         </button>
       </div>
     `).join('');
@@ -614,18 +580,18 @@ class App {
     const questions = State.forumQuestions.filter(q => q.courseId === course.id);
 
     list.innerHTML = questions.map(q => `
-      <div style="background: var(--bg-elevated); border: 1px solid var(--border-glass); border-radius: var(--radius-md); padding: 16px; margin-bottom: 14px;">
-        <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 6px;">
-          <strong>👤 ${q.author} (${q.role})</strong>
+      <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: var(--radius-xs); padding: 12px; margin-bottom: 10px;">
+        <div style="display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px;">
+          <strong>${q.author} (${q.role})</strong>
           <span>${q.date}</span>
         </div>
-        <p style="font-size: 0.9rem; color: var(--text-primary); margin-bottom: 12px;">${q.text}</p>
+        <p style="font-size: 0.82rem; color: var(--text-primary); margin-bottom: 8px;">${q.text}</p>
 
-        <div style="background: rgba(0, 46, 90, 0.4); border-left: 3px solid var(--braseg-gold); padding: 10px 14px; border-radius: 4px;">
-          <div style="font-size: 0.78rem; font-weight: 700; color: var(--braseg-gold); margin-bottom: 4px;">
-            👨‍⚕️ ${q.answeredBy}
+        <div style="background: rgba(0, 46, 90, 0.35); border-left: 2px solid var(--color-accent-gold); padding: 8px 10px; border-radius: var(--radius-xs);">
+          <div style="font-size: 0.72rem; font-weight: 700; color: var(--color-accent-gold); margin-bottom: 2px;">
+            ${q.answeredBy}
           </div>
-          <p style="font-size: 0.85rem; color: #cbd5e1;">${q.answer}</p>
+          <p style="font-size: 0.78rem; color: #cbd5e1;">${q.answer}</p>
         </div>
       </div>
     `).join('');
@@ -638,7 +604,7 @@ class App {
       State.addForumQuestion(course.id, txt);
       input.value = '';
       this.renderForumTab(course, lesson);
-      this.showToast('Sua dúvida foi enviada para a equipe médica e de engenharia do Grupo BRASEG!');
+      this.showToast('Pergunta encaminhada ao corpo técnico.');
     };
   }
 
@@ -647,52 +613,36 @@ class App {
     if (!container) return;
 
     container.innerHTML = `
-      <div class="docs-wrapper" style="max-width: 1200px; margin: 30px auto; padding: 0 20px;">
-        <!-- Hero Institucional BRASEG -->
-        <div style="background: var(--bg-card); backdrop-filter: var(--glass-blur); border: 1px solid var(--border-glass); border-radius: var(--radius-xl); padding: 40px; text-align: center; margin-bottom: 30px; box-shadow: var(--glass-shadow);">
-          <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" style="height: 56px; margin-bottom: 16px;">
-          <h2 style="font-family: var(--font-heading); font-size: 2.8rem; color: var(--braseg-gold); margin-bottom: 10px;">${BRASEG_INSTITUTIONAL.companyName}</h2>
-          <p style="font-size: 1.15rem; color: var(--text-secondary); max-width: 800px; margin: 0 auto 20px;">
+      <div style="max-width: 1100px; margin: 32px auto; padding: 0 16px;">
+        <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px; text-align: center; margin-bottom: 24px;">
+          <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" style="height: 48px; margin-bottom: 12px;">
+          <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.companyName}</h2>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); max-width: 700px; margin: 0 auto 16px;">
             "${BRASEG_INSTITUTIONAL.mission}"
           </p>
-          <div style="display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center;">
-            <a href="${BRASEG_INSTITUTIONAL.whatsappLink}" target="_blank" class="btn btn-whatsapp">
-              💬 WhatsApp Comercial: ${BRASEG_INSTITUTIONAL.whatsapp}
+          <div style="display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+            <a href="${BRASEG_INSTITUTIONAL.whatsappLink}" target="_blank" class="btn btn-whatsapp btn-sm">
+              WhatsApp SESMT: ${BRASEG_INSTITUTIONAL.whatsapp}
             </a>
-            <a href="mailto:${BRASEG_INSTITUTIONAL.email}" class="btn btn-outline">
-              ✉️ ${BRASEG_INSTITUTIONAL.email}
+            <a href="mailto:${BRASEG_INSTITUTIONAL.email}" class="btn btn-outline btn-sm">
+              ${BRASEG_INSTITUTIONAL.email}
             </a>
           </div>
         </div>
 
-        <!-- Grid de Especialidades e Responsáveis Técnicos -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 30px;">
-          <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--glass-shadow);">
-            <h3 style="font-size: 1.3rem; color: var(--braseg-blue); margin-bottom: 12px;">👨‍⚕️ Coordenação Médica PCMSO (NR-07)</h3>
-            <p style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">${BRASEG_INSTITUTIONAL.technicalDirectors[0].name}</p>
-            <p style="font-size: 0.82rem; color: var(--braseg-gold); margin-bottom: 10px;">${BRASEG_INSTITUTIONAL.technicalDirectors[0].credential}</p>
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">Elaboração e coordenação de PCMSO, emissão de ASOs (Admissional, Periódico, Demissional), gestão de exames complementares e enquadramento eSocial S-2220.</p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+          <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Coordenação Médica (PCMSO)</h3>
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent-gold);">${BRASEG_INSTITUTIONAL.technicalDirectors[0].name}</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.technicalDirectors[0].credential}</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Coordenação de exames ocupacionais (ASO Admissional, Periódico, Demissional) e conformidade eSocial S-2220.</p>
           </div>
 
-          <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 24px; box-shadow: var(--glass-shadow);">
-            <h3 style="font-size: 1.3rem; color: var(--braseg-blue); margin-bottom: 12px;">👷 Responsabilidade Técnica SST (PGR / NRs)</h3>
-            <p style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary);">${BRASEG_INSTITUTIONAL.technicalDirectors[1].name}</p>
-            <p style="font-size: 0.82rem; color: var(--braseg-gold); margin-bottom: 10px;">${BRASEG_INSTITUTIONAL.technicalDirectors[1].credential}</p>
-            <p style="font-size: 0.85rem; color: var(--text-secondary);">Projetos pedagógicos de treinamentos EAD, laudos de insalubridade e periculosidade (LTCAT), APRs, implementação de GRO/PGR e conformidade eSocial S-2240.</p>
-          </div>
-        </div>
-
-        <!-- Clientes e Atuação Regional -->
-        <div style="background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--glass-shadow);">
-          <h3 style="font-size: 1.4rem; color: var(--text-primary); margin-bottom: 16px;">Grandes Empresas Atendidas pelo Grupo BRASEG</h3>
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
-            ${BRASEG_INSTITUTIONAL.partners.map(p => `
-              <div style="background: var(--bg-elevated); padding: 16px; border-radius: var(--radius-md); border: 1px solid var(--border-glass); text-align: center;">
-                <strong style="font-family: var(--font-heading); font-size: 1.5rem; color: var(--braseg-blue); display: block;">${p.logoText}</strong>
-                <span style="font-size: 0.85rem; color: var(--text-primary); font-weight: 700; display: block;">${p.name}</span>
-                <small style="color: var(--text-muted);">${p.sector}</small>
-              </div>
-            `).join('')}
+          <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 20px;">
+            <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px;">Engenharia de Segurança (SST)</h3>
+            <p style="font-size: 0.85rem; font-weight: 700; color: var(--color-accent-gold);">${BRASEG_INSTITUTIONAL.technicalDirectors[1].name}</p>
+            <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.technicalDirectors[1].credential}</p>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Projetos pedagógicos de NRs, laudos LTCAT, gestão de riscos no PGR e integração eSocial S-2240.</p>
           </div>
         </div>
       </div>
@@ -710,7 +660,7 @@ class App {
     a.click();
     a.remove();
     URL.revokeObjectURL(url);
-    this.showToast(`Arquivo "${filename}" baixado com sucesso!`);
+    this.showToast(`Download de "${filename}" concluído.`);
   }
 
   showToast(message) {
@@ -718,8 +668,7 @@ class App {
     if (!toast) {
       toast = document.createElement('div');
       toast.id = 'appToast';
-      toast.className = 'app-toast';
-      toast.style.cssText = 'position: fixed; bottom: 24px; right: 24px; background: rgba(0, 46, 90, 0.95); backdrop-filter: blur(12px); color: #f4c602; border: 1px solid #f4c602; padding: 14px 20px; border-radius: 12px; font-weight: 700; font-size: 0.9rem; z-index: 9999; box-shadow: 0 8px 30px rgba(0,0,0,0.6); opacity: 0; transform: translateY(20px); transition: all 0.3s ease; pointer-events: none;';
+      toast.style.cssText = 'position: fixed; bottom: 20px; right: 20px; background: var(--bg-surface-1); color: var(--text-primary); border: 1px solid var(--border-medium); padding: 10px 16px; border-radius: 6px; font-size: 0.8rem; font-weight: 600; z-index: 9999; box-shadow: var(--shadow-lg); opacity: 0; transform: translateY(10px); transition: all 0.2s ease; pointer-events: none;';
       document.body.appendChild(toast);
     }
     toast.textContent = message;
@@ -727,8 +676,8 @@ class App {
     toast.style.transform = 'translateY(0)';
     setTimeout(() => {
       toast.style.opacity = '0';
-      toast.style.transform = 'translateY(20px)';
-    }, 3500);
+      toast.style.transform = 'translateY(10px)';
+    }, 3000);
   }
 
   playSuccessChime() {
@@ -741,15 +690,13 @@ class App {
 
       osc.type = 'sine';
       osc.frequency.setValueAtTime(587.33, audioCtx.currentTime);
-      osc.frequency.setValueAtTime(880.00, audioCtx.currentTime + 0.15);
-
-      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.5);
+      gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
 
       osc.start();
-      osc.stop(audioCtx.currentTime + 0.5);
+      osc.stop(audioCtx.currentTime + 0.3);
     } catch (e) {
-      // Audio context policy
+      // Audio policy
     }
   }
 }

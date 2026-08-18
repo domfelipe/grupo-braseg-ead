@@ -3,254 +3,308 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grupo BRASEG EAD • Streaming de Treinamentos Regulamentares SST (NRs)</title>
-  <meta name="description" content="Plataforma oficial de streaming e EAD do Grupo BRASEG Consultoria e Treinamentos (Lençóis Paulista/SP). Cursos de NR-35, NR-10, NR-33, NR-12, NR-31, NR-20, NR-05, NR-06, NR-17 e Primeiros Socorros.">
+  <title>Grupo BRASEG • Plataforma Corporativa de Treinamentos Regulamentares (NRs)</title>
+  <meta name="description" content="Plataforma oficial de capacitação técnica e conformidade em Segurança e Medicina do Trabalho do Grupo BRASEG. Treinamentos em conformidade com a NR-01 e Portaria MTP nº 6.730/2020.">
   
-  <!-- Fontes do Google: Plus Jakarta Sans, Bebas Neue, Inter, JetBrains Mono -->
+  <!-- Tipografia Corporativa Suíça / Apple: Plus Jakarta Sans, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   
-  <!-- Estilos CSS Principais Liquid Glass & Streaming -->
+  <!-- Estilos CSS Principais -->
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Top Banner de Conversão (Estilo TheMembers) -->
-  <div class="top-conversion-bar no-print">
-    <div class="top-bar-container">
+  <!-- Barra Institucional Superior (Sóbria e Executiva) -->
+  <div class="top-brand-bar no-print">
+    <div class="top-bar-inner">
       <div class="top-bar-left">
-        <span class="top-bar-tag">PROMOÇÃO 2026</span>
-        <span class="top-bar-text">GARANTA SEU CERTIFICADO REGULAMENTAR · 0% PIX · EM ATÉ 12x NO CARTÃO · ASAS GATEWAY</span>
+        <span class="location-item">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Lençóis Paulista - SP
+        </span>
+        <span class="divider">/</span>
+        <span class="contact-item">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          (14) 3283-2060
+        </span>
+        <span class="divider">/</span>
+        <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="whatsapp-top-link">
+          Atendimento SESMT: (14) 99760-9595
+        </a>
       </div>
       <div class="top-bar-right">
-        <button class="top-bar-cta" id="btnTopBarMembership">👑 ASSINAR BRASEG PASS</button>
-        <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="top-bar-whatsapp">
-          💬 WhatsApp: (14) 99760-9595
-        </a>
+        <span class="compliance-tag">Homologado MTE • Anexo II NR-01</span>
+        <a href="https://www.brasegconsultoria.com.br/" target="_blank" class="site-link">brasegconsultoria.com.br ↗</a>
       </div>
     </div>
   </div>
 
-  <!-- Header Flutuante / Floating Pill Navbar (Liquid Glass Style) -->
-  <header class="floating-header no-print">
-    <div class="floating-header-inner">
+  <!-- Header Executivo Flutuante (Design Limpo e Minimalista) -->
+  <header class="app-header no-print">
+    <div class="header-container">
       <!-- Marca / Logotipo Oficial Grupo BRASEG -->
-      <div class="brand-container" id="brandLogo" role="button" title="Voltar ao Início">
-        <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="braseg-header-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-        <div class="braseg-fallback-logo" style="display: none;">
-          <span class="logo-shield">🛡️</span>
-          <span class="logo-text">GRUPO BRASEG</span>
+      <div class="brand-wrapper" id="brandLogo" role="button" title="Página Inicial">
+        <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="braseg-logo">
+        <div class="brand-divider"></div>
+        <div class="brand-tagline">
+          <span class="tag-main">SST & EAD</span>
+          <span class="tag-sub">Portal Corporativo</span>
         </div>
       </div>
 
-      <!-- Links de Navegação Principal em Pill Flutuante -->
-      <nav class="nav-pill-menu">
-        <button class="nav-link active" data-view="catalog" id="navCatalog">
-          <span>🎬 Catálogo NRs</span>
+      <!-- Navegação Principal -->
+      <nav class="main-navigation">
+        <button class="nav-item active" data-view="catalog" id="navCatalog">
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          <span>Catálogo de NRs</span>
         </button>
-        <button class="nav-link" data-view="player" id="navPlayer">
-          <span>▶️ Sala de Aula</span>
+        <button class="nav-item" data-view="player" id="navPlayer">
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          <span>Sala de Capacitação</span>
         </button>
-        <button class="nav-link" data-view="membership" id="navMembership">
-          <span style="color: var(--braseg-gold); font-weight: 700;">👑 BRASEG Pass</span>
+        <button class="nav-item" data-view="membership" id="navMembership">
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          <span>Planos Corporativos</span>
         </button>
-        <button class="nav-link" data-view="dashboard" id="navDashboard">
-          <span>📊 Portal SESMT & Faturas</span>
+        <button class="nav-item" data-view="dashboard" id="navDashboard">
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+          <span>Painel SESMT & Faturamento</span>
         </button>
-        <button class="nav-link" data-view="docs" id="navDocs">
-          <span>🏢 Sobre a BRASEG</span>
+        <button class="nav-item" data-view="docs" id="navDocs">
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <span>Sobre a BRASEG</span>
         </button>
       </nav>
 
-      <!-- Ações do Cabeçalho: Tema, Checkout e Perfil -->
-      <div class="header-right-actions">
-        <!-- Botão Alternar Tema -->
-        <button class="theme-toggle-btn" id="btnThemeToggle" title="Alternar entre Modo Corporativo Claro e Modo Cinema Escuro">
+      <!-- Ações do Cabeçalho: Tema & Perfil Corporativo -->
+      <div class="header-actions">
+        <!-- Alternar Tema Sóbrio -->
+        <button class="btn-icon-theme" id="btnThemeToggle" title="Alternar Modo Escuro / Claro">
           <span id="themeIcon">☀️</span>
         </button>
 
-        <!-- Card do Aluno / Empresa -->
-        <div class="header-profile-card" id="headerProfileCard" title="Ver Perfil do Aluno e Portal SESMT">
-          <div class="user-avatar-circle">
-            <img src="assets/images/doctor.jpg" alt="Foto do Usuário" class="avatar-img">
-            <span class="online-indicator"></span>
+        <!-- Identificação do Usuário / Empresa -->
+        <div class="user-account-card" id="headerProfileCard" title="Acessar Gestão de Colaboradores">
+          <div class="user-avatar-wrap">
+            <img src="assets/images/doctor.jpg" alt="Colaborador" class="user-avatar">
+            <span class="user-status-dot"></span>
           </div>
-          <div class="user-meta-info">
-            <span class="user-name" id="headerUserName">Carlos Alberto Mendonça</span>
-            <span class="user-role" id="headerUserRole">Técnico de Manutenção</span>
-            <span class="user-company" id="headerUserCompany">Indústrias Delta S/A</span>
+          <div class="user-text-info">
+            <span class="user-display-name" id="headerUserName">Carlos Alberto Mendonça</span>
+            <span class="user-display-role" id="headerUserRole">Técnico de Manutenção</span>
+            <span class="user-display-company" id="headerUserCompany">Indústrias Delta S/A</span>
           </div>
-          <div class="dropdown-arrow">▾</div>
         </div>
       </div>
     </div>
   </header>
 
-  <!-- Conteúdo Principal Dinâmico (SPA) -->
-  <main class="app-main-content">
+  <!-- Conteúdo SPA -->
+  <main class="app-viewport">
     
     <!-- ========================================== -->
-    <!-- VIEW 1: CATÁLOGO STREAMING (NETFLIX STYLE)  -->
+    <!-- VIEW 1: CATÁLOGO EXECUTIVO DE TREINAMENTOS -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewCatalog">
+    <section class="view-panel" id="viewCatalog">
       
-      <!-- Hero Banner Cinematográfico (Featured Streaming Course) -->
-      <div class="streaming-hero" id="streamingHeroSection">
-        <div class="hero-backdrop-gradient"></div>
-        <div class="hero-image-overlay">
-          <img src="assets/images/nr35.jpg" alt="NR-35 Destaque" class="hero-bg-img">
+      <!-- Hero Editorial Executivo (Padrão Apple / Linear) -->
+      <div class="executive-hero">
+        <div class="hero-backdrop-layer">
+          <img src="assets/images/nr35.jpg" alt="Ambiente Técnico Industrial" class="hero-bg-media">
+          <div class="hero-gradient-overlay"></div>
         </div>
-        
-        <div class="hero-content-wrapper">
-          <div class="hero-badge-pill">
-            <span class="live-pulse-dot"></span>
-            <span>TREINAMENTO HOMOLOGADO MTE • PORTARIA SEPRT 6.730/20</span>
+
+        <div class="hero-container">
+          <div class="hero-header-badge">
+            <span class="badge-dot"></span>
+            <span>DIRETRIZES MTE • PORTARIA SEPRT Nº 6.730/2020 • EMISSÃO COM QR CODE</span>
           </div>
 
-          <h1 class="hero-headline">NR-35: Trabalho em Altura</h1>
-          <p class="hero-subheadline">
-            Capacitação obrigatória completa para atividades acima de 2,00m. Inclui cálculo dinâmico de Zona Livre de Queda (ZLQ), inspeção de cinturões paraquedistas, emissão de APR e simulações físicas em tempo real.
+          <h1 class="hero-main-title">Capacitação Regulamentar em Segurança & Saúde Ocupacional</h1>
+          
+          <p class="hero-main-desc">
+            Ecossistema digital do <strong>Grupo BRASEG</strong> para formação técnica e gestão de conformidade em NRs. Conteúdo programático alinhado às exigências do Ministério do Trabalho e Emprego, com validação técnica de Engenheiros de Segurança (CREA) e Médicos do Trabalho (CRM).
           </p>
 
-          <div class="hero-meta-row">
-            <span class="meta-tag rating">⭐ 4.9 (1.420 formados)</span>
-            <span class="meta-tag">⏱️ 8 Horas</span>
-            <span class="meta-tag">📜 Certificado c/ Assinatura CRM/CREA</span>
-            <span class="meta-tag price-tag">R$ 89,90 <small>no PIX</small></span>
+          <div class="hero-spec-grid">
+            <div class="spec-item">
+              <span class="spec-label">RESPONSABILIDADE TÉCNICA</span>
+              <strong class="spec-value">CRM-SP 148.920 / CREA-SP 506.128</strong>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">INTEGRAÇÃO ESOCIAL</span>
+              <strong class="spec-value">Eventos S-2220 e S-2240</strong>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">SEDE OPERACIONAL</span>
+              <strong class="spec-value">Lençóis Paulista - SP</strong>
+            </div>
+            <div class="spec-item">
+              <span class="spec-label">FATURAMENTO DIRETO</span>
+              <strong class="spec-value">Gateway Asaas • NFS-e Municipal</strong>
+            </div>
           </div>
 
-          <div class="hero-cta-buttons">
-            <button class="btn btn-hero-primary" id="btnHeroStartCourse">
-              ▶️ Acessar Videoaula & Simulação
+          <div class="hero-action-buttons">
+            <button class="btn btn-hero-cta" id="btnHeroStartCourse">
+              <svg class="icon-btn" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+              Acessar Sala de Capacitação
             </button>
-            <button class="btn btn-hero-buy" id="btnHeroBuyCourse">
-              ⚡ Comprar Curso Avulso (R$ 89,90)
-            </button>
-            <button class="btn btn-hero-membership" id="btnHeroPass">
-              👑 Assinar BRASEG Pass (R$ 24,90/mês)
+            <button class="btn btn-hero-secondary" id="btnHeroPass">
+              <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Conhecer Planos Corporativos
             </button>
           </div>
         </div>
       </div>
 
-      <!-- Barra de Busca Rápida & Filtros por Categoria -->
-      <div class="catalog-subnav-bar">
-        <div class="subnav-container">
-          <div class="category-pills-list">
-            <button class="cat-pill active" data-cat="all">Todos os Cursos (10)</button>
-            <button class="cat-pill" data-cat="industrial">🏭 Industrial & Elétrica</button>
-            <button class="cat-pill" data-cat="agro">🚜 Agroflorestal & Canavieiro</button>
-            <button class="cat-pill" data-cat="geral">🛡️ Segurança Geral & CIPA</button>
-            <button class="cat-pill" data-cat="saude">🩺 Saúde & Primeiros Socorros</button>
+      <!-- Barra de Filtros e Busca de NRs -->
+      <div class="filter-toolbar">
+        <div class="toolbar-container">
+          <div class="category-filter-group">
+            <button class="filter-tab active" data-cat="all">Todas as Normas (10)</button>
+            <button class="filter-tab" data-cat="industrial">Industrial & Elétrica</button>
+            <button class="filter-tab" data-cat="agro">Agroflorestal & Canavieiro</button>
+            <button class="filter-tab" data-cat="geral">Segurança Geral & CIPA</button>
+            <button class="filter-tab" data-cat="saude">Saúde & Emergência</button>
           </div>
 
-          <div class="search-box-pill">
-            <span class="search-icon">🔍</span>
-            <input type="text" id="catalogSearchInput" placeholder="Buscar por código (NR-10), título ou tema...">
+          <div class="search-input-box">
+            <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="catalogSearchInput" placeholder="Filtrar por código (ex: NR-35), título ou palavra-chave...">
           </div>
         </div>
       </div>
 
-      <!-- Grid / Fileiras de Cursos Estilo Streaming -->
-      <div class="streaming-catalog-container">
-        <!-- Grade Responsiva de Cards Liquid Glass -->
-        <div class="courses-streaming-grid" id="coursesGrid">
-          <!-- Renderizado Dinamicamente via js/app.js -->
+      <!-- Grid de Cursos Executivos -->
+      <div class="catalog-grid-wrapper">
+        <div class="courses-executive-grid" id="coursesGrid">
+          <!-- Injetado dinamicamente via js/app.js -->
         </div>
       </div>
 
-      <!-- Showcase de Clientes e Parceiros Corporativos -->
-      <div class="corporate-partners-bar">
-        <span class="partners-label">Grandes Empresas que Confiam no Grupo BRASEG:</span>
-        <div class="partners-logos-row">
-          <div class="partner-item">
-            <span class="partner-name">LDC.</span>
-            <small>Louis Dreyfus Company</small>
-          </div>
-          <div class="partner-item">
-            <span class="partner-name">FRIGOL</span>
-            <small>Frigol Alimentos</small>
-          </div>
-          <div class="partner-item">
-            <span class="partner-name">dexco</span>
-            <small>Deca • Portinari • Durafloor</small>
-          </div>
-          <div class="partner-item">
-            <span class="partner-name">LWART</span>
-            <small>Soluções Ambientais</small>
+      <!-- Empresas Atendidas pelo Grupo BRASEG -->
+      <div class="client-partners-section">
+        <div class="partners-container">
+          <span class="partners-section-title">Grandes Organizações Atendidas pelo Grupo BRASEG:</span>
+          <div class="partners-row">
+            <div class="partner-card-clean">
+              <strong>LDC.</strong>
+              <span>Louis Dreyfus Company</span>
+            </div>
+            <div class="partner-card-clean">
+              <strong>FRIGOL</strong>
+              <span>Frigol Alimentos</span>
+            </div>
+            <div class="partner-card-clean">
+              <strong>dexco</strong>
+              <span>Deca • Portinari • Durafloor</span>
+            </div>
+            <div class="partner-card-clean">
+              <strong>LWART</strong>
+              <span>Soluções Ambientais</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ========================================== -->
-    <!-- VIEW 2: PLANOS DE ASSINATURA BRASEG PASS   -->
+    <!-- VIEW 2: PLANOS CORPORATIVOS & ASSINATURAS  -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewMembership" style="display: none;">
-      <div class="membership-wrapper">
-        <div class="membership-hero">
-          <div class="membership-badge">
-            <span class="pulse-dot"></span>
-            <span>ECOSSISTEMA ILIMITADO EM SST</span>
-          </div>
-          <h2>Acesso Completo a Todos os Treinamentos Obrigatórios</h2>
-          <p class="membership-lead">
-            Treine sua equipe ou impulsione sua carreira com o <strong>BRASEG Pass</strong>. Acesso ilimitado às 10 NRs, reciclagens automáticas, emissão de certificados oficiais com QR Code e telemetria industrial em tempo real.
+    <section class="view-panel" id="viewMembership" style="display: none;">
+      <div class="membership-container">
+        <div class="section-title-header">
+          <span class="section-subtitle">MODELOS DE CONTRATAÇÃO & LICENCIAMENTO</span>
+          <h2>Planos Corporativos de Capacitação em SST</h2>
+          <p>
+            Estrutura flexível para empresas de todos os portes atenderem às exigências legais da NR-01 com previsibilidade orçamentária e emissão contínua de certificados homologados.
           </p>
         </div>
 
-        <div class="pricing-cards-grid">
+        <div class="pricing-cards-wrapper">
           <!-- Plano Anual -->
-          <div class="pricing-glass-card featured-plan">
-            <div class="plan-popular-tag">MAIS ESCOLHIDO • 38% DE ECONOMIA</div>
-            <h3 class="plan-name">BRASEG Pass Anual</h3>
-            <p class="plan-desc">Acesso ilimitado a todas as 10 NRs por 12 meses, ideal para profissionais autônomos e técnicos.</p>
-            
-            <div class="plan-price-block">
-              <span class="price-currency">R$</span>
-              <span class="price-val">24</span>
-              <span class="price-cents">,90</span>
-              <span class="price-period">/mês</span>
+          <div class="corporate-pricing-card featured">
+            <div class="card-highlight-badge">RECOMENDADO PARA PROFISSIONAIS E TÉCNICOS</div>
+            <div class="pricing-card-header">
+              <h3 class="plan-title">BRASEG Pass Anual</h3>
+              <p class="plan-description">Acesso irrestrito a todas as 10 Normas Regulamentadoras com reciclagens periódicas e certificados inclusos.</p>
             </div>
-            <small class="price-installments">Cobrança única de R$ 299,00/ano em até 12x no Cartão ou PIX</small>
 
-            <ul class="plan-benefits-list">
-              <li>✓ Acesso ilimitado a todas as 10 Normas Regulamentadoras;</li>
-              <li>✓ Emissão ilimitada de Certificados MTE com QR Code;</li>
-              <li>✓ Simuladores industriais interativos e telemetria Canvas;</li>
-              <li>✓ Suporte direto com Médico do Trabalho e Engenheiro SST;</li>
-              <li>✓ Emissão automática de NFS-e (Lençóis Paulista/SP);</li>
-              <li>✓ Reciclagem anual/bienal inclusa sem custo adicional.</li>
+            <div class="pricing-value-box">
+              <span class="currency">R$</span>
+              <span class="integer-part">24</span>
+              <span class="decimal-part">,90</span>
+              <span class="frequency">/mês</span>
+            </div>
+            <span class="billing-info">Faturamento anual de R$ 299,00 em até 12x no cartão ou à vista via PIX</span>
+
+            <div class="plan-divider"></div>
+
+            <ul class="features-checklist">
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Acesso integral a todas as 10 NRs (Industrial, Agro, Elétrica e Saúde);</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Certificados homologados com assinatura de Médicos (CRM) e Engenheiros (CREA);</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Simulações técnicas e telemetria industrial em tempo real;</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Suporte técnico-normativo com especialistas do Grupo BRASEG;</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Emissão automática de Nota Fiscal Eletrônica de Serviços (NFS-e Asaas).</span>
+              </li>
             </ul>
 
             <button class="btn btn-primary btn-block btn-select-plan" data-plan="pass_annual">
-              ⚡ Assinar Plano Anual (Asaas Gateway)
+              Contratar Licença Anual (Asaas Gateway)
             </button>
           </div>
 
           <!-- Plano Mensal -->
-          <div class="pricing-glass-card">
-            <h3 class="plan-name">BRASEG Pass Mensal</h3>
-            <p class="plan-desc">Flexibilidade para realizar cursos imediatos sem compromisso de longo prazo.</p>
-
-            <div class="plan-price-block">
-              <span class="price-currency">R$</span>
-              <span class="price-val">39</span>
-              <span class="price-cents">,90</span>
-              <span class="price-period">/mês</span>
+          <div class="corporate-pricing-card">
+            <div class="pricing-card-header">
+              <h3 class="plan-title">BRASEG Pass Mensal</h3>
+              <p class="plan-description">Flexibilidade para formação pontual sem compromisso de longo prazo.</p>
             </div>
-            <small class="price-installments">Cobrança recorrente mensal no Cartão ou PIX Asaas</small>
 
-            <ul class="plan-benefits-list">
-              <li>✓ Acesso a todos os cursos enquanto a assinatura estiver ativa;</li>
-              <li>✓ Certificados oficiais liberados após aprovação nas provas;</li>
-              <li>✓ Simuladores e videoaulas de alta definição;</li>
-              <li>✓ Cancele quando quiser com 1 clique, sem multas.</li>
+            <div class="pricing-value-box">
+              <span class="currency">R$</span>
+              <span class="integer-part">39</span>
+              <span class="decimal-part">,90</span>
+              <span class="frequency">/mês</span>
+            </div>
+            <span class="billing-info">Cobrança recorrente mensal no Cartão de Crédito ou PIX</span>
+
+            <div class="plan-divider"></div>
+
+            <ul class="features-checklist">
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Acesso a todos os treinamentos enquanto a assinatura estiver ativa;</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Certificados emitidos após aprovação com nota mínima de 70%;</span>
+              </li>
+              <li>
+                <svg class="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+                <span>Cancelamento simplificado a qualquer momento no painel.</span>
+              </li>
             </ul>
 
             <button class="btn btn-outline btn-block btn-select-plan" data-plan="pass_monthly">
-              Assinar Plano Mensal
+              Contratar Licença Mensal
             </button>
           </div>
         </div>
@@ -258,70 +312,68 @@
     </section>
 
     <!-- ========================================== -->
-    <!-- VIEW 3: SALA DE AULA EAD & VIDEO PLAYER    -->
+    <!-- VIEW 3: SALA DE CAPACITAÇÃO TÉCNICA EAD    -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewPlayer" style="display: none;">
-      <div class="player-layout">
-        <!-- Coluna Esquerda: Player e Conteúdo da Aula -->
-        <div class="player-main-col">
-          <!-- Top Bar do Curso -->
-          <div class="player-top-info">
-            <button class="btn btn-sm btn-outline" id="btnBackToCatalog">← Voltar ao Catálogo</button>
-            <div class="player-titles">
+    <section class="view-panel" id="viewPlayer" style="display: none;">
+      <div class="player-container">
+        <!-- Coluna Principal: Player e Conteúdo -->
+        <div class="player-content-column">
+          <div class="player-navigation-header">
+            <button class="btn-return-catalog" id="btnBackToCatalog">
+              <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+              Retornar ao Catálogo
+            </button>
+            <div class="player-header-titles">
               <h2 id="playerCourseTitle">NR-35: Trabalho em Altura</h2>
-              <span class="course-norm-badge" id="playerCourseNorma">Portaria MTP 4.218 • Carga Horária: 8h</span>
+              <span class="norm-reference-badge" id="playerCourseNorma">Portaria MTP 4.218 • Carga Horária: 8h</span>
             </div>
           </div>
 
-          <!-- Container do Player de Vídeo / Canvas Simulation -->
-          <div class="video-player-frame" id="videoPlayerMount">
-            <!-- Injetado dinamicamente via js/videoPlayer.js -->
-          </div>
+          <!-- Player de Vídeo e Simulação Canvas -->
+          <div class="video-mount-wrapper" id="videoPlayerMount"></div>
 
           <!-- Abas de Conteúdo Pedagógico -->
-          <div class="player-tabs-wrapper" id="playerTabsContainer">
-            <div class="tabs-nav-bar">
-              <button class="tab-btn active" data-tab="tabSummary">📝 Resumo Técnico & Legislação</button>
-              <button class="tab-btn" data-tab="tabNotes">📌 Minhas Anotações Técnicas</button>
-              <button class="tab-btn" data-tab="tabMaterials">📁 Modelos & APRs para Download</button>
-              <button class="tab-btn" data-tab="tabForum">💬 Dúvidas com Médico e Engenheiro</button>
+          <div class="pedagogical-tabs-container" id="playerTabsContainer">
+            <div class="tabs-header-nav">
+              <button class="pedagogical-tab-btn active" data-tab="tabSummary">Resumo Normativo & Transcrição</button>
+              <button class="pedagogical-tab-btn" data-tab="tabNotes">Anotações Técnicas do Aluno</button>
+              <button class="pedagogical-tab-btn" data-tab="tabMaterials">Documentos & Modelos de APR</button>
+              <button class="pedagogical-tab-btn" data-tab="tabForum">Fórum Técnico com Especialistas</button>
             </div>
 
             <!-- Tab 1: Resumo -->
-            <div class="tab-panel active" id="tabSummary">
+            <div class="pedagogical-tab-panel active" id="tabSummary">
               <div id="tabSummaryContent"></div>
             </div>
 
             <!-- Tab 2: Anotações -->
-            <div class="tab-panel" id="tabNotes">
+            <div class="pedagogical-tab-panel" id="tabNotes">
               <form id="addNoteForm" class="add-note-form">
-                <input type="text" id="newNoteInput" placeholder="Digite sua anotação no minuto atual do vídeo..." required>
-                <button type="submit" class="btn btn-primary btn-sm">+ Salvar Anotação</button>
+                <input type="text" id="newNoteInput" placeholder="Registrar anotação técnica no minuto atual..." required>
+                <button type="submit" class="btn btn-primary btn-sm">Salvar Anotação</button>
               </form>
               <div class="notes-list" id="notesList"></div>
             </div>
 
-            <!-- Tab 3: Materiais Complementares -->
-            <div class="tab-panel" id="tabMaterials">
+            <!-- Tab 3: Materiais -->
+            <div class="pedagogical-tab-panel" id="tabMaterials">
               <div class="attachments-list" id="attachmentsList"></div>
             </div>
 
-            <!-- Tab 4: Fórum de Dúvidas -->
-            <div class="tab-panel" id="tabForum">
+            <!-- Tab 4: Fórum -->
+            <div class="pedagogical-tab-panel" id="tabForum">
               <form id="askForumForm" class="forum-ask-form">
-                <input type="text" id="forumQuestionInput" placeholder="Envie sua dúvida técnica para o Dr. Carlos Eduardo e Eng. Ricardo..." required>
-                <button type="submit" class="btn btn-primary btn-sm">Enviar Dúvida Técnica</button>
+                <input type="text" id="forumQuestionInput" placeholder="Encaminhar dúvida para o Médico Coordenador ou Engenheiro de Segurança..." required>
+                <button type="submit" class="btn btn-primary btn-sm">Enviar Dúvida</button>
               </form>
               <div class="forum-questions-list" id="forumQuestionsList"></div>
             </div>
           </div>
         </div>
 
-        <!-- Coluna Direita: Grade Curricular & Progresso -->
-        <aside class="player-sidebar-col">
-          <div class="sidebar-curriculum-card" id="curriculumAccordion">
-            <!-- Injetado dinamicamente -->
-          </div>
+        <!-- Coluna Lateral: Grade Curricular -->
+        <aside class="player-sidebar-column">
+          <div class="curriculum-sidebar-card" id="curriculumAccordion"></div>
         </aside>
       </div>
     </section>
@@ -329,95 +381,95 @@
     <!-- ========================================== -->
     <!-- VIEW 4: AVALIAÇÃO FINAL HOMOLOGADA MTE     -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewExam" style="display: none;">
-      <div id="examContainer">
-        <!-- Injetado dinamicamente via js/examEngine.js -->
-      </div>
+    <section class="view-panel" id="viewExam" style="display: none;">
+      <div id="examContainer"></div>
     </section>
 
     <!-- ========================================== -->
-    <!-- VIEW 5: CERTIFICADO OFICIAL GRUPO BRASEG   -->
+    <!-- VIEW 5: CERTIFICADO OFICIAL HOMOLOGADO     -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewCertificate" style="display: none;">
-      <div id="certificateContainer">
-        <!-- Injetado dinamicamente via js/certificate.js -->
-      </div>
+    <section class="view-panel" id="viewCertificate" style="display: none;">
+      <div id="certificateContainer"></div>
     </section>
 
     <!-- ========================================== -->
     <!-- VIEW 6: PAINEL SESMT & FATURAMENTO ASAAS   -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewDashboard" style="display: none;">
-      <div id="dashboardContainer">
-        <!-- Injetado dinamicamente via js/dashboard.js -->
-      </div>
+    <section class="view-panel" id="viewDashboard" style="display: none;">
+      <div id="dashboardContainer"></div>
     </section>
 
     <!-- ========================================== -->
     <!-- VIEW 7: SOBRE O GRUPO BRASEG               -->
     <!-- ========================================== -->
-    <section class="view-section" id="viewDocs" style="display: none;">
-      <div id="docsMountContainer">
-        <!-- Injetado dinamicamente via js/app.js -->
-      </div>
+    <section class="view-panel" id="viewDocs" style="display: none;">
+      <div id="docsMountContainer"></div>
     </section>
 
   </main>
 
-  <!-- Container para o Modal Liquid Glass de Checkout Asaas -->
+  <!-- Container do Checkout Asaas -->
   <div id="checkoutModalContainer"></div>
 
-  <!-- Rodapé Institucional Grupo BRASEG -->
+  <!-- Rodapé Institucional do Grupo BRASEG -->
   <footer class="app-footer no-print">
-    <div class="footer-inner">
+    <div class="footer-container">
       <div class="footer-col brand-col">
         <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="footer-logo">
-        <p class="footer-desc">
-          <strong>Grupo BRASEG Consultoria e Treinamentos</strong><br>
-          Av. Marechal Rondon, 850 - Lençóis Paulista - SP<br>
+        <p class="footer-company-info">
+          <strong>Grupo BRASEG Consultoria e Treinamentos Ltda.</strong><br>
+          Av. Marechal Rondon, 850 - Centro - Lençóis Paulista - SP<br>
           CNPJ: 18.234.567/0001-89 • Tel: (14) 3283-2060
         </p>
-        <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="whatsapp-btn-footer">
-          💬 Fale com nossos Especialistas no WhatsApp
+        <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="footer-whatsapp-btn">
+          Atendimento Direto via WhatsApp
         </a>
       </div>
 
       <div class="footer-col">
-        <h4>Plataforma & NRs</h4>
-        <ul>
-          <li><a href="#" class="footer-link" data-view="catalog">NR-35: Trabalho em Altura</a></li>
-          <li><a href="#" class="footer-link" data-view="catalog">NR-10: Segurança em Eletricidade</a></li>
-          <li><a href="#" class="footer-link" data-view="catalog">NR-33: Espaços Confinados</a></li>
-          <li><a href="#" class="footer-link" data-view="catalog">NR-31: Tratores e Agrícola</a></li>
-          <li><a href="#" class="footer-link" data-view="catalog">NR-12: Máquinas e Equipamentos</a></li>
+        <h4>Treinamentos Regulamentares</h4>
+        <ul class="footer-links-list">
+          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-35: Trabalho em Altura (8h)</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-10: Segurança Elétrica e LOTO (40h)</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-33: Espaços Confinados (16h)</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-31: Tratores e Máquinas Agrícolas (24h)</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="catalog">NR-12: Segurança de Máquinas (16h)</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Gestão & SESMT</h4>
-        <ul>
-          <li><a href="#" class="footer-link" data-view="dashboard">Portal do Gestor SESMT</a></li>
-          <li><a href="#" class="footer-link" data-view="dashboard">Agendamento de ASO (NR-07)</a></li>
-          <li><a href="#" class="footer-link" data-view="dashboard">Faturamento & Faturas Asaas</a></li>
-          <li><a href="#" class="footer-link" data-view="dashboard">Exportação eSocial S-2220/2240</a></li>
-          <li><a href="#" class="footer-link" data-view="membership">Assinatura BRASEG Pass</a></li>
+        <h4>Soluções para Empresas</h4>
+        <ul class="footer-links-list">
+          <li><a href="#" class="footer-nav-link" data-view="dashboard">Portal do Gestor SESMT</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="dashboard">Agendamento de Exames & ASO (NR-07)</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="dashboard">Faturamento & Notas Fiscais Asaas</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="dashboard">Lotes XML para o eSocial S-2220/2240</a></li>
+          <li><a href="#" class="footer-nav-link" data-view="membership">Contratação de Licenças Corporativas</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4>Responsabilidade Técnica</h4>
-        <p class="tech-resp-text">
-          <strong>Coordenação Médica PCMSO:</strong><br>
-          Dr. Carlos Eduardo Menezes (CRM-SP 148.920)<br><br>
-          <strong>Engenharia de Segurança:</strong><br>
-          Eng. Ricardo S. Albuquerque (CREA-SP 506.128.932-D)<br><br>
-          <em>Em conformidade com a NR-01 e Portaria MTP nº 6.730/2020.</em>
-        </p>
+        <h4>Corpo Técnico Responsável</h4>
+        <div class="technical-directors-info">
+          <p>
+            <strong>Dr. Carlos Eduardo Menezes</strong><br>
+            Médico Coordenador do PCMSO<br>
+            CRM-SP 148.920 / RQE 72.104
+          </p>
+          <p style="margin-top: 8px;">
+            <strong>Eng. Ricardo S. Albuquerque</strong><br>
+            Engenheiro de Segurança do Trabalho<br>
+            CREA-SP 506.128.932-D
+          </p>
+        </div>
       </div>
     </div>
-    <div class="footer-bottom-bar">
-      <span>&copy; 2026 Grupo BRASEG Consultoria e Treinamentos. Todos os direitos reservados.</span>
-      <span>Checkout Transparente Seguro Asaas &bull; Certificação com QR Code Homologado</span>
+
+    <div class="footer-bottom-row">
+      <div class="bottom-inner">
+        <span>&copy; 2026 Grupo BRASEG Consultoria e Treinamentos Ltda. Todos os direitos reservados.</span>
+        <span>Conformidade com a NR-01 (Portaria MTP nº 6.730/2020) &bull; Certificação Digital com QR Code</span>
+      </div>
     </div>
   </footer>
 
