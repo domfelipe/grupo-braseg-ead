@@ -6,44 +6,49 @@
   <title>Grupo BRASEG • Plataforma Corporativa de Treinamentos Regulamentares (NRs)</title>
   <meta name="description" content="Plataforma oficial de capacitação técnica e conformidade em Segurança e Medicina do Trabalho do Grupo BRASEG. Treinamentos em conformidade com a NR-01 e Portaria MTP nº 6.730/2020.">
   
-  <!-- Tipografia Corporativa Suíça / Apple: Plus Jakarta Sans, Inter, JetBrains Mono -->
+  <!-- Tipografia Corporativa Suíça: Plus Jakarta Sans, Inter, JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   
   <!-- Estilos CSS Principais -->
   <link rel="stylesheet" href="index.css">
 </head>
 <body>
 
-  <!-- Barra Institucional Superior (Sóbria e Executiva) -->
+  <!-- Barra Institucional Superior (Top Bar de Fora a Fora) -->
   <div class="top-brand-bar no-print">
     <div class="top-bar-inner">
       <div class="top-bar-left">
         <span class="location-item">
           <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Lençóis Paulista - SP
+          Sede Operacional: Lençóis Paulista - SP
         </span>
         <span class="divider">/</span>
         <span class="contact-item">
           <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-          (14) 3283-2060
+          Central: (14) 3283-2060
         </span>
         <span class="divider">/</span>
         <a href="https://api.whatsapp.com/send?phone=5514997609595&text=Ol%C3%A1%20Grupo%20BRASEG,%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20treinamentos%20e%20SST" target="_blank" class="whatsapp-top-link">
-          Atendimento SESMT: (14) 99760-9595
+          WhatsApp SESMT: (14) 99760-9595
         </a>
       </div>
       <div class="top-bar-right">
-        <span class="compliance-tag">Homologado MTE • Anexo II NR-01</span>
+        <span class="compliance-tag">
+          <span class="status-live-dot"></span>
+          Ambiente Homologado MTE • Anexo II da NR-01
+        </span>
+        <span class="divider">/</span>
         <a href="https://www.brasegconsultoria.com.br/" target="_blank" class="site-link">brasegconsultoria.com.br ↗</a>
       </div>
     </div>
   </div>
 
-  <!-- Header Executivo Flutuante (Design Limpo e Minimalista) -->
+  <!-- Header Executivo Full-Width (De Fora a Fora, Equilibrado) -->
   <header class="app-header no-print">
-    <div class="header-container">
+    <div class="header-container-fluid">
+      
       <!-- Marca / Logotipo Oficial Grupo BRASEG -->
       <div class="brand-wrapper" id="brandLogo" role="button" title="Página Inicial">
         <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" class="braseg-logo">
@@ -73,19 +78,32 @@
           <span>Painel SESMT & Faturamento</span>
         </button>
         <button class="nav-item" data-view="docs" id="navDocs">
-          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+          <svg class="icon-nav" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
           <span>Sobre a BRASEG</span>
         </button>
       </nav>
 
-      <!-- Ações do Cabeçalho: Tema & Perfil Corporativo -->
+      <!-- Ações do Cabeçalho: Equilíbrio Lateral Completo -->
       <div class="header-actions">
-        <!-- Alternar Tema Sóbrio -->
+        
+        <!-- Status de Conexão SESMT -->
+        <div class="header-status-chip">
+          <span class="pulse-indicator"></span>
+          <span class="chip-label">eSocial S-2220 / 2240 Ativo</span>
+        </div>
+
+        <!-- Botão Suporte Rápido -->
+        <a href="https://api.whatsapp.com/send?phone=5514997609595" target="_blank" class="btn-header-support" title="Falar com Suporte Técnico BRASEG">
+          <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span>Suporte SESMT</span>
+        </a>
+
+        <!-- Alternar Tema -->
         <button class="btn-icon-theme" id="btnThemeToggle" title="Alternar Modo Escuro / Claro">
           <span id="themeIcon">☀️</span>
         </button>
 
-        <!-- Identificação do Usuário / Empresa -->
+        <!-- Perfil do Usuário / Colaborador Ativo -->
         <div class="user-account-card" id="headerProfileCard" title="Acessar Gestão de Colaboradores">
           <div class="user-avatar-wrap">
             <img src="assets/images/doctor.jpg" alt="Colaborador" class="user-avatar">
@@ -94,14 +112,14 @@
           <div class="user-text-info">
             <span class="user-display-name" id="headerUserName">Carlos Alberto Mendonça</span>
             <span class="user-display-role" id="headerUserRole">Técnico de Manutenção</span>
-            <span class="user-display-company" id="headerUserCompany">Indústrias Delta S/A</span>
           </div>
         </div>
+
       </div>
     </div>
   </header>
 
-  <!-- Conteúdo SPA -->
+  <!-- Conteúdo SPA Principal -->
   <main class="app-viewport">
     
     <!-- ========================================== -->
@@ -109,54 +127,92 @@
     <!-- ========================================== -->
     <section class="view-panel" id="viewCatalog">
       
-      <!-- Hero Editorial Executivo (Padrão Apple / Linear) -->
-      <div class="executive-hero">
-        <div class="hero-backdrop-layer">
-          <img src="assets/images/nr35.jpg" alt="Ambiente Técnico Industrial" class="hero-bg-media">
-          <div class="hero-gradient-overlay"></div>
-        </div>
-
-        <div class="hero-container">
-          <div class="hero-header-badge">
-            <span class="badge-dot"></span>
-            <span>DIRETRIZES MTE • PORTARIA SEPRT Nº 6.730/2020 • EMISSÃO COM QR CODE</span>
-          </div>
-
-          <h1 class="hero-main-title">Capacitação Regulamentar em Segurança & Saúde Ocupacional</h1>
+      <!-- Hero Executivo Limpo e de Alto Impacto (Clean Split Layout) -->
+      <div class="executive-hero-section">
+        <div class="hero-split-container">
           
-          <p class="hero-main-desc">
-            Ecossistema digital do <strong>Grupo BRASEG</strong> para formação técnica e gestão de conformidade em NRs. Conteúdo programático alinhado às exigências do Ministério do Trabalho e Emprego, com validação técnica de Engenheiros de Segurança (CREA) e Médicos do Trabalho (CRM).
-          </p>
+          <!-- Coluna Esquerda: Conteúdo Editorial e Ações -->
+          <div class="hero-left-content">
+            <div class="hero-badge-tag">
+              <span class="badge-dot-gold"></span>
+              PORTARIA MTP Nº 6.730/2020 • CERTIFICAÇÃO DIGITAL COM QR CODE
+            </div>
 
-          <div class="hero-spec-grid">
-            <div class="spec-item">
-              <span class="spec-label">RESPONSABILIDADE TÉCNICA</span>
-              <strong class="spec-value">CRM-SP 148.920 / CREA-SP 506.128</strong>
+            <h1 class="hero-title-main">
+              SALA DE CAPACITAÇÃO EAD
+            </h1>
+            
+            <p class="hero-subtitle-lead">
+              Treinamentos regulamentares em Segurança e Medicina do Trabalho com validação técnica de Médicos (CRM) e Engenheiros (CREA). Estrutura homologada para atendimento ao eSocial e gestão contínua de conformidade.
+            </p>
+
+            <!-- Grid de Metadados / Especificações Técnicas -->
+            <div class="hero-metrics-strip">
+              <div class="metric-block">
+                <span class="metric-num">10 NRs</span>
+                <span class="metric-text">Catálogo Completo</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric-block">
+                <span class="metric-num">CRM / CREA</span>
+                <span class="metric-text">Corpo Docente Titulado</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric-block">
+                <span class="metric-num">S-2220 / 2240</span>
+                <span class="metric-text">Integração eSocial</span>
+              </div>
+              <div class="metric-divider"></div>
+              <div class="metric-block">
+                <span class="metric-num">Asaas D+0</span>
+                <span class="metric-text">Faturamento & NFS-e</span>
+              </div>
             </div>
-            <div class="spec-item">
-              <span class="spec-label">INTEGRAÇÃO ESOCIAL</span>
-              <strong class="spec-value">Eventos S-2220 e S-2240</strong>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">SEDE OPERACIONAL</span>
-              <strong class="spec-value">Lençóis Paulista - SP</strong>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">FATURAMENTO DIRETO</span>
-              <strong class="spec-value">Gateway Asaas • NFS-e Municipal</strong>
+
+            <!-- Ações Principais do Hero -->
+            <div class="hero-actions-group">
+              <button class="btn btn-hero-primary" id="btnHeroStartCourse">
+                <svg class="icon-btn" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Acessar Sala de Treinamento
+              </button>
+              <button class="btn btn-hero-outline" id="btnHeroPass">
+                <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                Planos Corporativos
+              </button>
             </div>
           </div>
 
-          <div class="hero-action-buttons">
-            <button class="btn btn-hero-cta" id="btnHeroStartCourse">
-              <svg class="icon-btn" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-              Acessar Sala de Capacitação
-            </button>
-            <button class="btn btn-hero-secondary" id="btnHeroPass">
-              <svg class="icon-btn" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-              Conhecer Planos Corporativos
-            </button>
+          <!-- Coluna Direita: Card em Destaque (Preview do Treinamento Ativo) -->
+          <div class="hero-right-preview">
+            <div class="featured-training-card">
+              <div class="featured-image-wrapper">
+                <img src="assets/images/nr35.jpg" alt="NR-35 Trabalho em Altura" class="featured-img">
+                <div class="featured-overlay"></div>
+                <span class="featured-chip-tag">TREINAMENTO EM DESTAQUE</span>
+                <div class="featured-play-btn" id="btnPlayFeaturedHero">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="6 4 20 12 6 20 6 4"/></svg>
+                </div>
+              </div>
+
+              <div class="featured-card-body">
+                <div class="featured-card-meta">
+                  <span class="meta-code">NR-35</span>
+                  <span class="meta-duration">⏱️ Carga: 8 horas</span>
+                  <span class="meta-validity">Validade: 2 anos</span>
+                </div>
+                <h3 class="featured-card-title">NR-35: Trabalho em Altura e Análise de Risco</h3>
+                <p class="featured-card-desc">Planejamento operacional, cálculo de ZLQ, inspeção de EPIs e procedimentos de resgate conforme Portaria MTP 4.218.</p>
+                
+                <div class="featured-instructor-row">
+                  <div class="instructor-info-chip">
+                    <span class="inst-label">Responsável Técnico:</span>
+                    <strong>Eng. Ricardo S. Albuquerque (CREA-SP 506.128)</strong>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
       </div>
 
@@ -173,7 +229,7 @@
 
           <div class="search-input-box">
             <svg class="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input type="text" id="catalogSearchInput" placeholder="Filtrar por código (ex: NR-35), título ou palavra-chave...">
+            <input type="text" id="catalogSearchInput" placeholder="Buscar por código (ex: NR-35), título ou termo técnico...">
           </div>
         </div>
       </div>
@@ -185,7 +241,7 @@
         </div>
       </div>
 
-      <!-- Empresas Atendidas pelo Grupo BRASEG -->
+      <!-- Clientes Corporativos Atendidos -->
       <div class="client-partners-section">
         <div class="partners-container">
           <span class="partners-section-title">Grandes Organizações Atendidas pelo Grupo BRASEG:</span>

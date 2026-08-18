@@ -95,6 +95,10 @@ class App {
       this.navigateTo('player', 'nr35');
     });
 
+    document.getElementById('btnPlayFeaturedHero')?.addEventListener('click', () => {
+      this.navigateTo('player', 'nr35');
+    });
+
     document.getElementById('btnHeroPass')?.addEventListener('click', () => {
       this.navigateTo('membership');
     });
@@ -145,11 +149,9 @@ class App {
   updateHeaderProfile() {
     const nameEl = document.getElementById('headerUserName');
     const roleEl = document.getElementById('headerUserRole');
-    const compEl = document.getElementById('headerUserCompany');
 
     if (nameEl) nameEl.textContent = State.currentStudent.name;
     if (roleEl) roleEl.textContent = `${State.currentStudent.role}`;
-    if (compEl) compEl.textContent = State.currentStudent.company;
   }
 
   navigateTo(view, courseId = null, lessonId = null) {
@@ -613,7 +615,7 @@ class App {
     if (!container) return;
 
     container.innerHTML = `
-      <div style="max-width: 1100px; margin: 32px auto; padding: 0 16px;">
+      <div style="max-width: 1100px; margin: 32px auto; padding: 0 24px;">
         <div style="background: var(--bg-surface-1); border: 1px solid var(--border-subtle); border-radius: var(--radius-md); padding: 36px; text-align: center; margin-bottom: 24px;">
           <img src="assets/images/braseg_logo_white.png" alt="Grupo BRASEG" style="height: 48px; margin-bottom: 12px;">
           <h2 style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-bottom: 8px;">${BRASEG_INSTITUTIONAL.companyName}</h2>
